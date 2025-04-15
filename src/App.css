@@ -1,0 +1,27 @@
+.app {
+  text-align: center;
+  min-height: 100vh;
+  background-color: #f0f8ff;
+}
+
+header {
+  padding: 2rem;
+  background-color: #4caf50;
+  color: white;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+header p {
+  margin: 0.5rem 0 0;
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+main {
+  padding: 2rem;
+}
