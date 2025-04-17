@@ -1,4 +1,4 @@
-# Litera po Literze v0.1.1
+# Litera po Literze v0.2.0
 
 Litera po Literze is an educational web application designed to help children learn reading and writing in Polish. The application provides an interactive and engaging way for children to practice their language skills.
 
@@ -12,10 +12,10 @@ Litera po Literze is an educational web application designed to help children le
 
 ## Prerequisites
 
-Before you begin, ensure you have the following installed:
+Ensure you have the following installed before starting:
 
-- Node.js (v14 or higher)
-- npm (v6 or higher)
+- **Node.js** (version 14 or higher)
+- **npm** (version 6 or higher)
 
 ## Getting Started
 
@@ -34,17 +34,16 @@ Before you begin, ensure you have the following installed:
 
 3. Start the development server:
    ```bash
-   npm start
+   npm run dev
    ```
 
-The application will open in your default browser at `http://localhost:3000`.
+The application will open in your default browser at `http://localhost:5173`.
 
 ## Available Scripts
 
-- `npm start` - Runs the app in development mode
-- `npm test` - Launches the test runner
+- `npm run dev` - Runs the app in development mode
 - `npm run build` - Builds the app for production
-- `npm run eject` - Ejects from Create React App
+- `npm run serve` - Serves the production build for preview
 
 ## Building for Production
 
@@ -54,11 +53,23 @@ To create a production build:
 npm run build
 ```
 
-The build artifacts will be stored in the `build/` directory.
+The build artifacts will be stored in the `dist/` directory.
 
-## Credits:
+To preview the production build:
 
-- Coding: [Cursor](https://www.cursor.com/)
+```bash
+npm run serve
+```
+
+The application will be served locally for testing.
+
+## Changelog
+
+For a detailed list of changes, see the [Changelog](./CHANGELOG.md).
+
+## Credits
+
+- Coding: [Cursor](https://www.cursor.com/) & [ChatGPT](https://chatgpt.com/)
 - Images: [ChatGPT](https://chatgpt.com/)
 - Resize & Compress: [iLoveIMG](https://www.iloveimg.com/)
 - Words: [TTSMaker](https://ttsmaker.com/)
