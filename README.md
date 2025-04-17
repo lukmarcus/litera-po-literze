@@ -1,4 +1,4 @@
-# Litera po Literze v0.1.0
+# Litera po Literze v0.1.1
 
 Litera po Literze is an educational web application designed to help children learn reading and writing in Polish. The application provides an interactive and engaging way for children to practice their language skills.
 
@@ -55,14 +55,6 @@ npm run build
 ```
 
 The build artifacts will be stored in the `build/` directory.
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
 
 ## Credits:
 
