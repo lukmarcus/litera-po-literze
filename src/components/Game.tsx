@@ -3,9 +3,6 @@ import { PL_03_BSC } from "../data/pl-03-bsc";
 import { PL_03_DCR } from "../data/pl-03-dcr";
 import { getFileName } from "../utils/fileUtils";
 import "./Game.css";
-import placeholderImage from "../assets/images/words/placeholder.png";
-import errorAudio from "../assets/audio/effects/error.mp3";
-import successAudio from "../assets/audio/effects/success.mp3";
 import { WordPack } from "../types/WordPack";
 
 interface GameState {
@@ -68,11 +65,18 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
       console.error("Error loading audio:", e);
     };
     setAudio(audioFile);
-  }, [getRandomWord]);
+  }, [getRandomWord, wordPack.id]);
 
-  useEffect(() => {
+  const handleNextWord = useCallback(() => {
     initializeGame();
   }, [initializeGame]);
+
+  useEffect(() => {
+    const handleNextWordEffect = () => {
+      handleNextWord();
+    };
+    handleNextWordEffect();
+  }, [handleNextWord]);
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -118,7 +122,7 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
 
     window.addEventListener("keydown", handleKeyPress);
     return () => window.removeEventListener("keydown", handleKeyPress);
-  }, [gameState]);
+  }, [gameState, handleNextWord]);
 
   const playAudio = () => {
     if (audio) {
@@ -130,10 +134,6 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
     } else {
       console.log("No audio available");
     }
-  };
-
-  const handleNextWord = () => {
-    initializeGame();
   };
 
   return (
