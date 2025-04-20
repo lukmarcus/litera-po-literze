@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.2.0] - 2025-04-18
+## [0.2.0] - 2025-04-20
 
 ### Changed
 
@@ -8,6 +8,7 @@
 - Updated `package.json` scripts (`start` → `dev`, added `serve`).
 - Replaced `process.env` with `import.meta.env` for environment variables.
 - Renamed all files to follow `kebab-case` naming convention (e.g., `MainMenu.tsx` → `main-menu.tsx`).
+- Updated Vite configuration to use ESM format to address deprecation warnings.
 
 ### Removed
 
