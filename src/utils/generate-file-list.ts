@@ -1,6 +1,6 @@
 import { PL_03_BSC as basicWords } from "../data/pl-03-bsc";
 import { PL_03_DCR as difficultWords } from "../data/pl-03-dcr";
-import { getFileName } from "./getFileName";
+import { getFileName } from "./get-file-name";
 
 export const generateFileList = () => {
   const allWords = [...basicWords, ...difficultWords];

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { PL_03_BSC } from "../data/pl-03-bsc";
 import { PL_03_DCR } from "../data/pl-03-dcr";
-import { getFileName } from "../utils/fileUtils";
-import "./Game.css";
-import { WordPack } from "../types/WordPack";
+import { getFileName } from "../utils/file-utils";
+import "./game.css";
+import { WordPack } from "../types/word-pack";
 
 interface GameState {
   currentWord: string;

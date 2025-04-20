@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Game from "./components/Game";
-import MainMenu from "./components/MainMenu";
-import { WordPack } from "./types/WordPack";
+import Game from "./components/game";
+import MainMenu from "./components/main-menu";
+import { WordPack } from "./types/word-pack";
 import { PL_03_BSC } from "./data/pl-03-bsc";
 import { PL_03_DCR } from "./data/pl-03-dcr";
-import "./App.css";
+import "./app.css";
 
 const App: React.FC = () => {
   const [selectedPack, setSelectedPack] = useState<WordPack | null>(null);
