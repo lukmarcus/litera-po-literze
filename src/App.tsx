@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Game from "./components/game";
+import Game from "./components/Game";
 import MainMenu from "./components/main-menu";
 import { WordPack } from "./types/word-pack";
 import { PL_03_BSC } from "./data/pl-03-bsc";
