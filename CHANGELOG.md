@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.2.1] - 2025-04-25
+
+### Added
+
+- New application icons with `manifest.webmanifest` file.
+
+### Changed
+
+- Prevented double game initialization on mount in React 18 dev mode (StrictMode).
+- Improved `initializeGame` logic to avoid multiple calls during development.
+
+### Removed
+
+- Removed duplicate `getFileName` utility causing mismatched image paths for words with Polish diacritics.
+- Removed `manifest.json` to avoid conflicts with `manifest.webmanifest`.
+
 ## [0.2.0] - 2025-04-20
 
 ### Changed
@@ -24,4 +40,4 @@
 
 ### Added
 
-- Initial release of the application
+- Initial release of the application.

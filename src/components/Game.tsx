@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { PL_03_BSC } from "../data/pl-03-bsc";
 import { PL_03_DCR } from "../data/pl-03-dcr";
-import { getFileName } from "../utils/file-utils";
 import "./game.css";
 import { WordPack } from "../types/word-pack";
+import { getFileName } from "../utils/get-file-name";
 
 interface GameState {
   currentWord: string;
@@ -54,6 +54,11 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
       "mp3"
     )}`;
     console.log("Loading audio from:", audioPath);
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+
     const audioFile = new Audio(audioPath);
     audioFile.oncanplaythrough = () => {
       console.log("Audio loaded, playing...");
@@ -71,12 +76,14 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
     initializeGame();
   }, [initializeGame]);
 
+  const hasInitializedRef = useRef(false);
+
   useEffect(() => {
-    const handleNextWordEffect = () => {
+    if (!hasInitializedRef.current) {
       handleNextWord();
-    };
-    handleNextWordEffect();
-  }, [handleNextWord]);
+      hasInitializedRef.current = true;
+    }
+  }, []);
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {

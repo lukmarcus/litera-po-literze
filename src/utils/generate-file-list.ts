@@ -9,7 +9,7 @@ export const generateFileList = () => {
   console.log("Required files:");
   console.log("\nImages (public/images/):");
   uniqueWords.forEach((word) => {
-    console.log(`- ${getFileName(word, "jpg")}`);
+    console.log(`- ${getFileName(word, "png")}`);
   });
   console.log("\nAudio files (public/audio/):");
   uniqueWords.forEach((word) => {

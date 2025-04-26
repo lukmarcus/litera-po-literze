@@ -2,7 +2,7 @@
  * Utility function to get the filename for a word
  * Removes Polish characters and creates a normalized filename
  */
-export const getFileName = (word: string, extension: "mp3" | "jpg"): string => {
+export const getFileName = (word: string, extension: "mp3" | "png"): string => {
   return (
     word
       .toLowerCase()

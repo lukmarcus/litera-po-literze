@@ -1,4 +1,4 @@
-# Litera po Literze v0.2.0
+# Litera po Literze
 
 Litera po Literze is an educational web application designed to help children learn reading and writing in Polish. The application provides an interactive and engaging way for children to practice their language skills.
 
@@ -69,8 +69,10 @@ For a detailed list of changes, see the [Changelog](./CHANGELOG.md).
 
 ## Credits
 
-- Coding: [Cursor](https://www.cursor.com/) & [ChatGPT](https://chatgpt.com/)
+- Coding: [Cursor](https://www.cursor.com/), [ChatGPT](https://chatgpt.com/) & [GitHub Copilot
+  ](https://github.com/features/copilot)
 - Images: [ChatGPT](https://chatgpt.com/)
 - Resize & Compress: [iLoveIMG](https://www.iloveimg.com/)
 - Words: [TTSMaker](https://ttsmaker.com/)
 - Sounds: [Pixabay](https://pixabay.com/)
+- Human behind AI: [Marek Szumny](https://github.com/lukmarcus)
