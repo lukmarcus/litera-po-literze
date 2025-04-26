@@ -171,29 +171,29 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
           🔊
         </button>
 
-        <div className="letter-slots">
-          {gameState.userInput.map((letter, index) => (
-            <div
-              key={index}
-              className={`letter-slot ${
-                index === gameState.activeIndex ? "active" : ""
-              } ${
-                gameState.showError && index === gameState.activeIndex
-                  ? "error"
-                  : ""
-              }`}
-            >
-              {letter}
-            </div>
-          ))}
-        </div>
-
-        {gameState.isComplete && (
+        {gameState.isComplete ? (
           <div className="success-message">
             <h2>Brawo!</h2>
             <button onClick={handleNextWord} className="next-button">
               Następne słowo (Enter)
             </button>
+          </div>
+        ) : (
+          <div className="letter-slots">
+            {gameState.userInput.map((letter, index) => (
+              <div
+                key={index}
+                className={`letter-slot ${
+                  index === gameState.activeIndex ? "active" : ""
+                } ${
+                  gameState.showError && index === gameState.activeIndex
+                    ? "error"
+                    : ""
+                }`}
+              >
+                {letter}
+              </div>
+            ))}
           </div>
         )}
       </div>
