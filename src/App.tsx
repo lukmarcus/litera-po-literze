@@ -27,8 +27,13 @@ const App: React.FC = () => {
   return (
     <div className="app">
       <header>
-        <h1>Litera po Literze</h1>
-        <p>Nauka czytania i pisania dla dzieci</p>
+        <div className="logo">
+          <img src="/icon.svg" alt="Logo" className="logo-icon" />
+          <div>
+            <h1>Litera po Literze</h1>
+            <p>Nauka czytania i pisania dla dzieci</p>
+          </div>
+        </div>
       </header>
       <main>
         {selectedPack ? (
