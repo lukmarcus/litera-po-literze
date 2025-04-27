@@ -25,3 +25,36 @@ header p {
 main {
   padding: 2rem;
 }
+
+header {
+  padding: 1rem 2rem;
+  background-color: #4caf50;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.logo img {
+  width: 80px;
+  height: 80px;
+}
+
+.logo h1 {
+  margin: 0;
+  font-size: 2rem;
+  line-height: 1.2;
+  color: white;
+}
+
+.logo p {
+  margin: 0;
+  font-size: 1rem;
+  opacity: 0.9;
+}
