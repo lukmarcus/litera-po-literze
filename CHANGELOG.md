@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.2] - 2025-04-27
+
+### Changed
+
+- Enhanced the `Game` component to visually distinguish between gameplay and completion states.
+
 ## [0.2.1] - 2025-04-25
 
 ### Added
