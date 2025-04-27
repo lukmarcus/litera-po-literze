@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.3.0] - 2025-04-27
+
+### Added
+
+- New visual main menu with navigation buttons.
+
+### Changed
+
+- Updated `App` header with logo and title.
+
 ## [0.2.2] - 2025-04-27
 
 ### Changed
