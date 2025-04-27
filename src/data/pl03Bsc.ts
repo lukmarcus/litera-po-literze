@@ -1,4 +1,4 @@
-export const PL_03_BSC: string[] = [
+export const PL03BSC: string[] = [
   "bal",
   "bat",
   "but",

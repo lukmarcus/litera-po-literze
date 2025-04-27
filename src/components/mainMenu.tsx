@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { WordPack } from "../types/word-pack";
-import "./main-menu.css";
+import { WordPack } from "../types/wordPack";
+import "./mainMenu.css";
 
 interface MainMenuProps {
   wordPacks: WordPack[];

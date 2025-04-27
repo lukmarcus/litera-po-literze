@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  background-color: #e0f7fa; /* jasny błękit */
+  background-color: #e0f7fa;
   font-family: "Comic Sans MS", cursive, sans-serif;
   padding: 2rem 1rem;
 }
@@ -22,7 +22,7 @@
 }
 
 .logo h1 {
-  color: #6a1b9a; /* fiolet */
+  color: #6a1b9a;
   font-size: 2.5rem;
   margin: 0;
 }

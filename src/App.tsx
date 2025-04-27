@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Game from "./components/Game";
-import MainMenu from "./components/main-menu";
-import { WordPack } from "./types/word-pack";
-import { PL_03_BSC } from "./data/pl-03-bsc";
-import { PL_03_DCR } from "./data/pl-03-dcr";
+import Game from "./components/game";
+import MainMenu from "./components/mainMenu";
+import { WordPack } from "./types/wordPack";
+import { PL03BSC } from "./data/pl03Bsc";
+import { PL03DCR } from "./data/pl03Dcr";
 import "./app.css";
 
 const App: React.FC = () => {
@@ -11,16 +11,16 @@ const App: React.FC = () => {
 
   const wordPacks: WordPack[] = [
     {
-      id: "pl-03-bsc",
+      id: "pl03Bsc",
       name: "Podstawowe słowa",
       description: "Proste 3-literowe słowa",
-      words: PL_03_BSC,
+      words: PL03BSC,
     },
     {
-      id: "pl-03-dcr",
+      id: "pl03Dcr",
       name: "Trudniejsze słowa",
       description: "Trudniejsze 3-literowe słowa",
-      words: PL_03_DCR,
+      words: PL03DCR,
     },
   ];
 
