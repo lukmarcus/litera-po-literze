@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.3.1] - 2025-04-28
+
+### Changed
+
+- Renamed files and folders from kebab-case to camelCase.
+
 ## [0.3.0] - 2025-04-27
 
 ### Added

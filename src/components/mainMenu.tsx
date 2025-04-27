@@ -51,7 +51,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ wordPacks, onSelectPack }) => {
         </div>
       )}
 
-      <footer className="footer">Wersja 0.3.0 • Marek Szumny</footer>
+      <footer className="footer">Wersja 0.3.1 • Marek Szumny</footer>
     </div>
   );
 };
