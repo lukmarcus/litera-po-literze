@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { PL_03_BSC } from "../data/pl-03-bsc";
-import { PL_03_DCR } from "../data/pl-03-dcr";
+import { PL03BSC } from "../data/pl03Bsc";
+import { PL03DCR } from "../data/pl03Dcr";
 import "./game.css";
-import { WordPack } from "../types/word-pack";
-import { getFileName } from "../utils/get-file-name";
+import { WordPack } from "../types/wordPack";
+import { getFileName } from "../utils/getFileName";
 
 interface GameState {
   currentWord: string;
@@ -31,7 +31,7 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const getRandomWord = useCallback(() => {
-    const words = wordPack.id === "pl-03-bsc" ? PL_03_BSC : PL_03_DCR;
+    const words = wordPack.id === "pl03Bsc" ? PL03BSC : PL03DCR;
     const randomIndex = Math.floor(Math.random() * words.length);
     return words[randomIndex];
   }, [wordPack.id]);

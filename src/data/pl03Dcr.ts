@@ -1,4 +1,4 @@
-export const PL_03_DCR: string[] = [
+export const PL03DCR: string[] = [
   "bąk",
   "bób",
   "ćma",

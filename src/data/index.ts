@@ -1,4 +1,4 @@
-import { PL_03_BSC } from "./pl-03-bsc";
-import { PL_03_DCR } from "./pl-03-dcr";
+import { PL03BSC } from "./pl03Bsc";
+import { PL03DCR } from "./pl03Dcr";
 
-export const PL_03_ALL = [...PL_03_BSC, ...PL_03_DCR];
+export const PL_03_ALL = [...PL03BSC, ...PL03DCR];
