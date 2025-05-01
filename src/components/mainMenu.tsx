@@ -52,7 +52,16 @@ const MainMenu: React.FC<MainMenuProps> = ({ wordPacks, onSelectPack }) => {
         </div>
       )}
 
-      <footer className="footer">Wersja {version} • Marek Szumny</footer>
+      <footer className="footer">
+        Litera po Literze v{version} • Marek Szumny •{" "}
+        <a
+          href="https://github.com/lukmarcus/litera-po-literze"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Repozytorium GitHub
+        </a>
+      </footer>
     </div>
   );
 };
