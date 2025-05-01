@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { WordPack } from "../types/wordPack";
 import "./mainMenu.css";
+import { version } from "../../package.json";
 
 interface MainMenuProps {
   wordPacks: WordPack[];
@@ -51,7 +52,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ wordPacks, onSelectPack }) => {
         </div>
       )}
 
-      <footer className="footer">Wersja 0.3.1 • Marek Szumny</footer>
+      <footer className="footer">Wersja {version} • Marek Szumny</footer>
     </div>
   );
 };
