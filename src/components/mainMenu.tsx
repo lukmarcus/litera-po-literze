@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { WordPack } from "../types/wordPack";
 import "./mainMenu.css";
-import { version } from "../../package.json";
 
 interface MainMenuProps {
   wordPacks: WordPack[];
@@ -51,17 +50,6 @@ const MainMenu: React.FC<MainMenuProps> = ({ wordPacks, onSelectPack }) => {
           </div>
         </div>
       )}
-
-      <footer className="footer">
-        Litera po Literze v{version} • Marek Szumny •{" "}
-        <a
-          href="https://github.com/lukmarcus/litera-po-literze"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Repozytorium GitHub
-        </a>
-      </footer>
     </div>
   );
 };
