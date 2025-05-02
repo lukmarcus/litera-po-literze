@@ -113,13 +113,6 @@
   margin: 0;
 }
 
-.footer {
-  margin-top: auto;
-  padding: 1rem;
-  font-size: 0.9rem;
-  color: #666;
-}
-
 .fade-in {
   animation: fadeInMove 0.4s ease-out forwards;
 }

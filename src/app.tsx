@@ -4,6 +4,7 @@ import MainMenu from "./components/mainMenu";
 import { WordPack } from "./types/wordPack";
 import { PL03BSC } from "./data/pl03Bsc";
 import { PL03DCR } from "./data/pl03Dcr";
+import { version } from "../package.json"; // Import version
 import "./app.css";
 
 const App: React.FC = () => {
@@ -45,6 +46,16 @@ const App: React.FC = () => {
           <MainMenu wordPacks={wordPacks} onSelectPack={setSelectedPack} />
         )}
       </main>
+      <footer className="footer">
+        Litera po Literze v{version} • Marek Szumny •{" "}
+        <a
+          href="https://github.com/lukmarcus/litera-po-literze"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Repozytorium GitHub
+        </a>
+      </footer>
     </div>
   );
 };

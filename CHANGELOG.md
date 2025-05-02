@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.3.2] - 2025-05-02
+
+### Added
+
+- Footer now dynamically displays the app version from `package.json`.
+
+### Changed
+
+- Moved the footer from `MainMenu` to `App` to ensure it is fixed at the bottom of every page.
+
 ## [0.3.1] - 2025-04-28
 
 ### Changed
