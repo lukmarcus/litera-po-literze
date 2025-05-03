@@ -4,11 +4,13 @@ import MainMenu from "./components/mainMenu";
 import { WordPack } from "./types/wordPack";
 import { PL03BSC } from "./data/pl03Bsc";
 import { PL03DCR } from "./data/pl03Dcr";
-import { version } from "../package.json"; // Import version
+import Footer from "./components/footer";
+import BugReportModal from "./components/bugReportModal";
 import "./app.css";
 
 const App: React.FC = () => {
   const [selectedPack, setSelectedPack] = useState<WordPack | null>(null);
+  const [showModal, setShowModal] = useState(false);
 
   const wordPacks: WordPack[] = [
     {
@@ -36,6 +38,7 @@ const App: React.FC = () => {
           </div>
         </div>
       </header>
+
       <main>
         {selectedPack ? (
           <Game
@@ -46,16 +49,9 @@ const App: React.FC = () => {
           <MainMenu wordPacks={wordPacks} onSelectPack={setSelectedPack} />
         )}
       </main>
-      <footer className="footer">
-        Litera po Literze v{version} • Marek Szumny •{" "}
-        <a
-          href="https://github.com/lukmarcus/litera-po-literze"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Repozytorium GitHub
-        </a>
-      </footer>
+
+      <Footer onReportClick={() => setShowModal(true)} />
+      {showModal && <BugReportModal onClose={() => setShowModal(false)} />}
     </div>
   );
 };
