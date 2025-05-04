@@ -27,9 +27,9 @@ const MainMenu: React.FC<MainMenuProps> = ({ wordPacks, onSelectPack }) => {
         </button>
         <button
           className="menu-button orange"
-          onClick={() => alert("Instrukcje jeszcze niedostępne")}
+          onClick={() => alert("Opcja jeszcze niedostępna")}
         >
-          ❓ Instrukcje
+          ❓ Jak grać?
         </button>
       </div>
 
