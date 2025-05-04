@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.3.3] - 2025-05-05
+
+### Added
+
+- Bug report modal accessible from the footer, offering two submission options: GitHub issue or Google Form.
+- New `Footer` and `BugReportModal` components, each with dedicated CSS files.
+
+### Changed
+
+- Refactored `App.tsx` to delegate footer and modal logic to reusable components.
+
 ## [0.3.2] - 2025-05-02
 
 ### Added
