@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { WordPack } from "../types/wordPack";
+import { WordPack } from "../../types/wordPack";
 import "./mainMenu.css";
 
 interface MainMenuProps {

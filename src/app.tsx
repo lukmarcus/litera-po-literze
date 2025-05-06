@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import Game from "./components/game";
-import MainMenu from "./components/mainMenu";
+import Game from "./components/game/game";
+import MainMenu from "./components/mainMenu/mainMenu";
 import { WordPack } from "./types/wordPack";
 import { PL03BSC } from "./data/pl03Bsc";
 import { PL03DCR } from "./data/pl03Dcr";
-import Footer from "./components/footer";
-import BugReportModal from "./components/bugReportModal";
+import Footer from "./components/footer/footer";
+import BugReportModal from "./components/bugReportModal/bugReportModal";
 import "./app.css";
 
 const App: React.FC = () => {
