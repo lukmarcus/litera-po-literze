@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.3.4] - 2025-05-07
+
+### Changed
+
+- Refactored component structure by moving each component and its styles into dedicated folders.
+
 ## [0.3.3] - 2025-05-05
 
 ### Added
