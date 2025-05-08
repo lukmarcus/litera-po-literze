@@ -5,30 +5,26 @@ on:
     branches:
       - main
   pull_request:
-    types: [opened, synchronize, reopened]
     branches:
       - main
-
-  pull_request_target:
-    types: [closed]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Check out the repository
         uses: actions/checkout@v3
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
+          node-version: 18
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Build application
+      - name: Build the project
         run: npm run build
 
       - name: Deploy to GitHub Pages (main branch)
@@ -36,7 +32,11 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          publish_dir: ./dist
+
+      - name: Fetch all branches
+        if: github.event_name == 'pull_request'
+        run: git fetch --all
 
       - name: Deploy PR Preview
         if: github.event_name == 'pull_request'
@@ -46,21 +46,4 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add pr-${{ github.event.number }}
           git commit -m "Deploy preview for PR #${{ github.event.number }}"
-          git push origin +gh-pages
-
-  cleanup:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request_target' && github.event.action == 'closed'
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Delete PR Preview
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull origin gh-pages
-          git rm -rf pr-${{ github.event.number }}
-          git commit -m "Remove preview for PR #${{ github.event.number }}"
           git push origin +gh-pages
