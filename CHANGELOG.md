@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.4.0] - 2025-05-08
+
+### Added
+
+- Automatic deployment to GitHub Pages on push to `main`.
+- Preview environment for Pull Requests with automatic removal after merge.
+
+### Changed
+
+- Configured `gh-pages` branch for GitHub Pages deployment.
+- Added `homepage` property to `package.json`.
+
 ## [0.3.4] - 2025-05-07
 
 ### Changed
