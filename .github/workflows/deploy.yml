@@ -41,7 +41,7 @@ jobs:
       - name: Deploy PR Preview
         if: github.event_name == 'pull_request'
         run: |
-          mv build pr-${{ github.event.number }}
+          mv dist pr-${{ github.event.number }}
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add pr-${{ github.event.number }}
