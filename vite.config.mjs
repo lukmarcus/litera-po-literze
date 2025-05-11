@@ -13,4 +13,7 @@ export default defineConfig({
   server: {
     open: true, // Automatically open the app in the browser
   },
+  build: {
+    assetsDir: isPreview ? `pr-${prNumber}/assets` : "assets",
+  },
 });
