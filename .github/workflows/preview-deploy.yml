@@ -2,11 +2,10 @@ name: Deploy Preview to GitHub Pages
 
 on:
   pull_request:
-    branches:
-      - main
-
-permissions:
-  contents: write
+    types:
+      - opened
+      - synchronize
+      - reopened
 
 jobs:
   build-and-deploy:
@@ -40,8 +39,14 @@ jobs:
         run: |
           rm -rf pr-${{ github.event.number }}
           mv dist pr-${{ github.event.number }}
+          touch pr-${{ github.event.number }}/.nojekyll
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add pr-${{ github.event.number }}
           git commit -m "Deploy preview for PR #${{ github.event.number }}"
           git push origin gh-pages
+
+      - name: Clean up node_modules
+        run: |
+          rm -rf node_modules
+          git rm -r --cached node_modules
