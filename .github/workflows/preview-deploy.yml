@@ -41,13 +41,14 @@ jobs:
       - name: Deploy Preview
         run: |
           rm -rf pr-${{ github.event.number }}
-          mv dist pr-${{ github.event.number }}
+          cp -R dist pr-${{ github.event.number }}
           touch pr-${{ github.event.number }}/.nojekyll
           rm -rf node_modules
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add pr-${{ github.event.number }}
-          git commit -m "Deploy preview for PR #${{ github.event.number }}"
+          git status
+          git commit -m "Deploy preview for PR #${{ github.event.number }}" || echo "Nothing to commit"
           git push origin gh-pages
 
       - name: Clean up node_modules
