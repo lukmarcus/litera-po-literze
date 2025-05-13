@@ -7,7 +7,7 @@ const prNumber = process.env.PR_NUMBER;
 export default defineConfig({
   base: isPreview ? `/litera-po-literze/pr-${prNumber}/` : "/",
   build: {
-    outDir: isPreview ? `dist/pr-${prNumber}` : "dist",
+    outDir: "dist",
     rollupOptions: {
       output: {
         entryFileNames: isPreview
