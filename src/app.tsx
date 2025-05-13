@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import React, { useState } from "react";
 import Game from "./components/game/game";
 import MainMenu from "./components/mainMenu/mainMenu";
@@ -7,6 +8,7 @@ import { PL03DCR } from "./data/pl03Dcr";
 import Footer from "./components/footer/footer";
 import BugReportModal from "./components/bugReportModal/bugReportModal";
 import "./app.css";
+import { asset } from "./utils/asset";
 
 const App: React.FC = () => {
   const [selectedPack, setSelectedPack] = useState<WordPack | null>(null);
@@ -31,7 +33,7 @@ const App: React.FC = () => {
     <div className="app">
       <header>
         <div className="logo">
-          <img src="/icon.svg" alt="Logo" className="logo-icon" />
+          <img src={asset("/icon.svg")} alt="Logo" className="logo-icon" />
           <div>
             <h1>Litera po Literze</h1>
             <p>Nauka czytania i pisania dla dzieci</p>
