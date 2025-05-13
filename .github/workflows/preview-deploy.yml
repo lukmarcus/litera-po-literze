@@ -57,3 +57,18 @@ jobs:
           if git ls-files --error-unmatch node_modules > /dev/null 2>&1; then
             git rm -r --cached node_modules
           fi
+
+      - name: Post GitHub Comment with Preview URL
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const prNumber = context.payload.number;
+            const previewUrl = `https://lukmarcus.github.io/litera-po-literze/pr-${prNumber}/`;
+
+            await github.issues.createComment({
+              issue_number: prNumber,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `🚀 PR Preview deployed successfully! [Click here to view it](${previewUrl})`
+            });
