@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.4.1] - 2025-05-14
+
+### Added
+
+- Split `deploy.yml` into three separate workflows: `preview-deploy.yml`, `main-deploy.yml`, and `preview-cleanup.yml`.
+- Automatic PR comment with preview URL after deployment.
+
+### Changed
+
+- Unified asset paths with `asset` helper.
+- Improved `preview-cleanup.yml` to handle missing folders.
+- Main deployment now moves built files to the root of `gh-pages`.
+
+### Removed
+
+- Removed old `deploy.yml`.
+
 ## [0.4.0] - 2025-05-08
 
 ### Added

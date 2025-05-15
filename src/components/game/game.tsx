@@ -1,9 +1,11 @@
+/// <reference types="vite/client" />
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import "./game.css";
 import { WordPack } from "../../types/wordPack";
 import { getFileName } from "../../utils/getFileName";
 import { PL03BSC } from "../../data/pl03Bsc";
 import { PL03DCR } from "../../data/pl03Dcr";
+import { asset } from "../../utils/asset";
 
 interface GameState {
   currentWord: string;
@@ -49,10 +51,10 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
     });
 
     // Load and play audio
-    const audioPath = `/audio/words/${wordPack.id}/${getFileName(
-      newWord,
-      "mp3"
-    )}`;
+    const audioPath = asset(
+      `/audio/words/${wordPack.id}/${getFileName(newWord, "mp3")}`
+    );
+
     console.log("Loading audio from:", audioPath);
     if (audio) {
       audio.pause();
@@ -108,7 +110,7 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
           setGameState((prev) => {
             const isComplete = prev.activeIndex + 1 === prev.currentWord.length;
             if (isComplete) {
-              new Audio("/audio/effects/success.mp3")
+              new Audio(asset("/audio/effects/success.mp3"))
                 .play()
                 .catch(console.error);
             }
@@ -122,7 +124,9 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
           });
         } else {
           setGameState((prev) => ({ ...prev, showError: true }));
-          new Audio("/audio/effects/error.mp3").play().catch(console.error);
+          new Audio(asset("/audio/effects/error.mp3"))
+            .play()
+            .catch(console.error);
         }
       }
     };
@@ -147,17 +151,19 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
     <div className="game-container" ref={containerRef}>
       <div className="word-display">
         <img
-          src={`/images/words/${wordPack.id}/${getFileName(
-            gameState.currentWord,
-            "png"
-          )}`}
+          src={asset(
+            `/images/words/${wordPack.id}/${getFileName(
+              gameState.currentWord,
+              "png"
+            )}`
+          )}
           alt={gameState.currentWord}
           className="word-image"
           onError={(e) => {
             console.log("Image load error, using placeholder");
             console.log("Attempted to load:", e.currentTarget.src);
             const target = e.target as HTMLImageElement;
-            target.src = "/images/words/placeholder.png";
+            target.src = asset("/images/words/placeholder.png");
           }}
           onLoad={() => {
             console.log("Image loaded successfully:", gameState.currentWord);
