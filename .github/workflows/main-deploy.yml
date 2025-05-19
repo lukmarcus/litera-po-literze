@@ -30,7 +30,7 @@ jobs:
 
       - name: Deploy to GitHub Pages
         run: |
-          rm -rf !(dist)
+          find . -maxdepth 1 ! -name "dist" ! -name "." -exec rm -rf {} +
           mv dist/* .
           rm -rf dist
           git config user.name "github-actions[bot]"
