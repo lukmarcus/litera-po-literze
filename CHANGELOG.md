@@ -1,11 +1,5 @@
 # Changelog
 
-## [0.4.2] - 2025-05-19
-
-### Changed
-
-- Fixed deployment to `gh-pages` and improved folder handling.
-
 ## [0.4.1] - 2025-05-14
 
 ### Added
