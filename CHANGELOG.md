@@ -4,7 +4,7 @@
 
 ### Changed
 
-- Fixed deployment to `gh-pages` and improved folder handling.
+- Deployment to `gh-pages` workflow.
 
 ## [0.4.1] - 2025-05-14
 
