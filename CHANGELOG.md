@@ -1,10 +1,10 @@
 # Changelog
 
-## [0.4.2] - 2025-05-19
+## [0.4.2] - 2025-05-21
 
 ### Changed
 
-- Deployment to `gh-pages` workflow.
+- Deployment to `gh-pages` from `main` branch restructured for correctness and stability.
 
 ## [0.4.1] - 2025-05-14
 
