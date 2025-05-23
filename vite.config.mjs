@@ -1,11 +1,12 @@
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
 
 const isPreview = process.env.PREVIEW === "true";
 const prNumber = process.env.PR_NUMBER;
 
 export default defineConfig({
-  base: isPreview ? `/litera-po-literze/pr-${prNumber}/` : "/",
+  base: isPreview
+    ? `/litera-po-literze/pr-${prNumber}/`
+    : "/litera-po-literze/",
   build: {
     outDir: "dist",
     rollupOptions: {
