@@ -31,6 +31,7 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
 
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const getRandomWord = useCallback(() => {
     const words = wordPack.id === "pl03Bsc" ? PL03BSC : PL03DCR;
@@ -50,7 +51,6 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
       showError: false,
     });
 
-    // Load and play audio
     const audioPath = asset(
       `/audio/words/${wordPack.id}/${getFileName(newWord, "mp3")}`
     );
@@ -96,7 +96,6 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
         return;
       }
 
-      // Allow Polish characters and regular letters
       if (/^[a-ząćęłńóśźż]$/i.test(e.key)) {
         e.preventDefault();
         const key = e.key.toLowerCase();
@@ -135,6 +134,48 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
     return () => window.removeEventListener("keydown", handleKeyPress);
   }, [gameState, handleNextWord]);
 
+  useEffect(() => {
+    if (!gameState.isComplete && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [gameState.isComplete, gameState.activeIndex]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (!value) return;
+    const key = value[value.length - 1].toLowerCase();
+    if (/^[a-ząćęłńóśźż]$/i.test(key)) {
+      if (gameState.isComplete) return;
+      const currentLetter =
+        gameState.currentWord[gameState.activeIndex]?.toLowerCase();
+      if (key === currentLetter) {
+        const newInput = [...gameState.userInput];
+        newInput[gameState.activeIndex] = key;
+        setGameState((prev) => {
+          const isComplete = prev.activeIndex + 1 === prev.currentWord.length;
+          if (isComplete) {
+            new Audio(asset("/audio/effects/success.mp3"))
+              .play()
+              .catch(console.error);
+          }
+          return {
+            ...prev,
+            userInput: newInput,
+            activeIndex: prev.activeIndex + 1,
+            isComplete,
+            showError: false,
+          };
+        });
+      } else {
+        setGameState((prev) => ({ ...prev, showError: true }));
+        new Audio(asset("/audio/effects/error.mp3"))
+          .play()
+          .catch(console.error);
+      }
+    }
+    e.target.value = "";
+  };
+
   const playAudio = () => {
     if (audio) {
       console.log("Playing audio");
@@ -149,6 +190,26 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
 
   return (
     <div className="game-container" ref={containerRef}>
+      <input
+        ref={inputRef}
+        type="text"
+        inputMode="text"
+        autoCapitalize="off"
+        autoCorrect="off"
+        spellCheck="false"
+        className="hidden-mobile-input"
+        onChange={handleInputChange}
+        tabIndex={-1}
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          opacity: 0,
+          left: "-9999px",
+          height: 0,
+          width: 0,
+          zIndex: -1,
+        }}
+      />
       <div className="word-display">
         <img
           src={asset(
