@@ -33,6 +33,10 @@ jobs:
           PR_NUMBER: ${{ github.event.number }}
         run: npm run build
 
+      - name: Save build output
+        run: |
+          mv dist /tmp/pr-preview-build
+
       - name: Fetch gh-pages
         run: |
           git fetch origin gh-pages
@@ -42,7 +46,7 @@ jobs:
       - name: Deploy Preview
         run: |
           rm -rf pr-${{ github.event.number }}
-          cp -R dist pr-${{ github.event.number }}
+          cp -R /tmp/pr-preview-build pr-${{ github.event.number }}
           touch pr-${{ github.event.number }}/.nojekyll
           rm -rf node_modules
           git config user.name "github-actions[bot]"
