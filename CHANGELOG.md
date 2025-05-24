@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.4.3] - 2025-05-24
+
+### Changed
+
+- Fixed GitHub Pages deployment in main branch.
+
 ## [0.4.2] - 2025-05-21
 
 ### Changed
