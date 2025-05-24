@@ -31,24 +31,28 @@ jobs:
         env:
           PREVIEW: true
           PR_NUMBER: ${{ github.event.number }}
-        run: npm run build
+        run: |
+          set -e
+          npm run build
 
       - name: Save build output
         run: |
+          set -e
           mv dist /tmp/pr-preview-build
 
       - name: Fetch gh-pages
         run: |
+          set -e
           git fetch origin gh-pages
           git checkout gh-pages
           git pull origin gh-pages
 
       - name: Deploy Preview
         run: |
+          set -e
           rm -rf pr-${{ github.event.number }}
           cp -R /tmp/pr-preview-build pr-${{ github.event.number }}
           touch pr-${{ github.event.number }}/.nojekyll
-          rm -rf node_modules
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add pr-${{ github.event.number }}
