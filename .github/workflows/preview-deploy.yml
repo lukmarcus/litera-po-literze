@@ -45,21 +45,37 @@ jobs:
           set -e
           git fetch origin gh-pages
           git checkout gh-pages
-          git pull origin gh-pages
-
-      - name: Deploy Preview
+          git pull origin gh-pages      - name: Deploy Preview
         run: |
           set -e
           rm -rf pr-${{ github.event.number }}
           cp -R /tmp/pr-preview-build pr-${{ github.event.number }}
           touch pr-${{ github.event.number }}/.nojekyll
-          ls -l pr-${{ github.event.number }}
+          
+          echo "Listing preview directory contents:"
+          ls -la pr-${{ github.event.number }}
+          
+          # Clean up any existing git state
+          git reset
+          
+          # Configure git
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f pr-${{ github.event.number }}
+          
+          # Add all files in the preview directory
+          echo "Adding files to git:"
+          git add -A pr-${{ github.event.number }}
+          
+          echo "Git status:"
           git status
-          git commit -m "Deploy preview for PR #${{ github.event.number }}" || echo "Nothing to commit"
-          git push origin gh-pages
+          
+          # Commit and push
+          if git status --porcelain | grep '^[MADRC]'; then
+            git commit -m "Deploy preview for PR #${{ github.event.number }}"
+            git push origin gh-pages
+          else
+            echo "No changes to commit"
+          fi
 
       - name: Clean up node_modules
         run: |
