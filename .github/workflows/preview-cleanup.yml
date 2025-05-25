@@ -16,24 +16,42 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v3
 
+      - name: Setup git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
       - name: Fetch gh-pages
         run: |
+          set -e
+          echo "Fetching gh-pages branch..."
           git fetch origin gh-pages
           git checkout gh-pages
           git pull origin gh-pages
 
-      - name: Verify PR exists
+      - name: Check preview directory
+        id: check_preview
         run: |
-          if [ ! -d "pr-${{ github.event.number }}" ]; then
-            echo "PR folder not found, skipping."
-            exit 0
+          set -e
+          echo "Checking for PR preview directory..."
+          if [ -d "pr-${{ github.event.number }}" ]; then
+            echo "Preview directory found"
+            echo "has_preview=true" >> $GITHUB_OUTPUT
+          else
+            echo "Preview directory not found"
+            echo "has_preview=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Remove preview folder
+      - name: Remove preview
+        if: steps.check_preview.outputs.has_preview == 'true'
         run: |
+          set -e
+          echo "Removing preview directory for PR #${{ github.event.number }}..."
           rm -rf pr-${{ github.event.number }}
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "Cleanup preview for PR #${{ github.event.number }}" || echo "Nothing to commit"
+
+          echo "Committing changes..."
+          git add -A
+          git commit -m "Cleanup preview for PR #${{ github.event.number }}" || echo "No changes to commit"
+
+          echo "Pushing changes..."
           git push origin gh-pages

@@ -21,22 +21,47 @@ jobs:
         with:
           node-version: 18
 
+      - name: Setup git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
       - name: Install dependencies
-        run: npm ci
+        run: |
+          set -e
+          echo "Installing dependencies..."
+          npm ci
 
       - name: Build project
-        run: npm run build
+        env:
+          PREVIEW: false
+        run: |
+          set -e
+          echo "Building project..."
+          npm run build
+          echo "Build completed successfully"
 
       - name: Deploy to GitHub Pages
         run: |
+          set -e
+          echo "Preparing deployment..."
           mv dist ../dist-temp
+
+          echo "Setting up gh-pages branch..."
           git fetch origin gh-pages
           git switch gh-pages || git switch --orphan gh-pages
-          ls -A | grep -v '.git' | xargs rm -rf
+
+          echo "Cleaning previous deployment..."
+          rm -rf ./*
+          touch .nojekyll
+
+          echo "Moving new build files..."
           mv ../dist-temp/* ./
           rmdir ../dist-temp
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "Deploy main branch to GitHub Pages" || echo "Nothing to commit"
-          git push origin gh-pages --force
+
+          echo "Committing changes..."
+          git add -A
+          git commit -m "Deploy main branch to GitHub Pages" || echo "No changes to commit"
+
+          echo "Pushing to gh-pages branch..."
+          git push origin gh-pages
