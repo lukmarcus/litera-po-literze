@@ -2,9 +2,14 @@
 
 ## [0.4.3] - 2025-05-25
 
+### Added
+
+- Added system keyboard support for mobile devices.
+
 ### Changed
 
-- Fixed GitHub Pages deployment in main branch.
+- Enhanced GitHub Actions workflows with improved error handling and deployment reliability.
+- Fixed GitHub Pages base path configuration for all deployment types.
 
 ## [0.4.2] - 2025-05-21
 
