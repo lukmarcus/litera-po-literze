@@ -38,7 +38,9 @@ jobs:
       - name: Save build output
         run: |
           set -e
-          mv dist /tmp/pr-preview-build      - name: Fetch gh-pages
+          mv dist /tmp/pr-preview-build
+
+      - name: Fetch gh-pages
         run: |
           set -e
           git fetch origin gh-pages
