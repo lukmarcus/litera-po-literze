@@ -1,9 +1,5 @@
-body,
-html,
-button,
-input,
-select,
-textarea {
+body {
+  margin: 0;
   font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
     "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
