@@ -1,6 +1,8 @@
 # Litera po Literze
 
-Litera po Literze is an educational web application designed to help children learn reading and writing in Polish. The application provides an interactive and engaging way for children to practice their language skills.
+> **Note:** Currently, the application is available only in Polish. English version might be added in the future.
+
+Litera po Literze ("Letter by Letter") is an educational web application designed to help children learn reading and writing in Polish. The application provides an interactive and engaging way for children to practice their language skills through word recognition and typing exercises.
 
 ## Features
 
@@ -9,13 +11,14 @@ Litera po Literze is an educational web application designed to help children le
 - Visual representation of words
 - Success and error sound effects
 - Responsive design for various devices
+- Mobile-friendly: system keyboard support on mobile devices
 
 ## Prerequisites
 
-Ensure you have the following installed before starting:
+Before starting, make sure you have:
 
-- **Node.js** (version 14 or higher)
-- **npm** (version 6 or higher)
+- **Node.js** (version 18.x recommended; minimum 14)
+- **npm** (version 9.x recommended; minimum 6)
 
 ## Getting Started
 
@@ -41,9 +44,9 @@ The application will open in your default browser at `http://localhost:5173`.
 
 ## Available Scripts
 
-- `npm run dev` - Runs the app in development mode
-- `npm run build` - Builds the app for production
-- `npm run serve` - Serves the production build for preview
+- `npm run dev` – Runs the app in development mode (with hot reload)
+- `npm run build` – Builds the app for production (output in `dist/`)
+- `npm run serve` – Serves the production build locally for testing
 
 ## Building for Production
 
@@ -63,16 +66,24 @@ npm run serve
 
 The application will be served locally for testing.
 
+## Deployment
+
+The application uses GitHub Actions for automatic deployment to GitHub Pages:
+
+- Main branch is deployed to the root path (`/litera-po-literze/`)
+- Pull Request previews are deployed to their own subfolders (`/litera-po-literze/pr-XX/`)
+- Preview deployments are automatically cleaned up when PRs are closed
+
+Note: When multiple deployments are triggered simultaneously, GitHub may show cancellation messages for lower-priority deployments. This is normal behavior that ensures deployment consistency and can be safely ignored.
+
 ## Changelog
 
 For a detailed list of changes, see the [Changelog](./CHANGELOG.md).
 
 ## Credits
 
-- Coding: [Cursor](https://www.cursor.com/), [ChatGPT](https://chatgpt.com/) & [GitHub Copilot
-  ](https://github.com/features/copilot)
+- Main author (behind the AI): [Marek Szumny](https://github.com/lukmarcus)
 - Images: [ChatGPT](https://chatgpt.com/)
 - Resize & Compress: [iLoveIMG](https://www.iloveimg.com/)
 - Words: [TTSMaker](https://ttsmaker.com/)
 - Sounds: [Pixabay](https://pixabay.com/)
-- Human behind AI: [Marek Szumny](https://github.com/lukmarcus)
