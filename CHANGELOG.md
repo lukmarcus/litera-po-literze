@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.4] - 2025-05-31
+
+### Changed
+
+- Unified Nunito font usage across all platforms for consistent typography.
+- Improved header layout for better vertical balance above and below the logo.
+
 ## [0.4.3] - 2025-05-25
 
 ### Added
