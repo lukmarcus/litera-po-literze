@@ -3,9 +3,9 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import "./game.css";
 import { WordPack } from "../../types/wordPack";
 import { getFileName } from "../../utils/getFileName";
+import { asset } from "../../utils/asset";
 import { PL03BSC } from "../../data/pl03Bsc";
 import { PL03DCR } from "../../data/pl03Dcr";
-import { asset } from "../../utils/asset";
 
 interface GameState {
   currentWord: string;
@@ -33,11 +33,12 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // Używaj dynamicznej listy słów z przekazanego packa
   const getRandomWord = useCallback(() => {
-    const words = wordPack.id === "pl03Bsc" ? PL03BSC : PL03DCR;
+    const words = wordPack.words;
     const randomIndex = Math.floor(Math.random() * words.length);
     return words[randomIndex];
-  }, [wordPack.id]);
+  }, [wordPack.words]);
 
   const initializeGame = useCallback(() => {
     const newWord = getRandomWord();
@@ -51,8 +52,10 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
       showError: false,
     });
 
+    // Poprawka: znajdź właściwe id paczki dla danego słowa
+    const packId = findPackIdForWord(newWord);
     const audioPath = asset(
-      `/audio/words/${wordPack.id}/${getFileName(newWord, "mp3")}`
+      `/audio/words/${packId}/${getFileName(newWord, "mp3")}`
     );
 
     console.log("Loading audio from:", audioPath);
@@ -176,16 +179,28 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
     e.target.value = "";
   };
 
+  // Funkcja pomocnicza: znajdź id paczki dla danego słowa
+  const findPackIdForWord = (word: string): string => {
+    if (PL03BSC.includes(word)) return "pl03Bsc";
+    if (PL03DCR.includes(word)) return "pl03Dcr";
+    // Fallback: pierwszy fragment id
+    return wordPack.id.split("-")[0];
+  };
+
   const playAudio = () => {
+    const packId = findPackIdForWord(gameState.currentWord);
+    const audioPath = asset(
+      `/audio/words/${packId}/${getFileName(gameState.currentWord, "mp3")}`
+    );
     if (audio) {
-      console.log("Playing audio");
+      audio.pause();
       audio.currentTime = 0;
-      audio.play().catch((error) => {
-        console.error("Error playing audio:", error);
-      });
-    } else {
-      console.log("No audio available");
     }
+    const audioFile = new Audio(audioPath);
+    audioFile.play().catch((error) => {
+      console.error("Error playing audio:", error);
+    });
+    setAudio(audioFile);
   };
 
   return (
@@ -213,10 +228,9 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
       <div className="word-display">
         <img
           src={asset(
-            `/images/words/${wordPack.id}/${getFileName(
-              gameState.currentWord,
-              "png"
-            )}`
+            `/images/words/${findPackIdForWord(
+              gameState.currentWord
+            )}/${getFileName(gameState.currentWord, "png")}`
           )}
           alt={gameState.currentWord}
           className="word-image"

@@ -11,7 +11,7 @@ import "./app.css";
 import { asset } from "./utils/asset";
 
 const App: React.FC = () => {
-  const [selectedPack, setSelectedPack] = useState<WordPack | null>(null);
+  const [selectedPacks, setSelectedPacks] = useState<WordPack[] | null>(null);
   const [showModal, setShowModal] = useState(false);
 
   const wordPacks: WordPack[] = [
@@ -29,6 +29,16 @@ const App: React.FC = () => {
     },
   ];
 
+  // Tworzymy jeden pack z połączonymi słowami
+  const mergedPack: WordPack | null = selectedPacks
+    ? {
+        id: selectedPacks.map((p) => p.id).join("-"),
+        name: selectedPacks.map((p) => p.name).join(", "),
+        description: selectedPacks.map((p) => p.description).join(", "),
+        words: selectedPacks.flatMap((p) => p.words),
+      }
+    : null;
+
   return (
     <div className="app">
       <header>
@@ -42,13 +52,13 @@ const App: React.FC = () => {
       </header>
 
       <main>
-        {selectedPack ? (
+        {mergedPack ? (
           <Game
-            wordPack={selectedPack}
-            onBackToMenu={() => setSelectedPack(null)}
+            wordPack={mergedPack}
+            onBackToMenu={() => setSelectedPacks(null)}
           />
         ) : (
-          <MainMenu wordPacks={wordPacks} onSelectPack={setSelectedPack} />
+          <MainMenu wordPacks={wordPacks} onSelectPack={setSelectedPacks} />
         )}
       </main>
 
