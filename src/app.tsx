@@ -5,6 +5,7 @@ import MainMenu from "./components/mainMenu/mainMenu";
 import { WordPack } from "./types/wordPack";
 import { PL03BSC } from "./data/pl03Bsc";
 import { PL03DCR } from "./data/pl03Dcr";
+import { PL01TST } from "./data/pl01Tst";
 import Footer from "./components/footer/footer";
 import BugReportModal from "./components/bugReportModal/bugReportModal";
 import "./app.css";
@@ -26,6 +27,12 @@ const App: React.FC = () => {
       name: "Trudniejsze słowa",
       description: "Trudniejsze 3-literowe słowa",
       words: PL03DCR,
+    },
+    {
+      id: "pl01Tst",
+      name: "Testowa 1-litery",
+      description: "Testowa paczka z trzema 1-literowymi słowami (a, s, d)",
+      words: PL01TST,
     },
   ];
 

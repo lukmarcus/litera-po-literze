@@ -30,20 +30,30 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
   });
 
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
+  const [remainingWords, setRemainingWords] = useState<string[]>([
+    ...wordPack.words,
+  ]);
+  const [allDone, setAllDone] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Używaj dynamicznej listy słów z przekazanego packa
+  // Losuj słowo bez powtórzeń z remainingWords
   const getRandomWord = useCallback(() => {
-    const words = wordPack.words;
-    const randomIndex = Math.floor(Math.random() * words.length);
-    return words[randomIndex];
-  }, [wordPack.words]);
+    if (remainingWords.length === 0) return null;
+    const randomIndex = Math.floor(Math.random() * remainingWords.length);
+    return remainingWords[randomIndex];
+  }, [remainingWords]);
 
   const initializeGame = useCallback(() => {
+    if (remainingWords.length === 0) {
+      setAllDone(true);
+      return;
+    }
     const newWord = getRandomWord();
-    console.log("Initializing game with word:", newWord);
-
+    if (!newWord) {
+      setAllDone(true);
+      return;
+    }
     setGameState({
       currentWord: newWord,
       userInput: Array(newWord.length).fill(""),
@@ -58,7 +68,6 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
       `/audio/words/${packId}/${getFileName(newWord, "mp3")}`
     );
 
-    console.log("Loading audio from:", audioPath);
     if (audio) {
       audio.pause();
       audio.currentTime = 0;
@@ -66,7 +75,6 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
 
     const audioFile = new Audio(audioPath);
     audioFile.oncanplaythrough = () => {
-      console.log("Audio loaded, playing...");
       audioFile.play().catch((error) => {
         console.error("Error playing audio:", error);
       });
@@ -75,11 +83,31 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
       console.error("Error loading audio:", e);
     };
     setAudio(audioFile);
-  }, [getRandomWord, wordPack.id]);
+  }, [getRandomWord, remainingWords]);
 
+  // Po poprawnym wpisaniu słowa usuń je z remainingWords
   const handleNextWord = useCallback(() => {
-    initializeGame();
-  }, [initializeGame]);
+    setRemainingWords((prev) =>
+      prev.filter((w) => w !== gameState.currentWord)
+    );
+  }, [gameState.currentWord]);
+
+  // Gdy remainingWords się zmieni, losuj kolejne słowo
+  useEffect(() => {
+    if (remainingWords.length > 0 && !allDone) {
+      initializeGame();
+    } else if (remainingWords.length === 0) {
+      setAllDone(true);
+    }
+    // eslint-disable-next-line
+  }, [remainingWords]);
+
+  // Resetuj pulę słów po zmianie paczki
+  useEffect(() => {
+    setRemainingWords([...wordPack.words]);
+    setAllDone(false);
+    // eslint-disable-next-line
+  }, [wordPack]);
 
   const hasInitializedRef = useRef(false);
 
@@ -226,56 +254,74 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
         }}
       />
       <div className="word-display">
-        <img
-          src={asset(
-            `/images/words/${findPackIdForWord(
-              gameState.currentWord
-            )}/${getFileName(gameState.currentWord, "png")}`
-          )}
-          alt={gameState.currentWord}
-          className="word-image"
-          onError={(e) => {
-            console.log("Image load error, using placeholder");
-            console.log("Attempted to load:", e.currentTarget.src);
-            const target = e.target as HTMLImageElement;
-            target.src = asset("/images/words/placeholder.png");
-          }}
-          onLoad={() => {
-            console.log("Image loaded successfully:", gameState.currentWord);
-          }}
-        />
-
-        {/* Debug: Show current word */}
-        <div className="debug-word">Current word: {gameState.currentWord}</div>
-
-        <button onClick={playAudio} className="audio-button">
-          🔊
-        </button>
-
-        {gameState.isComplete ? (
+        {allDone ? (
           <div className="success-message">
-            <h2>Brawo!</h2>
-            <button onClick={handleNextWord} className="next-button">
-              Następne słowo (Enter)
+            <h2>Gratulacje! Ukończono wszystkie słowa.</h2>
+            <button
+              className="next-button"
+              onClick={() => {
+                setRemainingWords([...wordPack.words]);
+                setAllDone(false);
+              }}
+            >
+              Zagraj jeszcze raz
+            </button>
+            <button
+              className="next-button"
+              onClick={onBackToMenu}
+              style={{ marginLeft: 16 }}
+            >
+              Wróć do menu
             </button>
           </div>
         ) : (
-          <div className="letter-slots">
-            {gameState.userInput.map((letter, index) => (
-              <div
-                key={index}
-                className={`letter-slot ${
-                  index === gameState.activeIndex ? "active" : ""
-                } ${
-                  gameState.showError && index === gameState.activeIndex
-                    ? "error"
-                    : ""
-                }`}
-              >
-                {letter}
+          // ...istniejący kod gry...
+          <>
+            <img
+              src={asset(
+                `/images/words/${findPackIdForWord(
+                  gameState.currentWord
+                )}/${getFileName(gameState.currentWord, "png")}`
+              )}
+              alt={gameState.currentWord}
+              className="word-image"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = asset("/images/words/placeholder.png");
+              }}
+            />
+            <div className="debug-word">
+              Current word: {gameState.currentWord}
+            </div>
+            <button onClick={playAudio} className="audio-button">
+              🔊
+            </button>
+            {gameState.isComplete ? (
+              <div className="success-message">
+                <h2>Brawo!</h2>
+                <button onClick={handleNextWord} className="next-button">
+                  Następne słowo (Enter)
+                </button>
               </div>
-            ))}
-          </div>
+            ) : (
+              <div className="letter-slots">
+                {gameState.userInput.map((letter, index) => (
+                  <div
+                    key={index}
+                    className={`letter-slot ${
+                      index === gameState.activeIndex ? "active" : ""
+                    } ${
+                      gameState.showError && index === gameState.activeIndex
+                        ? "error"
+                        : ""
+                    }`}
+                  >
+                    {letter}
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
