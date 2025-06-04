@@ -7,7 +7,6 @@ interface MainMenuProps {
   onSelectPack: (packs: WordPack[]) => void;
 }
 
-// Typy trudności dla poziomów
 const LEVEL_DIFFICULTIES = [
   { id: "basic", label: "Podstawowe" },
   { id: "mixed", label: "Mieszane" },
@@ -15,14 +14,11 @@ const LEVEL_DIFFICULTIES = [
 ];
 
 const MainMenu: React.FC<MainMenuProps> = ({ wordPacks, onSelectPack }) => {
-  // view: 'main' | 'levels' | 'packs'
   const [view, setView] = useState<"main" | "levels" | "packs">("main");
   const [checked, setChecked] = useState<boolean[]>(wordPacks.map(() => true));
 
-  // Handler wyboru trudności poziomów (na razie tylko alert)
   const handleLevelDifficulty = (difficulty: string) => {
     alert(`Wybrano poziomy, trudność: ${difficulty}`);
-    // Tu docelowo: przekazanie wyboru do gry
   };
 
   return (

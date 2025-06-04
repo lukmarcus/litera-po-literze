@@ -37,7 +37,6 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Losuj słowo bez powtórzeń z remainingWords
   const getRandomWord = useCallback(() => {
     if (remainingWords.length === 0) return null;
     const randomIndex = Math.floor(Math.random() * remainingWords.length);
@@ -62,7 +61,6 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
       showError: false,
     });
 
-    // Poprawka: znajdź właściwe id paczki dla danego słowa
     const packId = findPackIdForWord(newWord);
     const audioPath = asset(
       `/audio/words/${packId}/${getFileName(newWord, "mp3")}`
@@ -85,14 +83,12 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
     setAudio(audioFile);
   }, [getRandomWord, remainingWords]);
 
-  // Po poprawnym wpisaniu słowa usuń je z remainingWords
   const handleNextWord = useCallback(() => {
     setRemainingWords((prev) =>
       prev.filter((w) => w !== gameState.currentWord)
     );
   }, [gameState.currentWord]);
 
-  // Gdy remainingWords się zmieni, losuj kolejne słowo
   useEffect(() => {
     if (remainingWords.length > 0 && !allDone) {
       initializeGame();
@@ -102,7 +98,6 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
     // eslint-disable-next-line
   }, [remainingWords]);
 
-  // Resetuj pulę słów po zmianie paczki
   useEffect(() => {
     setRemainingWords([...wordPack.words]);
     setAllDone(false);
@@ -207,11 +202,9 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
     e.target.value = "";
   };
 
-  // Funkcja pomocnicza: znajdź id paczki dla danego słowa
   const findPackIdForWord = (word: string): string => {
     if (PL03BSC.includes(word)) return "pl03Bsc";
     if (PL03DCR.includes(word)) return "pl03Dcr";
-    // Fallback: pierwszy fragment id
     return wordPack.id.split("-")[0];
   };
 
@@ -275,7 +268,6 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
             </button>
           </div>
         ) : (
-          // ...istniejący kod gry...
           <>
             <img
               src={asset(

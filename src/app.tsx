@@ -36,7 +36,6 @@ const App: React.FC = () => {
     },
   ];
 
-  // Tworzymy jeden pack z połączonymi słowami
   const mergedPack: WordPack | null = selectedPacks
     ? {
         id: selectedPacks.map((p) => p.id).join("-"),
