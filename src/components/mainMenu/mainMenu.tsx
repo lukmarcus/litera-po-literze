@@ -88,11 +88,12 @@ const MainMenu: React.FC<MainMenuProps> = ({ wordPacks, onSelectPack }) => {
                 key={pack.id}
                 style={{
                   display: "flex",
-                  alignItems: "flex-start",
+                  alignItems: "center",
                   gap: "0.75em",
                   background: "#e6ffe6",
                   borderRadius: 8,
                   padding: "0.5em 1em",
+                  fontWeight: "bold",
                 }}
               >
                 <input
@@ -105,13 +106,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ wordPacks, onSelectPack }) => {
                   }}
                   style={{ marginTop: 4 }}
                 />
-                <span>
-                  <span style={{ fontWeight: "bold" }}>{pack.name}</span>
-                  <br />
-                  <span style={{ fontSize: "0.95em", color: "#444" }}>
-                    {pack.description}
-                  </span>
-                </span>
+                {pack.name}
               </label>
             ))}
             <button

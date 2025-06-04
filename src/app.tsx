@@ -18,20 +18,17 @@ const App: React.FC = () => {
   const wordPacks: WordPack[] = [
     {
       id: "pl03Bsc",
-      name: "Podstawowe słowa",
-      description: "Proste 3-literowe słowa",
+      name: "3 litery bez polskich znaków",
       words: PL03BSC,
     },
     {
       id: "pl03Dcr",
-      name: "Trudniejsze słowa",
-      description: "Trudniejsze 3-literowe słowa",
+      name: "3 litery z polskimi znakami",
       words: PL03DCR,
     },
     {
       id: "pl01Tst",
-      name: "Testowa 1-litery",
-      description: "Testowa paczka z trzema 1-literowymi słowami (a, s, d)",
+      name: "3×1 litera do testów",
       words: PL01TST,
     },
   ];
@@ -40,7 +37,6 @@ const App: React.FC = () => {
     ? {
         id: selectedPacks.map((p) => p.id).join("-"),
         name: selectedPacks.map((p) => p.name).join(", "),
-        description: selectedPacks.map((p) => p.description).join(", "),
         words: selectedPacks.flatMap((p) => p.words),
       }
     : null;
