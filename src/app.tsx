@@ -5,7 +5,8 @@ import MainMenu from "./components/mainMenu/mainMenu";
 import { WordPack } from "./types/wordPack";
 import { PL03BSC } from "./data/pl03Bsc";
 import { PL03DCR } from "./data/pl03Dcr";
-import { PL01TST } from "./data/pl01Tst";
+import { PL01ASD } from "./data/pl01ASD";
+import { PL01QWE } from "./data/pl01QWE";
 import Footer from "./components/footer/footer";
 import BugReportModal from "./components/bugReportModal/bugReportModal";
 import "./app.css";
@@ -27,9 +28,14 @@ const App: React.FC = () => {
       words: PL03DCR,
     },
     {
-      id: "pl01Tst",
-      name: "3×1 litera do testów",
-      words: PL01TST,
+      id: "pl01ASD",
+      name: "3×1 litera do testów (ASD)",
+      words: PL01ASD,
+    },
+    {
+      id: "pl01QWE",
+      name: "3×1 litera do testów (QWE)",
+      words: PL01QWE,
     },
   ];
 
