@@ -257,7 +257,19 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
                 setAllDone(false);
               }}
             >
-              Zagraj jeszcze raz
+              Zagraj te same paczki
+            </button>
+            <button
+              className="next-button"
+              onClick={() => {
+                if (typeof window !== "undefined") {
+                  const event = new CustomEvent("change-packs");
+                  window.dispatchEvent(event);
+                }
+              }}
+              style={{ marginLeft: 16 }}
+            >
+              Zmień paczki
             </button>
             <button
               className="next-button"

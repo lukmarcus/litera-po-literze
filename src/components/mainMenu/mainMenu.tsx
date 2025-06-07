@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { WordPack } from "../../types/wordPack";
 import "./mainMenu.css";
 
@@ -14,8 +14,25 @@ const LEVEL_DIFFICULTIES = [
 ];
 
 const MainMenu: React.FC<MainMenuProps> = ({ wordPacks, onSelectPack }) => {
-  const [view, setView] = useState<"main" | "levels" | "packs">("main");
-  const [checked, setChecked] = useState<boolean[]>(wordPacks.map(() => true));
+  const [view, setView] = useState<"main" | "levels" | "packs">("packs");
+  const [checked, setChecked] = useState<boolean[]>(() => {
+    const saved = localStorage.getItem("lastChecked");
+    if (saved) {
+      try {
+        const arr = JSON.parse(saved);
+        if (Array.isArray(arr) && arr.length === wordPacks.length) return arr;
+      } catch {}
+    }
+    return wordPacks.map(() => true);
+  });
+
+  useEffect(() => {
+    const handler = () => {
+      setView("packs");
+    };
+    window.addEventListener("change-packs", handler);
+    return () => window.removeEventListener("change-packs", handler);
+  }, []);
 
   const handleLevelDifficulty = (difficulty: string) => {
     alert(`Wybrano poziomy, trudność: ${difficulty}`);
@@ -79,6 +96,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ wordPacks, onSelectPack }) => {
             }}
             onSubmit={(e) => {
               e.preventDefault();
+              localStorage.setItem("lastChecked", JSON.stringify(checked));
               const selected = wordPacks.filter((_, i) => checked[i]);
               if (selected.length > 0) onSelectPack(selected);
             }}

@@ -16,6 +16,14 @@ const App: React.FC = () => {
   const [selectedPacks, setSelectedPacks] = useState<WordPack[] | null>(null);
   const [showModal, setShowModal] = useState(false);
 
+  React.useEffect(() => {
+    const handler = () => {
+      setSelectedPacks(null);
+    };
+    window.addEventListener("change-packs", handler);
+    return () => window.removeEventListener("change-packs", handler);
+  }, []);
+
   const wordPacks: WordPack[] = [
     {
       id: "pl03Bsc",
