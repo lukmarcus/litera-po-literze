@@ -18,9 +18,14 @@ interface GameState {
 interface GameProps {
   wordPack: WordPack;
   onBackToMenu: () => void;
+  onChangePacks?: () => void;
 }
 
-const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
+const Game: React.FC<GameProps> = ({
+  wordPack,
+  onBackToMenu,
+  onChangePacks,
+}) => {
   const [gameState, setGameState] = useState<GameState>({
     currentWord: "",
     userInput: [],
@@ -262,10 +267,7 @@ const Game: React.FC<GameProps> = ({ wordPack, onBackToMenu }) => {
             <button
               className="next-button"
               onClick={() => {
-                if (typeof window !== "undefined") {
-                  const event = new CustomEvent("change-packs");
-                  window.dispatchEvent(event);
-                }
+                if (onChangePacks) onChangePacks();
               }}
               style={{ marginLeft: 16 }}
             >

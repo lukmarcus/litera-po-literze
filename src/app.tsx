@@ -15,14 +15,12 @@ import { asset } from "./utils/asset";
 const App: React.FC = () => {
   const [selectedPacks, setSelectedPacks] = useState<WordPack[] | null>(null);
   const [showModal, setShowModal] = useState(false);
+  const [showPacksView, setShowPacksView] = useState(false);
 
-  React.useEffect(() => {
-    const handler = () => {
-      setSelectedPacks(null);
-    };
-    window.addEventListener("change-packs", handler);
-    return () => window.removeEventListener("change-packs", handler);
-  }, []);
+  const handleChangePacks = () => {
+    setSelectedPacks(null);
+    setShowPacksView(true);
+  };
 
   const wordPacks: WordPack[] = [
     {
@@ -71,10 +69,21 @@ const App: React.FC = () => {
         {mergedPack ? (
           <Game
             wordPack={mergedPack}
-            onBackToMenu={() => setSelectedPacks(null)}
+            onBackToMenu={() => {
+              setSelectedPacks(null);
+              setShowPacksView(false);
+            }}
+            onChangePacks={handleChangePacks}
           />
         ) : (
-          <MainMenu wordPacks={wordPacks} onSelectPack={setSelectedPacks} />
+          <MainMenu
+            wordPacks={wordPacks}
+            onSelectPack={(packs) => {
+              setSelectedPacks(packs);
+              setShowPacksView(false);
+            }}
+            initialView={showPacksView ? "packs" : undefined}
+          />
         )}
       </main>
 

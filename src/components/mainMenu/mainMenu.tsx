@@ -5,6 +5,7 @@ import "./mainMenu.css";
 interface MainMenuProps {
   wordPacks: WordPack[];
   onSelectPack: (packs: WordPack[]) => void;
+  initialView?: "main" | "levels" | "packs";
 }
 
 const LEVEL_DIFFICULTIES = [
@@ -13,8 +14,14 @@ const LEVEL_DIFFICULTIES = [
   { id: "diacritical", label: "Diakrytyczne" },
 ];
 
-const MainMenu: React.FC<MainMenuProps> = ({ wordPacks, onSelectPack }) => {
-  const [view, setView] = useState<"main" | "levels" | "packs">("packs");
+const MainMenu: React.FC<MainMenuProps> = ({
+  wordPacks,
+  onSelectPack,
+  initialView,
+}) => {
+  const [view, setView] = useState<"main" | "levels" | "packs">(
+    initialView || "main"
+  );
   const [checked, setChecked] = useState<boolean[]>(() => {
     const saved = localStorage.getItem("lastChecked");
     if (saved) {
@@ -25,14 +32,6 @@ const MainMenu: React.FC<MainMenuProps> = ({ wordPacks, onSelectPack }) => {
     }
     return wordPacks.map(() => true);
   });
-
-  useEffect(() => {
-    const handler = () => {
-      setView("packs");
-    };
-    window.addEventListener("change-packs", handler);
-    return () => window.removeEventListener("change-packs", handler);
-  }, []);
 
   const handleLevelDifficulty = (difficulty: string) => {
     alert(`Wybrano poziomy, trudność: ${difficulty}`);
