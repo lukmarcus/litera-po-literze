@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.5.0] - 2025-06-08
+
+### Added
+
+- Game modes: new main menu with selection between "Levels" and "Random" (word packs) modes.
+- Ability to select multiple word packs for random mode, with merged gameplay pool.
+- Test word packs: PL01ASD (a, s, d) and PL01QWE (q, w, e) for development/testing.
+- End-of-game modal with options to replay the same packs, change packs (returns to pack selection with previous selection), or return to menu after finishing all words.
+
+### Changed
+
+- Refactored Game and MainMenu components to support dynamic word packs and improved UI/UX.
+- WordPack type: removed the description field.
+- All code and UI references updated to use new test pack names and structure.
+- Communication between Game and App now uses React callback props instead of CustomEvent for changing packs (more idiomatic React).
+
 ## [0.4.4] - 2025-05-31
 
 ### Changed
