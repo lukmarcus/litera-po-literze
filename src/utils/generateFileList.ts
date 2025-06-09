@@ -4,7 +4,7 @@ import { getFileName } from "./getFileName";
 
 export const generateFileList = () => {
   const allWords = [...basicWords, ...difficultWords];
-  const uniqueWords = Array.from(new Set(allWords)); // Convert Set to Array
+  const uniqueWords = Array.from(new Set(allWords));
 
   console.log("Required files:");
   console.log("\nImages (public/images/):");

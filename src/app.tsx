@@ -5,29 +5,53 @@ import MainMenu from "./components/mainMenu/mainMenu";
 import { WordPack } from "./types/wordPack";
 import { PL03BSC } from "./data/pl03Bsc";
 import { PL03DCR } from "./data/pl03Dcr";
+import { PL01ASD } from "./data/pl01ASD";
+import { PL01QWE } from "./data/pl01QWE";
 import Footer from "./components/footer/footer";
 import BugReportModal from "./components/bugReportModal/bugReportModal";
 import "./app.css";
 import { asset } from "./utils/asset";
 
 const App: React.FC = () => {
-  const [selectedPack, setSelectedPack] = useState<WordPack | null>(null);
+  const [selectedPacks, setSelectedPacks] = useState<WordPack[] | null>(null);
   const [showModal, setShowModal] = useState(false);
+  const [showPacksView, setShowPacksView] = useState(false);
+
+  const handleChangePacks = () => {
+    setSelectedPacks(null);
+    setShowPacksView(true);
+  };
 
   const wordPacks: WordPack[] = [
     {
       id: "pl03Bsc",
-      name: "Podstawowe słowa",
-      description: "Proste 3-literowe słowa",
+      name: "3 litery bez polskich znaków",
       words: PL03BSC,
     },
     {
       id: "pl03Dcr",
-      name: "Trudniejsze słowa",
-      description: "Trudniejsze 3-literowe słowa",
+      name: "3 litery z polskimi znakami",
       words: PL03DCR,
     },
+    {
+      id: "pl01ASD",
+      name: "3×1 litera do testów (ASD)",
+      words: PL01ASD,
+    },
+    {
+      id: "pl01QWE",
+      name: "3×1 litera do testów (QWE)",
+      words: PL01QWE,
+    },
   ];
+
+  const mergedPack: WordPack | null = selectedPacks
+    ? {
+        id: selectedPacks.map((p) => p.id).join("-"),
+        name: selectedPacks.map((p) => p.name).join(", "),
+        words: selectedPacks.flatMap((p) => p.words),
+      }
+    : null;
 
   return (
     <div className="app">
@@ -42,13 +66,24 @@ const App: React.FC = () => {
       </header>
 
       <main>
-        {selectedPack ? (
+        {mergedPack ? (
           <Game
-            wordPack={selectedPack}
-            onBackToMenu={() => setSelectedPack(null)}
+            wordPack={mergedPack}
+            onBackToMenu={() => {
+              setSelectedPacks(null);
+              setShowPacksView(false);
+            }}
+            onChangePacks={handleChangePacks}
           />
         ) : (
-          <MainMenu wordPacks={wordPacks} onSelectPack={setSelectedPack} />
+          <MainMenu
+            wordPacks={wordPacks}
+            onSelectPack={(packs) => {
+              setSelectedPacks(packs);
+              setShowPacksView(false);
+            }}
+            initialView={showPacksView ? "packs" : undefined}
+          />
         )}
       </main>
 
