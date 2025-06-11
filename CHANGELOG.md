@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.5.1] - 2025-06-12
+
+### Fixed
+
+- Fixed main menu layout: removed vertical scrolling and white borders.
+
 ## [0.5.0] - 2025-06-08
 
 ### Added
