@@ -6,6 +6,7 @@ import { getFileName } from "../../utils/getFileName";
 import { asset } from "../../utils/asset";
 import { PL03BSC } from "../../data/pl03Bsc";
 import { PL03DCR } from "../../data/pl03Dcr";
+import BackToMenuModal from "../backToMenuModal/backToMenuModal";
 
 interface GameState {
   currentWord: string;
@@ -39,6 +40,7 @@ const Game: React.FC<GameProps> = ({
     ...wordPack.words,
   ]);
   const [allDone, setAllDone] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -231,6 +233,32 @@ const Game: React.FC<GameProps> = ({
 
   return (
     <div className="game-container" ref={containerRef}>
+      <button
+        className="back-button"
+        style={{ position: "absolute", top: 16, left: 16, zIndex: 10 }}
+        onClick={() => {
+          if (!allDone) {
+            setShowConfirmModal(true);
+            return;
+          }
+          onBackToMenu();
+        }}
+        aria-label="Wróć do menu"
+      >
+        ← Menu
+      </button>
+      <BackToMenuModal
+        open={showConfirmModal}
+        title="Czy na pewno chcesz wrócić do menu?"
+        message="Postęp w tej grze zostanie utracony."
+        confirmLabel="Tak, wróć do menu"
+        cancelLabel="Anuluj"
+        onCancel={() => setShowConfirmModal(false)}
+        onConfirm={() => {
+          setShowConfirmModal(false);
+          onBackToMenu();
+        }}
+      />
       <input
         ref={inputRef}
         type="text"
