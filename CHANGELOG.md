@@ -1,6 +1,10 @@
 # Changelog
 
-## [0.5.1] - 2025-06-12
+## [0.5.1] - 2025-06-14
+
+### Added
+
+- Added the ability to return to the main menu during a game, with a confirmation modal to prevent accidental loss of progress.
 
 ### Fixed
 
