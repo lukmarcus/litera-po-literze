@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.5.1] - 2025-06-14
+
+### Added
+
+- Added the ability to return to the main menu during a game, with a confirmation modal to prevent accidental loss of progress.
+
+### Fixed
+
+- Fixed main menu layout: removed vertical scrolling and white borders.
+
 ## [0.5.0] - 2025-06-08
 
 ### Added
