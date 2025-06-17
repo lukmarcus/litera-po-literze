@@ -311,19 +311,21 @@ const Game: React.FC<GameProps> = ({
           </div>
         ) : (
           <>
-            <img
-              src={asset(
-                `/images/words/${findPackIdForWord(
-                  gameState.currentWord
-                )}/${getFileName(gameState.currentWord, "png")}`
-              )}
-              alt={gameState.currentWord}
-              className="word-image"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.src = asset("/images/words/placeholder.png");
-              }}
-            />
+            {gameState.currentWord && (
+              <img
+                src={asset(
+                  `/images/words/${findPackIdForWord(
+                    gameState.currentWord
+                  )}/${getFileName(gameState.currentWord, "png")}`
+                )}
+                alt={gameState.currentWord}
+                className="word-image"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = asset("/images/words/placeholder.png");
+                }}
+              />
+            )}
             <div className="debug-word">
               Current word: {gameState.currentWord}
             </div>
