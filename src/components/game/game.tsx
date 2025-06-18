@@ -76,6 +76,8 @@ const Game: React.FC<GameProps> = ({
     if (audio) {
       audio.pause();
       audio.currentTime = 0;
+      audio.oncanplaythrough = null;
+      audio.onerror = null;
     }
 
     const audioFile = new Audio(audioPath);
