@@ -36,50 +36,53 @@ const Game: React.FC<GameProps> = ({
   });
 
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
-  const [remainingWords, setRemainingWords] = useState<string[]>([
-    ...wordPack.words,
-  ]);
+  const [remainingWords, setRemainingWords] = useState<string[]>([]);
   const [allDone, setAllDone] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const hasInitializedRef = useRef(false);
 
-  const getRandomWord = useCallback(() => {
-    if (remainingWords.length === 0) return null;
-    const randomIndex = Math.floor(Math.random() * remainingWords.length);
-    return remainingWords[randomIndex];
-  }, [remainingWords]);
-
-  const initializeGame = useCallback(() => {
-    if (remainingWords.length === 0) {
+  useEffect(() => {
+    if (wordPack.words.length === 0) {
       setAllDone(true);
+      setGameState({
+        currentWord: "",
+        userInput: [],
+        activeIndex: 0,
+        isComplete: false,
+        showError: false,
+      });
+      setRemainingWords([]);
       return;
     }
-    const newWord = getRandomWord();
-    if (!newWord) {
-      setAllDone(true);
-      return;
-    }
+    const randomIndex = Math.floor(Math.random() * wordPack.words.length);
+    const firstWord = wordPack.words[randomIndex];
     setGameState({
-      currentWord: newWord,
-      userInput: Array(newWord.length).fill(""),
+      currentWord: firstWord,
+      userInput: Array(firstWord.length).fill(""),
       activeIndex: 0,
       isComplete: false,
       showError: false,
     });
+    setRemainingWords(wordPack.words.filter((w, i) => i !== randomIndex));
+    setAllDone(false);
+    hasInitializedRef.current = false;
+    // eslint-disable-next-line
+  }, [wordPack]);
 
-    const packId = findPackIdForWord(newWord);
+  useEffect(() => {
+    if (!gameState.currentWord) return;
+    const packId = findPackIdForWord(gameState.currentWord);
     const audioPath = asset(
-      `/audio/words/${packId}/${getFileName(newWord, "mp3")}`
+      `/audio/words/${packId}/${getFileName(gameState.currentWord, "mp3")}`
     );
-
     if (audio) {
       audio.pause();
       audio.currentTime = 0;
       audio.oncanplaythrough = null;
       audio.onerror = null;
     }
-
     const audioFile = new Audio(audioPath);
     audioFile.oncanplaythrough = () => {
       audioFile.play().catch((error) => {
@@ -90,37 +93,24 @@ const Game: React.FC<GameProps> = ({
       console.error("Error loading audio:", e);
     };
     setAudio(audioFile);
-  }, [getRandomWord, remainingWords]);
-
-  const handleNextWord = useCallback(() => {
-    setRemainingWords((prev) =>
-      prev.filter((w) => w !== gameState.currentWord)
-    );
   }, [gameState.currentWord]);
 
-  useEffect(() => {
-    if (remainingWords.length > 0 && !allDone) {
-      initializeGame();
-    } else if (remainingWords.length === 0) {
+  const handleNextWord = useCallback(() => {
+    if (remainingWords.length === 0) {
       setAllDone(true);
+      return;
     }
-    // eslint-disable-next-line
+    const randomIndex = Math.floor(Math.random() * remainingWords.length);
+    const nextWord = remainingWords[randomIndex];
+    setGameState({
+      currentWord: nextWord,
+      userInput: Array(nextWord.length).fill(""),
+      activeIndex: 0,
+      isComplete: false,
+      showError: false,
+    });
+    setRemainingWords((prev) => prev.filter((w, i) => i !== randomIndex));
   }, [remainingWords]);
-
-  useEffect(() => {
-    setRemainingWords([...wordPack.words]);
-    setAllDone(false);
-    // eslint-disable-next-line
-  }, [wordPack]);
-
-  const hasInitializedRef = useRef(false);
-
-  useEffect(() => {
-    if (!hasInitializedRef.current) {
-      handleNextWord();
-      hasInitializedRef.current = true;
-    }
-  }, []);
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
