@@ -261,7 +261,6 @@ const Game: React.FC<GameProps> = ({
         className="hidden-mobile-input"
         onChange={handleInputChange}
         tabIndex={-1}
-        aria-hidden="true"
         style={{
           position: "absolute",
           opacity: 0,
