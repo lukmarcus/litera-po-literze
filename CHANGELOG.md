@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.2] - 2025-06-21
+
+### Changed
+
+- Refactored Game component logic for random mode: simplified word selection, state management, and audio handling.
+- Improved word image rendering and removed unnecessary attributes from the hidden input.
+
 ## [0.5.1] - 2025-06-14
 
 ### Added
