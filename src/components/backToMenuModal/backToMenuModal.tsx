@@ -1,15 +1,6 @@
 import React from "react";
 import "./backToMenuModal.css";
-
-interface BackToMenuModalProps {
-  open: boolean;
-  title: string;
-  message?: string;
-  confirmLabel?: string;
-  cancelLabel?: string;
-  onConfirm: () => void;
-  onCancel: () => void;
-}
+import { BackToMenuModalProps } from "./types";
 
 const BackToMenuModal: React.FC<BackToMenuModalProps> = ({
   open,

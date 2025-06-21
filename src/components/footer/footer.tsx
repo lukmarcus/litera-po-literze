@@ -1,10 +1,7 @@
 import React from "react";
 import { version } from "../../../package.json";
 import "./footer.css";
-
-interface FooterProps {
-  onReportClick: () => void;
-}
+import { FooterProps } from "./types";
 
 const Footer: React.FC<FooterProps> = ({ onReportClick }) => (
   <footer className="footer">

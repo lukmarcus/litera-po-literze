@@ -1,9 +1,6 @@
 import React from "react";
 import "./bugReportModal.css";
-
-interface BugReportModalProps {
-  onClose: () => void;
-}
+import { BugReportModalProps } from "./types";
 
 const BugReportModal: React.FC<BugReportModalProps> = ({ onClose }) => (
   <div className="modal-overlay" onClick={onClose}>

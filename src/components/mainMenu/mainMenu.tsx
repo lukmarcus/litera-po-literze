@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { WordPack } from "../../types/wordPack";
+import { MainMenuProps } from "./types";
 import "./mainMenu.css";
-
-interface MainMenuProps {
-  wordPacks: WordPack[];
-  onSelectPack: (packs: WordPack[]) => void;
-  initialView?: "main" | "levels" | "packs";
-}
 
 const LEVEL_DIFFICULTIES = [
   { id: "basic", label: "Podstawowe" },

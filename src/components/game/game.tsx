@@ -1,28 +1,9 @@
 /// <reference types="vite/client" />
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import "./game.css";
-import { WordPack } from "../../types/wordPack";
-import { getFileName } from "../../utils/getFileName";
 import { asset } from "../../utils/asset";
-import { PL03BSC } from "../../data/pl03Bsc";
-import { PL03DCR } from "../../data/pl03Dcr";
 import BackToMenuModal from "../backToMenuModal/backToMenuModal";
-
-// Zamiast stringów, obsługujemy tylko tablice obiektów {pl, en}
-interface GameState {
-  currentWord: string;
-  userInput: string[];
-  activeIndex: number;
-  isComplete: boolean;
-  showError: boolean;
-  currentWordObj?: { pl: string; en: string };
-}
-
-interface GameProps {
-  wordPack: WordPack;
-  onBackToMenu: () => void;
-  onChangePacks?: () => void;
-}
+import { GameState, GameProps } from "./types";
 
 const Game: React.FC<GameProps> = ({
   wordPack,
@@ -35,6 +16,7 @@ const Game: React.FC<GameProps> = ({
     activeIndex: 0,
     isComplete: false,
     showError: false,
+    currentWordObj: undefined,
   });
 
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
