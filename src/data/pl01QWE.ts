@@ -1,5 +1,1 @@
-export const PL01QWE = [
-  { pl: "q", en: "q" },
-  { pl: "w", en: "w" },
-  { pl: "e", en: "e" },
-];
+export const PL01QWE = [{ word: "q" }, { word: "w" }, { word: "e" }];

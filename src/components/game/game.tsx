@@ -21,7 +21,7 @@ const Game: React.FC<GameProps> = ({
 
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [remainingWords, setRemainingWords] = useState<
-    { pl: string; en: string }[]
+    { word: string; file?: string }[]
   >([]);
   const [allDone, setAllDone] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -34,18 +34,17 @@ const Game: React.FC<GameProps> = ({
       Array.isArray(wordPack.words) &&
       wordPack.words.length > 0 &&
       typeof wordPack.words[0] === "object" &&
-      "pl" in wordPack.words[0] &&
-      "en" in wordPack.words[0]
+      "word" in wordPack.words[0]
     ) {
       const wordsArr = wordPack.words.filter(
-        (w): w is { pl: string; en: string } =>
-          typeof w === "object" && "pl" in w && "en" in w
+        (w): w is { word: string; file?: string } =>
+          typeof w === "object" && "word" in w
       );
       const randomIndex = Math.floor(Math.random() * wordsArr.length);
       const firstWordObj = wordsArr[randomIndex];
       setGameState({
-        currentWord: firstWordObj.pl,
-        userInput: Array(firstWordObj.pl.length).fill(""),
+        currentWord: firstWordObj.word,
+        userInput: Array(firstWordObj.word.length).fill(""),
         activeIndex: 0,
         isComplete: false,
         showError: false,
@@ -71,9 +70,9 @@ const Game: React.FC<GameProps> = ({
 
   useEffect(() => {
     if (!gameState.currentWordObj) return;
-    const audioPath = asset(
-      `/audio/words/pl/${gameState.currentWordObj.en}.mp3`
-    );
+    const fileName =
+      gameState.currentWordObj.file || gameState.currentWordObj.word;
+    const audioPath = asset(`/audio/words/pl/${fileName}.mp3`);
     if (audio) {
       audio.pause();
       audio.currentTime = 0;
@@ -100,8 +99,8 @@ const Game: React.FC<GameProps> = ({
     const randomIndex = Math.floor(Math.random() * remainingWords.length);
     const nextWordObj = remainingWords[randomIndex];
     setGameState({
-      currentWord: nextWordObj.pl,
-      userInput: Array(nextWordObj.pl.length).fill(""),
+      currentWord: nextWordObj.word,
+      userInput: Array(nextWordObj.word.length).fill(""),
       activeIndex: 0,
       isComplete: false,
       showError: false,
@@ -201,9 +200,9 @@ const Game: React.FC<GameProps> = ({
 
   const playAudio = () => {
     if (!gameState.currentWordObj) return;
-    const audioPath = asset(
-      `/audio/words/pl/${gameState.currentWordObj.en}.mp3`
-    );
+    const fileName =
+      gameState.currentWordObj.file || gameState.currentWordObj.word;
+    const audioPath = asset(`/audio/words/pl/${fileName}.mp3`);
     if (audio) {
       audio.pause();
       audio.currentTime = 0;
@@ -215,8 +214,8 @@ const Game: React.FC<GameProps> = ({
     setAudio(audioFile);
   };
 
-  const getImageFileName = (wordObj: { pl: string; en: string }) => {
-    return `${wordObj.en}.png`;
+  const getImageFileName = (wordObj: { word: string; file?: string }) => {
+    return `${wordObj.file || wordObj.word}.png`;
   };
 
   return (
@@ -277,12 +276,11 @@ const Game: React.FC<GameProps> = ({
                   Array.isArray(wordPack.words) &&
                   wordPack.words.length > 0 &&
                   typeof wordPack.words[0] === "object" &&
-                  "pl" in wordPack.words[0] &&
-                  "en" in wordPack.words[0]
+                  "word" in wordPack.words[0]
                 ) {
                   const wordsArr = wordPack.words.filter(
-                    (w): w is { pl: string; en: string } =>
-                      typeof w === "object" && "pl" in w && "en" in w
+                    (w): w is { word: string; file?: string } =>
+                      typeof w === "object" && "word" in w
                   );
                   setRemainingWords(wordsArr);
                   setAllDone(false);

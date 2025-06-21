@@ -4,7 +4,7 @@ export interface GameState {
   activeIndex: number;
   isComplete: boolean;
   showError: boolean;
-  currentWordObj?: { pl: string; en: string };
+  currentWordObj?: { word: string; file?: string };
 }
 
 export interface GameProps {
