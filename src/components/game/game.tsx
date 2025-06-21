@@ -8,12 +8,14 @@ import { PL03BSC } from "../../data/pl03Bsc";
 import { PL03DCR } from "../../data/pl03Dcr";
 import BackToMenuModal from "../backToMenuModal/backToMenuModal";
 
+// Zamiast stringów, obsługujemy tylko tablice obiektów {pl, en}
 interface GameState {
   currentWord: string;
   userInput: string[];
   activeIndex: number;
   isComplete: boolean;
   showError: boolean;
+  currentWordObj?: { pl: string; en: string };
 }
 
 interface GameProps {
@@ -36,7 +38,9 @@ const Game: React.FC<GameProps> = ({
   });
 
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
-  const [remainingWords, setRemainingWords] = useState<string[]>([]);
+  const [remainingWords, setRemainingWords] = useState<
+    { pl: string; en: string }[]
+  >([]);
   const [allDone, setAllDone] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -44,7 +48,31 @@ const Game: React.FC<GameProps> = ({
   const hasInitializedRef = useRef(false);
 
   useEffect(() => {
-    if (wordPack.words.length === 0) {
+    if (
+      Array.isArray(wordPack.words) &&
+      wordPack.words.length > 0 &&
+      typeof wordPack.words[0] === "object" &&
+      "pl" in wordPack.words[0] &&
+      "en" in wordPack.words[0]
+    ) {
+      const wordsArr = wordPack.words.filter(
+        (w): w is { pl: string; en: string } =>
+          typeof w === "object" && "pl" in w && "en" in w
+      );
+      const randomIndex = Math.floor(Math.random() * wordsArr.length);
+      const firstWordObj = wordsArr[randomIndex];
+      setGameState({
+        currentWord: firstWordObj.pl,
+        userInput: Array(firstWordObj.pl.length).fill(""),
+        activeIndex: 0,
+        isComplete: false,
+        showError: false,
+        currentWordObj: firstWordObj,
+      });
+      setRemainingWords(wordsArr.filter((_, i) => i !== randomIndex));
+      setAllDone(false);
+      hasInitializedRef.current = false;
+    } else {
       setAllDone(true);
       setGameState({
         currentWord: "",
@@ -52,30 +80,17 @@ const Game: React.FC<GameProps> = ({
         activeIndex: 0,
         isComplete: false,
         showError: false,
+        currentWordObj: undefined,
       });
       setRemainingWords([]);
       return;
     }
-    const randomIndex = Math.floor(Math.random() * wordPack.words.length);
-    const firstWord = wordPack.words[randomIndex];
-    setGameState({
-      currentWord: firstWord,
-      userInput: Array(firstWord.length).fill(""),
-      activeIndex: 0,
-      isComplete: false,
-      showError: false,
-    });
-    setRemainingWords(wordPack.words.filter((w, i) => i !== randomIndex));
-    setAllDone(false);
-    hasInitializedRef.current = false;
-    // eslint-disable-next-line
   }, [wordPack]);
 
   useEffect(() => {
-    if (!gameState.currentWord) return;
-    const packId = findPackIdForWord(gameState.currentWord);
+    if (!gameState.currentWordObj) return;
     const audioPath = asset(
-      `/audio/words/${packId}/${getFileName(gameState.currentWord, "mp3")}`
+      `/audio/words/pl/${gameState.currentWordObj.en}.mp3`
     );
     if (audio) {
       audio.pause();
@@ -93,7 +108,7 @@ const Game: React.FC<GameProps> = ({
       console.error("Error loading audio:", e);
     };
     setAudio(audioFile);
-  }, [gameState.currentWord]);
+  }, [gameState.currentWordObj]);
 
   const handleNextWord = useCallback(() => {
     if (remainingWords.length === 0) {
@@ -101,15 +116,16 @@ const Game: React.FC<GameProps> = ({
       return;
     }
     const randomIndex = Math.floor(Math.random() * remainingWords.length);
-    const nextWord = remainingWords[randomIndex];
+    const nextWordObj = remainingWords[randomIndex];
     setGameState({
-      currentWord: nextWord,
-      userInput: Array(nextWord.length).fill(""),
+      currentWord: nextWordObj.pl,
+      userInput: Array(nextWordObj.pl.length).fill(""),
       activeIndex: 0,
       isComplete: false,
       showError: false,
+      currentWordObj: nextWordObj,
     });
-    setRemainingWords((prev) => prev.filter((w, i) => i !== randomIndex));
+    setRemainingWords((prev) => prev.filter((_, i) => i !== randomIndex));
   }, [remainingWords]);
 
   useEffect(() => {
@@ -201,16 +217,10 @@ const Game: React.FC<GameProps> = ({
     e.target.value = "";
   };
 
-  const findPackIdForWord = (word: string): string => {
-    if (PL03BSC.includes(word)) return "pl03Bsc";
-    if (PL03DCR.includes(word)) return "pl03Dcr";
-    return wordPack.id.split("-")[0];
-  };
-
   const playAudio = () => {
-    const packId = findPackIdForWord(gameState.currentWord);
+    if (!gameState.currentWordObj) return;
     const audioPath = asset(
-      `/audio/words/${packId}/${getFileName(gameState.currentWord, "mp3")}`
+      `/audio/words/pl/${gameState.currentWordObj.en}.mp3`
     );
     if (audio) {
       audio.pause();
@@ -221,6 +231,10 @@ const Game: React.FC<GameProps> = ({
       console.error("Error playing audio:", error);
     });
     setAudio(audioFile);
+  };
+
+  const getImageFileName = (wordObj: { pl: string; en: string }) => {
+    return `${wordObj.en}.png`;
   };
 
   return (
@@ -277,8 +291,20 @@ const Game: React.FC<GameProps> = ({
             <button
               className="next-button"
               onClick={() => {
-                setRemainingWords([...wordPack.words]);
-                setAllDone(false);
+                if (
+                  Array.isArray(wordPack.words) &&
+                  wordPack.words.length > 0 &&
+                  typeof wordPack.words[0] === "object" &&
+                  "pl" in wordPack.words[0] &&
+                  "en" in wordPack.words[0]
+                ) {
+                  const wordsArr = wordPack.words.filter(
+                    (w): w is { pl: string; en: string } =>
+                      typeof w === "object" && "pl" in w && "en" in w
+                  );
+                  setRemainingWords(wordsArr);
+                  setAllDone(false);
+                }
               }}
             >
               Zagraj te same paczki
@@ -302,12 +328,10 @@ const Game: React.FC<GameProps> = ({
           </div>
         ) : (
           <>
-            {gameState.currentWord && (
+            {gameState.currentWord && gameState.currentWordObj && (
               <img
                 src={asset(
-                  `/images/words/${findPackIdForWord(
-                    gameState.currentWord
-                  )}/${getFileName(gameState.currentWord, "png")}`
+                  `/images/words/${getImageFileName(gameState.currentWordObj)}`
                 )}
                 alt={gameState.currentWord}
                 className="word-image"
