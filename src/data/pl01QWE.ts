@@ -1,1 +1,5 @@
-export const PL01QWE: string[] = ["q", "w", "e"];
+export const PL01QWE = [
+  { pl: "q", en: "q" },
+  { pl: "w", en: "w" },
+  { pl: "e", en: "e" },
+];
