@@ -16,6 +16,7 @@ const App: React.FC = () => {
   const [selectedPacks, setSelectedPacks] = useState<WordPack[] | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [showPacksView, setShowPacksView] = useState(false);
+  const [language, setLanguage] = useState<"pl" | "en" | "test">("pl");
 
   const handleChangePacks = () => {
     setSelectedPacks(null);
@@ -55,7 +56,14 @@ const App: React.FC = () => {
 
   return (
     <div className="app">
-      <header>
+      <header
+        style={{
+          position: "relative",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <div className="logo">
           <img src={asset("/icon.svg")} alt="Logo" className="logo-icon" />
           <div>
@@ -69,6 +77,7 @@ const App: React.FC = () => {
         {mergedPack ? (
           <Game
             wordPack={mergedPack}
+            language={language}
             onBackToMenu={() => {
               setSelectedPacks(null);
               setShowPacksView(false);
@@ -78,6 +87,8 @@ const App: React.FC = () => {
         ) : (
           <MainMenu
             wordPacks={wordPacks}
+            language={language}
+            setLanguage={setLanguage}
             onSelectPack={(packs) => {
               setSelectedPacks(packs);
               setShowPacksView(false);

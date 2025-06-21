@@ -10,10 +10,12 @@ const LEVEL_DIFFICULTIES = [
 
 const MainMenu: React.FC<MainMenuProps> = ({
   wordPacks,
+  language,
+  setLanguage,
   onSelectPack,
   initialView,
 }) => {
-  const [view, setView] = useState<"main" | "levels" | "packs">(
+  const [view, setView] = useState<"main" | "levels" | "packs" | "language">(
     initialView || "main"
   );
   const [checked, setChecked] = useState<boolean[]>(() => {
@@ -52,6 +54,12 @@ const MainMenu: React.FC<MainMenuProps> = ({
             onClick={() => alert("Opcja jeszcze niedostępna")}
           >
             ❓ Jak grać?
+          </button>
+          <button
+            className="menu-button blue"
+            onClick={() => setView("language")}
+          >
+            🌐 Zmień język
           </button>
         </div>
       )}
@@ -129,6 +137,47 @@ const MainMenu: React.FC<MainMenuProps> = ({
               Zagraj
             </button>
           </form>
+          <button
+            className="menu-button"
+            onClick={() => setView("main")}
+            style={{ marginTop: "2rem" }}
+          >
+            ← Powrót
+          </button>
+        </div>
+      )}
+
+      {view === "language" && (
+        <div className="menu-buttons">
+          <button
+            className={`menu-button${language === "pl" ? " lang-active" : ""}`}
+            onClick={() => {
+              setLanguage("pl");
+              setView("main");
+            }}
+          >
+            🇵🇱 PL
+          </button>
+          <button
+            className={`menu-button${language === "en" ? " lang-active" : ""}`}
+            onClick={() => {
+              setLanguage("en");
+              setView("main");
+            }}
+          >
+            🇬🇧 EN
+          </button>
+          <button
+            className={`menu-button${
+              language === "test" ? " lang-active" : ""
+            }`}
+            onClick={() => {
+              setLanguage("test");
+              setView("main");
+            }}
+          >
+            🧪 Test
+          </button>
           <button
             className="menu-button"
             onClick={() => setView("main")}

@@ -9,6 +9,7 @@ export interface GameState {
 
 export interface GameProps {
   wordPack: import("../../types/wordPack").WordPack;
+  language: "pl" | "en" | "test";
   onBackToMenu: () => void;
   onChangePacks?: () => void;
 }

@@ -7,6 +7,7 @@ import { GameState, GameProps } from "./types";
 
 const Game: React.FC<GameProps> = ({
   wordPack,
+  language,
   onBackToMenu,
   onChangePacks,
 }) => {
