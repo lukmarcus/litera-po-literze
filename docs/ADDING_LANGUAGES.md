@@ -9,30 +9,43 @@ Quick guide for developers adding new languages to the application.
 Add new language to `src/types/language.ts`:
 
 ```typescript
-export const SUPPORTED_LANGUAGES = ["pl", "en", "test", "de"] as const;
+export const SUPPORTED_LANGUAGES = ["pl", "en", "test", "es"] as const;
 ```
 
 ### 2. Add Translations
 
-Add translation object to `src/translations/index.ts`:
+Create new file `src/translations/es.ts`:
 
 ```typescript
-de: {
-  title: "Buchstabe für Buchstabe",
-  subtitle: "Lesen und Schreiben lernen für Kinder",
-  reportBug: "Fehler melden",
+export const es = {
+  title: "Letra por Letra",
+  subtitle: "Aprender a leer y escribir para niños",
+  reportBug: "Reportar Error",
   // ... all other translation keys
-},
+} as const;
+```
+
+Then add import to `src/translations/index.ts`:
+
+```typescript
+import { es } from "./es";
+
+export const translations = {
+  pl,
+  en,
+  test,
+  es,
+} as const;
 ```
 
 ### 3. Create Word Pack
 
-Create `src/data/de03Basic.ts`:
+Create `src/data/es03Basic.ts`:
 
 ```typescript
-export const DE03BASIC = [
-  { word: "der", file: "the-masculine" },
-  { word: "die", file: "the-feminine" },
+export const ES03BASIC = [
+  { word: "sol", file: "sun" },
+  { word: "mar", file: "sea" },
   // ... more words
 ];
 ```
@@ -42,42 +55,42 @@ export const DE03BASIC = [
 Add language case in `src/app.tsx`:
 
 ```typescript
-} else if (language === "de") {
+} else if (language === "es") {
   wordPacks = [
     {
-      id: "de03Basic",
-      name: "3 Buchstaben Grundwortschatz",
-      words: DE03BASIC,
+      id: "es03Basic",
+      name: "3 Letras Básicas",
+      words: ES03BASIC,
     },
   ];
 ```
 
 ### 5. Add Menu Button
 
-Add button in `src/components/mainMenu/mainMenu.tsx`:
+Add button in `src/components/mainMenu/mainMenu.tsx` language view section:
 
 ```typescript
-// Add to TRANSLATIONS object
-de: {
-  levels: "Stufen",
-  packs: "Pakete",
-  // ... other menu translations
-}
-
-// Add button in language view
-<button onClick={() => setLanguage("de")}>
-  DE
+<button
+  className={`menu-button${language === "es" ? " lang-active" : ""}`}
+  onClick={() => {
+    setLanguage("es");
+    setView("main");
+  }}
+>
+  ES
 </button>
 ```
 
+> **Note**: Menu translations are now automatically included from the main translation files - no need to add them separately!
+
 ### 6. Add Assets
 
-- Audio: `public/audio/words/de/[filename].mp3`
+- Audio: `public/audio/words/es/[filename].mp3`
 - Images: `public/images/words/[filename].png`
 
 ### 7. Test
 
-Navigate to `/#de` and verify everything works.
+Navigate to `/#es` and verify everything works.
 
 ## Notes
 
