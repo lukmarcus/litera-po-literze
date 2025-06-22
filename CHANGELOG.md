@@ -1,10 +1,15 @@
 # Changelog
 
-## [0.6.0] - 2025-06-21
+## [0.6.0] - 2025-06-22
 
 ### Added
 
 - Language switcher in the main menu (PL, EN, Test) with a dedicated submenu.
+- Hash-based language routing with direct URL access to specific languages (e.g., `/#pl`, `/#en`, `/#test`).
+- Full internationalization (i18n) support for all UI components.
+- Centralized language type system in `src/types/language.ts` for maintainability and easy language additions.
+- Complete English word pack (EN99) with 58 words matching the Polish vocabulary.
+- Developer guide for adding new languages (`docs/ADDING_LANGUAGES.md`).
 
 ### Changed
 
