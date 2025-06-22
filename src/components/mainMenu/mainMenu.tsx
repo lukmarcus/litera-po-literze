@@ -2,11 +2,44 @@ import React, { useState, useEffect } from "react";
 import { MainMenuProps } from "./types";
 import "./mainMenu.css";
 
-const LEVEL_DIFFICULTIES = [
-  { id: "basic", label: "Podstawowe" },
-  { id: "mixed", label: "Mieszane" },
-  { id: "diacritical", label: "Diakrytyczne" },
-];
+const TRANSLATIONS = {
+  pl: {
+    levels: "Poziomy",
+    packs: "Paczki",
+    howToPlay: "Jak grać?",
+    changeLanguage: "Zmień język",
+    basic: "Podstawowe",
+    mixed: "Mieszane",
+    diacritical: "Diakrytyczne",
+    back: "← Powrót",
+    selectPacks: "Wybierz zestawy słów",
+    play: "Zagraj",
+  },
+  en: {
+    levels: "Levels",
+    packs: "Packs",
+    howToPlay: "How to play?",
+    changeLanguage: "Change language",
+    basic: "Basic",
+    mixed: "Mixed",
+    diacritical: "Diacritical",
+    back: "← Back",
+    selectPacks: "Select word packs",
+    play: "Play",
+  },
+  test: {
+    levels: "Levels",
+    packs: "Packs",
+    howToPlay: "How to play?",
+    changeLanguage: "Change language",
+    basic: "Basic",
+    mixed: "Mixed",
+    diacritical: "Diacritical",
+    back: "← Back",
+    selectPacks: "Select word packs",
+    play: "Play",
+  },
+};
 
 const MainMenu: React.FC<MainMenuProps> = ({
   wordPacks,
@@ -28,6 +61,23 @@ const MainMenu: React.FC<MainMenuProps> = ({
     }
     return wordPacks.map(() => true);
   });
+  const [levelDifficulties, setLevelDifficulties] = useState([
+    { id: "basic", label: TRANSLATIONS[language].basic },
+    { id: "mixed", label: TRANSLATIONS[language].mixed },
+    { id: "diacritical", label: TRANSLATIONS[language].diacritical },
+  ]);
+
+  useEffect(() => {
+    setLevelDifficulties([
+      { id: "basic", label: TRANSLATIONS[language].basic },
+      { id: "mixed", label: TRANSLATIONS[language].mixed },
+      { id: "diacritical", label: TRANSLATIONS[language].diacritical },
+    ]);
+  }, [language]);
+
+  useEffect(() => {
+    setChecked(wordPacks.map(() => true));
+  }, [language, wordPacks.length]);
 
   const handleLevelDifficulty = (difficulty: string) => {
     alert(`Wybrano poziomy, trudność: ${difficulty}`);
@@ -41,32 +91,32 @@ const MainMenu: React.FC<MainMenuProps> = ({
             className="menu-button yellow"
             onClick={() => setView("levels")}
           >
-            🧠 Poziomy
+            🧠 {TRANSLATIONS[language].levels}
           </button>
           <button
             className="menu-button green"
             onClick={() => setView("packs")}
           >
-            📦 Paczki
+            📦 {TRANSLATIONS[language].packs}
           </button>
           <button
             className="menu-button orange"
             onClick={() => alert("Opcja jeszcze niedostępna")}
           >
-            ❓ Jak grać?
+            ❓ {TRANSLATIONS[language].howToPlay}
           </button>
           <button
             className="menu-button blue"
             onClick={() => setView("language")}
           >
-            🌐 Zmień język
+            🌐 {TRANSLATIONS[language].changeLanguage}
           </button>
         </div>
       )}
 
       {view === "levels" && (
         <div className="menu-buttons">
-          {LEVEL_DIFFICULTIES.map((diff) => (
+          {levelDifficulties.map((diff) => (
             <button
               key={diff.id}
               className="menu-button blue"
@@ -80,14 +130,14 @@ const MainMenu: React.FC<MainMenuProps> = ({
             onClick={() => setView("main")}
             style={{ marginTop: "2rem" }}
           >
-            ← Powrót
+            {TRANSLATIONS[language].back}
           </button>
         </div>
       )}
 
       {view === "packs" && (
         <div className="menu-buttons" style={{ alignItems: "stretch" }}>
-          <h2>Wybierz zestawy słów</h2>
+          <h2>{TRANSLATIONS[language].selectPacks}</h2>
           <form
             style={{
               display: "flex",
@@ -134,7 +184,7 @@ const MainMenu: React.FC<MainMenuProps> = ({
               disabled={checked.every((v) => !v)}
               style={{ marginTop: "1.5rem" }}
             >
-              Zagraj
+              {TRANSLATIONS[language].play}
             </button>
           </form>
           <button
@@ -142,7 +192,7 @@ const MainMenu: React.FC<MainMenuProps> = ({
             onClick={() => setView("main")}
             style={{ marginTop: "2rem" }}
           >
-            ← Powrót
+            {TRANSLATIONS[language].back}
           </button>
         </div>
       )}
@@ -183,7 +233,7 @@ const MainMenu: React.FC<MainMenuProps> = ({
             onClick={() => setView("main")}
             style={{ marginTop: "2rem" }}
           >
-            ← Powrót
+            {TRANSLATIONS[language].back}
           </button>
         </div>
       )}

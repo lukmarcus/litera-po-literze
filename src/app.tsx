@@ -5,8 +5,9 @@ import MainMenu from "./components/mainMenu/mainMenu";
 import { WordPack } from "./types/wordPack";
 import { PL03BSC } from "./data/pl03Bsc";
 import { PL03DCR } from "./data/pl03Dcr";
-import { PL01ASD } from "./data/pl01ASD";
-import { PL01QWE } from "./data/pl01QWE";
+import { TESTASD } from "./data/testASD";
+import { TESTQWE } from "./data/testQWE";
+import { EN99 } from "./data/en99";
 import Footer from "./components/footer/footer";
 import BugReportModal from "./components/bugReportModal/bugReportModal";
 import "./app.css";
@@ -23,28 +24,42 @@ const App: React.FC = () => {
     setShowPacksView(true);
   };
 
-  const wordPacks: WordPack[] = [
-    {
-      id: "pl03Bsc",
-      name: "3 litery bez polskich znaków",
-      words: PL03BSC,
-    },
-    {
-      id: "pl03Dcr",
-      name: "3 litery z polskimi znakami",
-      words: PL03DCR,
-    },
-    {
-      id: "pl01ASD",
-      name: "3×1 litera do testów (ASD)",
-      words: PL01ASD,
-    },
-    {
-      id: "pl01QWE",
-      name: "3×1 litera do testów (QWE)",
-      words: PL01QWE,
-    },
-  ];
+  let wordPacks: WordPack[] = [];
+  if (language === "pl") {
+    wordPacks = [
+      {
+        id: "pl03Bsc",
+        name: "3 litery bez polskich znaków",
+        words: PL03BSC,
+      },
+      {
+        id: "pl03Dcr",
+        name: "3 litery z polskimi znakami",
+        words: PL03DCR,
+      },
+    ];
+  } else if (language === "en") {
+    wordPacks = [
+      {
+        id: "en99",
+        name: "English basic pack",
+        words: EN99.map(({ en }) => ({ word: en })),
+      },
+    ];
+  } else if (language === "test") {
+    wordPacks = [
+      {
+        id: "testASD",
+        name: "3×1 litera do testów (ASD)",
+        words: TESTASD,
+      },
+      {
+        id: "testQWE",
+        name: "3×1 litera do testów (QWE)",
+        words: TESTQWE,
+      },
+    ];
+  }
 
   const mergedPack: WordPack | null = selectedPacks
     ? {
