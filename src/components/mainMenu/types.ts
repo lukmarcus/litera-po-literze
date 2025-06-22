@@ -1,9 +1,10 @@
 import { WordPack } from "../../types/wordPack";
+import { Language } from "../../types/language";
 
 export interface MainMenuProps {
   wordPacks: WordPack[];
-  language: "pl" | "en" | "test";
-  setLanguage: (lang: "pl" | "en" | "test") => void;
+  language: Language;
+  setLanguage: (lang: Language) => void;
   onSelectPack: (packs: WordPack[]) => void;
   initialView?: "main" | "levels" | "packs";
 }

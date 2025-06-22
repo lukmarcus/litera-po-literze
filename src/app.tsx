@@ -3,6 +3,11 @@ import React, { useState, useEffect } from "react";
 import Game from "./components/game/game";
 import MainMenu from "./components/mainMenu/mainMenu";
 import { WordPack } from "./types/wordPack";
+import {
+  Language,
+  getLanguageFromHash,
+  DEFAULT_LANGUAGE,
+} from "./types/language";
 import { PL03BSC } from "./data/pl03Bsc";
 import { PL03DCR } from "./data/pl03Dcr";
 import { TESTASD } from "./data/testASD";
@@ -12,22 +17,15 @@ import Footer from "./components/footer/footer";
 import BugReportModal from "./components/bugReportModal/bugReportModal";
 import "./app.css";
 import { asset } from "./utils/asset";
+import { translations } from "./translations";
 
 const App: React.FC = () => {
   const [selectedPacks, setSelectedPacks] = useState<WordPack[] | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [showPacksView, setShowPacksView] = useState(false);
-  const [language, setLanguage] = useState<"pl" | "en" | "test">("pl");
+  const [language, setLanguage] = useState<Language>(DEFAULT_LANGUAGE);
 
-  const getLanguageFromHash = (): "pl" | "en" | "test" => {
-    const hash = window.location.hash.slice(1);
-    if (hash === "en" || hash === "test" || hash === "pl") {
-      return hash;
-    }
-    return "en";
-  };
-
-  const updateHash = (newLanguage: "pl" | "en" | "test") => {
+  const updateHash = (newLanguage: Language) => {
     window.location.hash = newLanguage;
   };
 
@@ -47,7 +45,7 @@ const App: React.FC = () => {
     };
   }, []);
 
-  const handleLanguageChange = (newLanguage: "pl" | "en" | "test") => {
+  const handleLanguageChange = (newLanguage: Language) => {
     updateHash(newLanguage);
     setLanguage(newLanguage);
   };
@@ -115,8 +113,8 @@ const App: React.FC = () => {
         <div className="logo">
           <img src={asset("/icon.svg")} alt="Logo" className="logo-icon" />
           <div>
-            <h1>Litera po Literze</h1>
-            <p>Nauka czytania i pisania dla dzieci</p>
+            <h1>{translations[language].title}</h1>
+            <p>{translations[language].subtitle}</p>
           </div>
         </div>
       </header>
@@ -146,8 +144,13 @@ const App: React.FC = () => {
         )}
       </main>
 
-      <Footer onReportClick={() => setShowModal(true)} />
-      {showModal && <BugReportModal onClose={() => setShowModal(false)} />}
+      <Footer language={language} onReportClick={() => setShowModal(true)} />
+      {showModal && (
+        <BugReportModal
+          language={language}
+          onClose={() => setShowModal(false)}
+        />
+      )}
     </div>
   );
 };

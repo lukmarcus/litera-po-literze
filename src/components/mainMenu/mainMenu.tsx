@@ -206,7 +206,7 @@ const MainMenu: React.FC<MainMenuProps> = ({
               setView("main");
             }}
           >
-            🇵🇱 PL
+            polski
           </button>
           <button
             className={`menu-button${language === "en" ? " lang-active" : ""}`}
@@ -215,7 +215,7 @@ const MainMenu: React.FC<MainMenuProps> = ({
               setView("main");
             }}
           >
-            🇬🇧 EN
+            English
           </button>
           <button
             className={`menu-button${
@@ -226,7 +226,7 @@ const MainMenu: React.FC<MainMenuProps> = ({
               setView("main");
             }}
           >
-            🧪 Test
+            Test
           </button>
           <button
             className="menu-button"

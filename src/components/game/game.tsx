@@ -4,6 +4,7 @@ import "./game.css";
 import { asset } from "../../utils/asset";
 import BackToMenuModal from "../backToMenuModal/backToMenuModal";
 import { GameState, GameProps } from "./types";
+import { translations } from "../../translations";
 
 const Game: React.FC<GameProps> = ({
   wordPack,
@@ -231,16 +232,16 @@ const Game: React.FC<GameProps> = ({
           }
           onBackToMenu();
         }}
-        aria-label="Wróć do menu"
+        aria-label={translations[language].backToMenu}
       >
-        ← Menu
+        {translations[language].backToMenu}
       </button>
       <BackToMenuModal
         open={showConfirmModal}
-        title="Czy na pewno chcesz wrócić do menu?"
-        message="Postęp w tej grze zostanie utracony."
-        confirmLabel="Tak, wróć do menu"
-        cancelLabel="Anuluj"
+        title={translations[language].backToMenuTitle}
+        message={translations[language].backToMenuMessage}
+        confirmLabel={translations[language].backToMenuConfirm}
+        cancelLabel={translations[language].cancel}
         onCancel={() => setShowConfirmModal(false)}
         onConfirm={() => {
           setShowConfirmModal(false);
@@ -267,9 +268,10 @@ const Game: React.FC<GameProps> = ({
         }}
       />
       <div className="word-display">
+        {" "}
         {allDone ? (
           <div className="success-message">
-            <h2>Gratulacje! Ukończono wszystkie słowa.</h2>
+            <h2>{translations[language].congratulations}</h2>
             <button
               className="next-button"
               onClick={() => {
@@ -288,7 +290,7 @@ const Game: React.FC<GameProps> = ({
                 }
               }}
             >
-              Zagraj te same paczki
+              {translations[language].playSamePacks}
             </button>
             <button
               className="next-button"
@@ -297,14 +299,14 @@ const Game: React.FC<GameProps> = ({
               }}
               style={{ marginLeft: 16 }}
             >
-              Zmień paczki
+              {translations[language].changePacks}
             </button>
             <button
               className="next-button"
               onClick={onBackToMenu}
               style={{ marginLeft: 16 }}
             >
-              Wróć do menu
+              {translations[language].returnToMenu}
             </button>
           </div>
         ) : (
@@ -321,18 +323,18 @@ const Game: React.FC<GameProps> = ({
                   target.src = asset("/images/words/placeholder.png");
                 }}
               />
-            )}
+            )}{" "}
             <div className="debug-word">
-              Current word: {gameState.currentWord}
+              {translations[language].currentWord} {gameState.currentWord}
             </div>
             <button onClick={playAudio} className="audio-button">
               🔊
             </button>
             {gameState.isComplete ? (
               <div className="success-message">
-                <h2>Brawo!</h2>
+                <h2>{translations[language].wellDone}</h2>
                 <button onClick={handleNextWord} className="next-button">
-                  Następne słowo (Enter)
+                  {translations[language].nextWord}
                 </button>
               </div>
             ) : (

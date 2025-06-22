@@ -1,3 +1,5 @@
+import { Language } from "../../types/language";
+
 export interface GameState {
   currentWord: string;
   userInput: string[];
@@ -9,7 +11,7 @@ export interface GameState {
 
 export interface GameProps {
   wordPack: import("../../types/wordPack").WordPack;
-  language: "pl" | "en" | "test";
+  language: Language;
   onBackToMenu: () => void;
   onChangePacks?: () => void;
 }
