@@ -1,6 +1,8 @@
-# Litera po Literze
+# Litera po Literze 🔤
 
-Litera po Literze ("Letter by Letter") is an educational web application designed to help children learn reading and writing. The application provides an interactive and engaging way for children to practice their language skills through word recognition and typing exercises.
+### _Letter by Letter - Educational Language Learning Game_
+
+**Litera po Literze** ("Letter by Letter") is a multilingual educational web application designed to help children learn reading and writing. The application provides an interactive and engaging way for children to practice their language skills through word recognition and typing exercises.
 
 ## Features
 
@@ -99,5 +101,5 @@ For a detailed list of changes, see the [Changelog](./CHANGELOG.md).
 - Main author (behind the AI): [Marek Szumny](https://github.com/lukmarcus)
 - Images: [ChatGPT](https://chatgpt.com/)
 - Resize & Compress: [iLoveIMG](https://www.iloveimg.com/)
-- Words: [TTSMaker](https://ttsmaker.com/)
+- Audio Words: [TTSMaker](https://ttsmaker.com/)
 - Sounds: [Pixabay](https://pixabay.com/)
