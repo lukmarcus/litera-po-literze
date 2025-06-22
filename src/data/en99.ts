@@ -1,6 +1,7 @@
 export const EN99 = [
   { en: "ball" },
   { en: "bat" },
+  { en: "beetle" },
   { en: "belt" },
   { en: "blanket" },
   { en: "bow" },
@@ -12,6 +13,7 @@ export const EN99 = [
   { en: "crab" },
   { en: "crowbar" },
   { en: "drone" },
+  { en: "elk" },
   { en: "elf" },
   { en: "embankment" },
   { en: "eye" },
@@ -22,6 +24,7 @@ export const EN99 = [
   { en: "goose" },
   { en: "hedgehog" },
   { en: "hook" },
+  { en: "horn" },
   { en: "horse" },
   { en: "house" },
   { en: "ice" },
