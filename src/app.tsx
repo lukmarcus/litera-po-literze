@@ -8,11 +8,7 @@ import {
   getLanguageFromHash,
   DEFAULT_LANGUAGE,
 } from "./types/language";
-import { PL03BSC } from "./data/pl03Bsc";
-import { PL03DCR } from "./data/pl03Dcr";
-import { TESTASD } from "./data/testASD";
-import { TESTQWE } from "./data/testQWE";
-import { EN99 } from "./data/en99";
+import { getWordPacksForLanguage } from "./wordPacks";
 import Footer from "./components/footer/footer";
 import BugReportModal from "./components/bugReportModal/bugReportModal";
 import "./app.css";
@@ -49,53 +45,18 @@ const App: React.FC = () => {
     updateHash(newLanguage);
     setLanguage(newLanguage);
   };
-
   const handleChangePacks = () => {
     setSelectedPacks(null);
     setShowPacksView(true);
   };
 
-  let wordPacks: WordPack[] = [];
-  if (language === "pl") {
-    wordPacks = [
-      {
-        id: "pl03Bsc",
-        name: "3 litery bez polskich znaków",
-        words: PL03BSC,
-      },
-      {
-        id: "pl03Dcr",
-        name: "3 litery z polskimi znakami",
-        words: PL03DCR,
-      },
-    ];
-  } else if (language === "en") {
-    wordPacks = [
-      {
-        id: "en99",
-        name: "English basic pack",
-        words: EN99.map(({ en }) => ({ word: en })),
-      },
-    ];
-  } else if (language === "test") {
-    wordPacks = [
-      {
-        id: "testASD",
-        name: "3×1 testing letter (ASD)",
-        words: TESTASD,
-      },
-      {
-        id: "testQWE",
-        name: "3×1 testing letter (QWE)",
-        words: TESTQWE,
-      },
-    ];
-  }
+  const wordPacks = getWordPacksForLanguage(language);
 
   const mergedPack: WordPack | null = selectedPacks
     ? {
         id: selectedPacks.map((p) => p.id).join("-"),
         name: selectedPacks.map((p) => p.name).join(", "),
+        type: "basic", // For merged packs, we can default to basic
         words: selectedPacks.flatMap((p) => p.words),
       }
     : null;
