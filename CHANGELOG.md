@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.6.0] - 2025-06-21
+
+### Added
+
+- Language switcher in the main menu (PL, EN, Test) with a dedicated submenu.
+
+### Changed
+
+- Moved all component props interfaces into dedicated `types.ts` files within each component folder.
+- Unified word image/audio file naming (English), asset folder structure, and word pack format (`{ word, file? }`) for multi-language support.
+
 ## [0.5.2] - 2025-06-21
 
 ### Changed
