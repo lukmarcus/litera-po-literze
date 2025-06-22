@@ -1,5 +1,5 @@
 /// <reference types="vite/client" />
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Game from "./components/game/game";
 import MainMenu from "./components/mainMenu/mainMenu";
 import { WordPack } from "./types/wordPack";
@@ -18,6 +18,39 @@ const App: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [showPacksView, setShowPacksView] = useState(false);
   const [language, setLanguage] = useState<"pl" | "en" | "test">("pl");
+
+  const getLanguageFromHash = (): "pl" | "en" | "test" => {
+    const hash = window.location.hash.slice(1);
+    if (hash === "en" || hash === "test" || hash === "pl") {
+      return hash;
+    }
+    return "en";
+  };
+
+  const updateHash = (newLanguage: "pl" | "en" | "test") => {
+    window.location.hash = newLanguage;
+  };
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const langFromHash = getLanguageFromHash();
+      setLanguage(langFromHash);
+    };
+
+    const initialLang = getLanguageFromHash();
+    setLanguage(initialLang);
+
+    window.addEventListener("hashchange", handleHashChange);
+
+    return () => {
+      window.removeEventListener("hashchange", handleHashChange);
+    };
+  }, []);
+
+  const handleLanguageChange = (newLanguage: "pl" | "en" | "test") => {
+    updateHash(newLanguage);
+    setLanguage(newLanguage);
+  };
 
   const handleChangePacks = () => {
     setSelectedPacks(null);
@@ -50,12 +83,12 @@ const App: React.FC = () => {
     wordPacks = [
       {
         id: "testASD",
-        name: "3×1 litera do testów (ASD)",
+        name: "3×1 testing letter (ASD)",
         words: TESTASD,
       },
       {
         id: "testQWE",
-        name: "3×1 litera do testów (QWE)",
+        name: "3×1 testing letter (QWE)",
         words: TESTQWE,
       },
     ];
@@ -103,7 +136,7 @@ const App: React.FC = () => {
           <MainMenu
             wordPacks={wordPacks}
             language={language}
-            setLanguage={setLanguage}
+            setLanguage={handleLanguageChange}
             onSelectPack={(packs) => {
               setSelectedPacks(packs);
               setShowPacksView(false);
