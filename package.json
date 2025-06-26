@@ -1,6 +1,7 @@
 {
   "name": "litera-po-literze",
-  "version": "0.5.2",
+  "version": "0.6.0",
+  "description": "Letter by Letter - Educational multilingual language learning game for children",
   "homepage": "https://lukmarcus.github.io/litera-po-literze",
   "private": true,
   "type": "module",

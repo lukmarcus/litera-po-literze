@@ -1,18 +1,19 @@
 import React from "react";
 import "./bugReportModal.css";
+import { BugReportModalProps } from "./types";
+import { translations } from "../../translations";
 
-interface BugReportModalProps {
-  onClose: () => void;
-}
-
-const BugReportModal: React.FC<BugReportModalProps> = ({ onClose }) => (
+const BugReportModal: React.FC<BugReportModalProps> = ({
+  language,
+  onClose,
+}) => (
   <div className="modal-overlay" onClick={onClose}>
     <div className="modal" onClick={(e) => e.stopPropagation()}>
       <button className="modal-close" onClick={onClose}>
         ×
       </button>
-      <h2>Zgłoś błąd</h2>
-      <p>Wybierz sposób zgłoszenia problemu:</p>
+      <h2>{translations[language].bugReportTitle}</h2>
+      <p>{translations[language].bugReportDescription}</p>
       <div className="modal-buttons">
         <a
           href="https://github.com/lukmarcus/litera-po-literze/issues/new/choose"
@@ -20,7 +21,7 @@ const BugReportModal: React.FC<BugReportModalProps> = ({ onClose }) => (
           rel="noopener noreferrer"
           className="modal-button github"
         >
-          🐛 Zgłoś przez GitHub
+          {translations[language].reportViaGithub}
         </a>
         <a
           href="https://forms.gle/example"
@@ -28,7 +29,7 @@ const BugReportModal: React.FC<BugReportModalProps> = ({ onClose }) => (
           rel="noopener noreferrer"
           className="modal-button form"
         >
-          📝 Zgłoś przez formularz
+          {translations[language].reportViaForm}
         </a>
       </div>
     </div>

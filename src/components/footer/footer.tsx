@@ -1,12 +1,10 @@
 import React from "react";
 import { version } from "../../../package.json";
 import "./footer.css";
+import { FooterProps } from "./types";
+import { translations } from "../../translations";
 
-interface FooterProps {
-  onReportClick: () => void;
-}
-
-const Footer: React.FC<FooterProps> = ({ onReportClick }) => (
+const Footer: React.FC<FooterProps> = ({ language, onReportClick }) => (
   <footer className="footer">
     © 2025 Marek Szumny · v{version} ·{" "}
     <a
@@ -18,7 +16,7 @@ const Footer: React.FC<FooterProps> = ({ onReportClick }) => (
     </a>{" "}
     ·{" "}
     <button onClick={onReportClick} className="link-button">
-      Zgłoś błąd
+      {translations[language].reportBug}
     </button>
   </footer>
 );

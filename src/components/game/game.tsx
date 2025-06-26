@@ -1,29 +1,14 @@
 /// <reference types="vite/client" />
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import "./game.css";
-import { WordPack } from "../../types/wordPack";
-import { getFileName } from "../../utils/getFileName";
 import { asset } from "../../utils/asset";
-import { PL03BSC } from "../../data/pl03Bsc";
-import { PL03DCR } from "../../data/pl03Dcr";
 import BackToMenuModal from "../backToMenuModal/backToMenuModal";
-
-interface GameState {
-  currentWord: string;
-  userInput: string[];
-  activeIndex: number;
-  isComplete: boolean;
-  showError: boolean;
-}
-
-interface GameProps {
-  wordPack: WordPack;
-  onBackToMenu: () => void;
-  onChangePacks?: () => void;
-}
+import { GameState, GameProps } from "./types";
+import { translations } from "../../translations";
 
 const Game: React.FC<GameProps> = ({
   wordPack,
+  language,
   onBackToMenu,
   onChangePacks,
 }) => {
@@ -33,10 +18,13 @@ const Game: React.FC<GameProps> = ({
     activeIndex: 0,
     isComplete: false,
     showError: false,
+    currentWordObj: undefined,
   });
 
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
-  const [remainingWords, setRemainingWords] = useState<string[]>([]);
+  const [remainingWords, setRemainingWords] = useState<
+    { word: string; file?: string }[]
+  >([]);
   const [allDone, setAllDone] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -44,7 +32,30 @@ const Game: React.FC<GameProps> = ({
   const hasInitializedRef = useRef(false);
 
   useEffect(() => {
-    if (wordPack.words.length === 0) {
+    if (
+      Array.isArray(wordPack.words) &&
+      wordPack.words.length > 0 &&
+      typeof wordPack.words[0] === "object" &&
+      "word" in wordPack.words[0]
+    ) {
+      const wordsArr = wordPack.words.filter(
+        (w): w is { word: string; file?: string } =>
+          typeof w === "object" && "word" in w
+      );
+      const randomIndex = Math.floor(Math.random() * wordsArr.length);
+      const firstWordObj = wordsArr[randomIndex];
+      setGameState({
+        currentWord: firstWordObj.word,
+        userInput: Array(firstWordObj.word.length).fill(""),
+        activeIndex: 0,
+        isComplete: false,
+        showError: false,
+        currentWordObj: firstWordObj,
+      });
+      setRemainingWords(wordsArr.filter((_, i) => i !== randomIndex));
+      setAllDone(false);
+      hasInitializedRef.current = false;
+    } else {
       setAllDone(true);
       setGameState({
         currentWord: "",
@@ -52,31 +63,18 @@ const Game: React.FC<GameProps> = ({
         activeIndex: 0,
         isComplete: false,
         showError: false,
+        currentWordObj: undefined,
       });
       setRemainingWords([]);
       return;
     }
-    const randomIndex = Math.floor(Math.random() * wordPack.words.length);
-    const firstWord = wordPack.words[randomIndex];
-    setGameState({
-      currentWord: firstWord,
-      userInput: Array(firstWord.length).fill(""),
-      activeIndex: 0,
-      isComplete: false,
-      showError: false,
-    });
-    setRemainingWords(wordPack.words.filter((w, i) => i !== randomIndex));
-    setAllDone(false);
-    hasInitializedRef.current = false;
-    // eslint-disable-next-line
   }, [wordPack]);
 
   useEffect(() => {
-    if (!gameState.currentWord) return;
-    const packId = findPackIdForWord(gameState.currentWord);
-    const audioPath = asset(
-      `/audio/words/${packId}/${getFileName(gameState.currentWord, "mp3")}`
-    );
+    if (!gameState.currentWordObj) return;
+    const fileName =
+      gameState.currentWordObj.file || gameState.currentWordObj.word;
+    const audioPath = asset(`/audio/words/pl/${fileName}.mp3`);
     if (audio) {
       audio.pause();
       audio.currentTime = 0;
@@ -93,7 +91,7 @@ const Game: React.FC<GameProps> = ({
       console.error("Error loading audio:", e);
     };
     setAudio(audioFile);
-  }, [gameState.currentWord]);
+  }, [gameState.currentWordObj]);
 
   const handleNextWord = useCallback(() => {
     if (remainingWords.length === 0) {
@@ -101,15 +99,16 @@ const Game: React.FC<GameProps> = ({
       return;
     }
     const randomIndex = Math.floor(Math.random() * remainingWords.length);
-    const nextWord = remainingWords[randomIndex];
+    const nextWordObj = remainingWords[randomIndex];
     setGameState({
-      currentWord: nextWord,
-      userInput: Array(nextWord.length).fill(""),
+      currentWord: nextWordObj.word,
+      userInput: Array(nextWordObj.word.length).fill(""),
       activeIndex: 0,
       isComplete: false,
       showError: false,
+      currentWordObj: nextWordObj,
     });
-    setRemainingWords((prev) => prev.filter((w, i) => i !== randomIndex));
+    setRemainingWords((prev) => prev.filter((_, i) => i !== randomIndex));
   }, [remainingWords]);
 
   useEffect(() => {
@@ -201,17 +200,11 @@ const Game: React.FC<GameProps> = ({
     e.target.value = "";
   };
 
-  const findPackIdForWord = (word: string): string => {
-    if (PL03BSC.includes(word)) return "pl03Bsc";
-    if (PL03DCR.includes(word)) return "pl03Dcr";
-    return wordPack.id.split("-")[0];
-  };
-
   const playAudio = () => {
-    const packId = findPackIdForWord(gameState.currentWord);
-    const audioPath = asset(
-      `/audio/words/${packId}/${getFileName(gameState.currentWord, "mp3")}`
-    );
+    if (!gameState.currentWordObj) return;
+    const fileName =
+      gameState.currentWordObj.file || gameState.currentWordObj.word;
+    const audioPath = asset(`/audio/words/pl/${fileName}.mp3`);
     if (audio) {
       audio.pause();
       audio.currentTime = 0;
@@ -221,6 +214,10 @@ const Game: React.FC<GameProps> = ({
       console.error("Error playing audio:", error);
     });
     setAudio(audioFile);
+  };
+
+  const getImageFileName = (wordObj: { word: string; file?: string }) => {
+    return `${wordObj.file || wordObj.word}.png`;
   };
 
   return (
@@ -235,16 +232,16 @@ const Game: React.FC<GameProps> = ({
           }
           onBackToMenu();
         }}
-        aria-label="Wróć do menu"
+        aria-label={translations[language].backToMenu}
       >
-        ← Menu
+        {translations[language].backToMenu}
       </button>
       <BackToMenuModal
         open={showConfirmModal}
-        title="Czy na pewno chcesz wrócić do menu?"
-        message="Postęp w tej grze zostanie utracony."
-        confirmLabel="Tak, wróć do menu"
-        cancelLabel="Anuluj"
+        title={translations[language].backToMenuTitle}
+        message={translations[language].backToMenuMessage}
+        confirmLabel={translations[language].backToMenuConfirm}
+        cancelLabel={translations[language].cancel}
         onCancel={() => setShowConfirmModal(false)}
         onConfirm={() => {
           setShowConfirmModal(false);
@@ -271,17 +268,29 @@ const Game: React.FC<GameProps> = ({
         }}
       />
       <div className="word-display">
+        {" "}
         {allDone ? (
           <div className="success-message">
-            <h2>Gratulacje! Ukończono wszystkie słowa.</h2>
+            <h2>{translations[language].congratulations}</h2>
             <button
               className="next-button"
               onClick={() => {
-                setRemainingWords([...wordPack.words]);
-                setAllDone(false);
+                if (
+                  Array.isArray(wordPack.words) &&
+                  wordPack.words.length > 0 &&
+                  typeof wordPack.words[0] === "object" &&
+                  "word" in wordPack.words[0]
+                ) {
+                  const wordsArr = wordPack.words.filter(
+                    (w): w is { word: string; file?: string } =>
+                      typeof w === "object" && "word" in w
+                  );
+                  setRemainingWords(wordsArr);
+                  setAllDone(false);
+                }
               }}
             >
-              Zagraj te same paczki
+              {translations[language].playSamePacks}
             </button>
             <button
               className="next-button"
@@ -290,24 +299,22 @@ const Game: React.FC<GameProps> = ({
               }}
               style={{ marginLeft: 16 }}
             >
-              Zmień paczki
+              {translations[language].changePacks}
             </button>
             <button
               className="next-button"
               onClick={onBackToMenu}
               style={{ marginLeft: 16 }}
             >
-              Wróć do menu
+              {translations[language].returnToMenu}
             </button>
           </div>
         ) : (
           <>
-            {gameState.currentWord && (
+            {gameState.currentWord && gameState.currentWordObj && (
               <img
                 src={asset(
-                  `/images/words/${findPackIdForWord(
-                    gameState.currentWord
-                  )}/${getFileName(gameState.currentWord, "png")}`
+                  `/images/words/${getImageFileName(gameState.currentWordObj)}`
                 )}
                 alt={gameState.currentWord}
                 className="word-image"
@@ -316,18 +323,18 @@ const Game: React.FC<GameProps> = ({
                   target.src = asset("/images/words/placeholder.png");
                 }}
               />
-            )}
+            )}{" "}
             <div className="debug-word">
-              Current word: {gameState.currentWord}
+              {translations[language].currentWord} {gameState.currentWord}
             </div>
             <button onClick={playAudio} className="audio-button">
               🔊
             </button>
             {gameState.isComplete ? (
               <div className="success-message">
-                <h2>Brawo!</h2>
+                <h2>{translations[language].wellDone}</h2>
                 <button onClick={handleNextWord} className="next-button">
-                  Następne słowo (Enter)
+                  {translations[language].nextWord}
                 </button>
               </div>
             ) : (

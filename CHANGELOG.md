@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.6.0] - 2025-06-25
+
+### Added
+
+- Language switcher in the main menu (PL, EN, Test) with a dedicated submenu.
+- Hash-based language routing with direct URL access to specific languages (e.g., `/#pl`, `/#en`, `/#test`).
+- Full internationalization (i18n) support for all UI components.
+- Centralized language type system in `src/types/language.ts` for maintainability and easy language additions.
+- Complete English word pack (EN99) with 58 words matching the Polish vocabulary.
+- Developer guide for adding new languages (`docs/ADDING_LANGUAGES.md`).
+- Modular translation system with separate files per language (`src/translations/`).
+- Modular word pack system with centralized management (`src/wordPacks/`).
+- PackType categorization ("basic" | "diacritics" | "test") for word packs.
+
+### Changed
+
+- Unified word image/audio file naming (English).
+- Moved all component props interfaces into dedicated `types.ts` files within each component folder.
+- Refactored translation architecture from single large file to modular per-language files.
+- Restructured word pack management from hardcoded app.tsx logic to configurable modular system.
+- Enhanced word pack format with PackType categorization for better organization.
+
 ## [0.5.2] - 2025-06-21
 
 ### Changed

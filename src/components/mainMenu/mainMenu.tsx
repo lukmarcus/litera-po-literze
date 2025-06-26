@@ -1,25 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { WordPack } from "../../types/wordPack";
+import { MainMenuProps } from "./types";
+import { translations } from "../../translations";
 import "./mainMenu.css";
-
-interface MainMenuProps {
-  wordPacks: WordPack[];
-  onSelectPack: (packs: WordPack[]) => void;
-  initialView?: "main" | "levels" | "packs";
-}
-
-const LEVEL_DIFFICULTIES = [
-  { id: "basic", label: "Podstawowe" },
-  { id: "mixed", label: "Mieszane" },
-  { id: "diacritical", label: "Diakrytyczne" },
-];
 
 const MainMenu: React.FC<MainMenuProps> = ({
   wordPacks,
+  language,
+  setLanguage,
   onSelectPack,
   initialView,
 }) => {
-  const [view, setView] = useState<"main" | "levels" | "packs">(
+  const [view, setView] = useState<"main" | "levels" | "packs" | "language">(
     initialView || "main"
   );
   const [checked, setChecked] = useState<boolean[]>(() => {
@@ -32,6 +23,23 @@ const MainMenu: React.FC<MainMenuProps> = ({
     }
     return wordPacks.map(() => true);
   });
+  const [levelDifficulties, setLevelDifficulties] = useState([
+    { id: "basic", label: translations[language].basic },
+    { id: "mixed", label: translations[language].mixed },
+    { id: "diacritical", label: translations[language].diacritical },
+  ]);
+
+  useEffect(() => {
+    setLevelDifficulties([
+      { id: "basic", label: translations[language].basic },
+      { id: "mixed", label: translations[language].mixed },
+      { id: "diacritical", label: translations[language].diacritical },
+    ]);
+  }, [language]);
+
+  useEffect(() => {
+    setChecked(wordPacks.map(() => true));
+  }, [language, wordPacks.length]);
 
   const handleLevelDifficulty = (difficulty: string) => {
     alert(`Wybrano poziomy, trudność: ${difficulty}`);
@@ -45,26 +53,32 @@ const MainMenu: React.FC<MainMenuProps> = ({
             className="menu-button yellow"
             onClick={() => setView("levels")}
           >
-            🧠 Poziomy
+            🧠 {translations[language].levels}
           </button>
           <button
             className="menu-button green"
             onClick={() => setView("packs")}
           >
-            📦 Paczki
+            📦 {translations[language].packs}
           </button>
           <button
             className="menu-button orange"
             onClick={() => alert("Opcja jeszcze niedostępna")}
           >
-            ❓ Jak grać?
+            ❓ {translations[language].howToPlay}
+          </button>
+          <button
+            className="menu-button blue"
+            onClick={() => setView("language")}
+          >
+            🌐 {translations[language].changeLanguage}
           </button>
         </div>
       )}
 
       {view === "levels" && (
         <div className="menu-buttons">
-          {LEVEL_DIFFICULTIES.map((diff) => (
+          {levelDifficulties.map((diff) => (
             <button
               key={diff.id}
               className="menu-button blue"
@@ -78,14 +92,14 @@ const MainMenu: React.FC<MainMenuProps> = ({
             onClick={() => setView("main")}
             style={{ marginTop: "2rem" }}
           >
-            ← Powrót
+            {translations[language].back}
           </button>
         </div>
       )}
 
       {view === "packs" && (
         <div className="menu-buttons" style={{ alignItems: "stretch" }}>
-          <h2>Wybierz zestawy słów</h2>
+          <h2>{translations[language].selectPacks}</h2>
           <form
             style={{
               display: "flex",
@@ -132,7 +146,7 @@ const MainMenu: React.FC<MainMenuProps> = ({
               disabled={checked.every((v) => !v)}
               style={{ marginTop: "1.5rem" }}
             >
-              Zagraj
+              {translations[language].play}
             </button>
           </form>
           <button
@@ -140,7 +154,48 @@ const MainMenu: React.FC<MainMenuProps> = ({
             onClick={() => setView("main")}
             style={{ marginTop: "2rem" }}
           >
-            ← Powrót
+            {translations[language].back}
+          </button>
+        </div>
+      )}
+
+      {view === "language" && (
+        <div className="menu-buttons">
+          <button
+            className={`menu-button${language === "pl" ? " lang-active" : ""}`}
+            onClick={() => {
+              setLanguage("pl");
+              setView("main");
+            }}
+          >
+            polski
+          </button>
+          <button
+            className={`menu-button${language === "en" ? " lang-active" : ""}`}
+            onClick={() => {
+              setLanguage("en");
+              setView("main");
+            }}
+          >
+            English
+          </button>
+          <button
+            className={`menu-button${
+              language === "test" ? " lang-active" : ""
+            }`}
+            onClick={() => {
+              setLanguage("test");
+              setView("main");
+            }}
+          >
+            Test
+          </button>
+          <button
+            className="menu-button"
+            onClick={() => setView("main")}
+            style={{ marginTop: "2rem" }}
+          >
+            {translations[language].back}
           </button>
         </div>
       )}

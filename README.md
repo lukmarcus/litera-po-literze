@@ -1,17 +1,33 @@
-# Litera po Literze
+# Litera po Literze 🔤
 
-> **Note:** Currently, the application is available only in Polish. English version might be added in the future.
+### _Letter by Letter - Educational Language Learning Game_
 
-Litera po Literze ("Letter by Letter") is an educational web application designed to help children learn reading and writing in Polish. The application provides an interactive and engaging way for children to practice their language skills through word recognition and typing exercises.
+**Litera po Literze** ("Letter by Letter") is a multilingual educational web application designed to help children learn reading and writing. The application provides an interactive and engaging way for children to practice their language skills through word recognition and typing exercises.
 
 ## Features
 
-- Interactive word learning interface
-- Audio pronunciation for each word
-- Visual representation of words
-- Success and error sound effects
-- Responsive design for various devices
-- Mobile-friendly: system keyboard support on mobile devices
+- **Multiple languages**: Polish, English, and test mode with hash-based routing (`/#pl`, `/#en`, `/#test`)
+- **Interactive word learning interface** with visual and audio feedback
+- **Audio pronunciation** for each word
+- **Visual representation** of words with images
+- **Success and error sound effects**
+- **Responsive design** for various devices
+- **Mobile-friendly**: system keyboard support on mobile devices
+- **Direct URL access** to specific languages for easy sharing
+
+## Language Support
+
+The app supports multiple languages with direct URL access:
+
+- **Polish**: `/#pl` - 58 words (32 basic + 26 with diacritics)
+- **English**: `/#en` - 58 words (basic vocabulary)
+- **Test mode**: `/#test` - 6 words (for testing)
+
+You can also switch languages using the "Change language" button in the main menu.
+
+**Note**: Audio pronunciation is in Polish for all modes.
+
+For developers wanting to add new languages, see [Adding Languages Guide](docs/ADDING_LANGUAGES.md).
 
 ## Prerequisites
 
@@ -85,5 +101,5 @@ For a detailed list of changes, see the [Changelog](./CHANGELOG.md).
 - Main author (behind the AI): [Marek Szumny](https://github.com/lukmarcus)
 - Images: [ChatGPT](https://chatgpt.com/)
 - Resize & Compress: [iLoveIMG](https://www.iloveimg.com/)
-- Words: [TTSMaker](https://ttsmaker.com/)
+- Audio Words: [TTSMaker](https://ttsmaker.com/)
 - Sounds: [Pixabay](https://pixabay.com/)

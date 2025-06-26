@@ -69,6 +69,18 @@
   color: #ef6c00;
 }
 
+.menu-button.blue {
+  background-color: #90caf9;
+  color: #1976d2;
+}
+
+.menu-button.lang-active {
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.4);
+}
+
 .packs-section {
   margin-top: 2rem;
   width: 100%;
