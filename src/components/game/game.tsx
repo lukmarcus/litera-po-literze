@@ -69,12 +69,11 @@ const Game: React.FC<GameProps> = ({
       return;
     }
   }, [wordPack]);
-
   useEffect(() => {
     if (!gameState.currentWordObj) return;
     const fileName =
       gameState.currentWordObj.file || gameState.currentWordObj.word;
-    const audioPath = asset(`/audio/words/pl/${fileName}.mp3`);
+    const audioPath = asset(`/audio/words/${language}/${fileName}.mp3`);
     if (audio) {
       audio.pause();
       audio.currentTime = 0;
@@ -199,12 +198,11 @@ const Game: React.FC<GameProps> = ({
     }
     e.target.value = "";
   };
-
   const playAudio = () => {
     if (!gameState.currentWordObj) return;
     const fileName =
       gameState.currentWordObj.file || gameState.currentWordObj.word;
-    const audioPath = asset(`/audio/words/pl/${fileName}.mp3`);
+    const audioPath = asset(`/audio/words/${language}/${fileName}.mp3`);
     if (audio) {
       audio.pause();
       audio.currentTime = 0;
