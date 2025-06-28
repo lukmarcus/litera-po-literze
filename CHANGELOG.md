@@ -2,9 +2,10 @@
 
 ## [0.6.1] - 2025-06-28
 
-### Fixed
+### Changed
 
 - Fixed audio paths to use correct language folders instead of always using Polish audio files.
+- Updated 4 English word names for better consistency.
 
 ## [0.6.0] - 2025-06-25
 

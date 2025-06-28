@@ -1,5 +1,5 @@
 export const PL03DCR = [
-  { word: "bąk", file: "drone" },
+  { word: "bąk", file: "horsefly" },
   { word: "bób", file: "broadbean" },
   { word: "ćma", file: "moth" },
   { word: "gęś", file: "goose" },
@@ -7,7 +7,7 @@ export const PL03DCR = [
   { word: "koń", file: "horse" },
   { word: "lód", file: "ice" },
   { word: "łom", file: "crowbar" },
-  { word: "łoś", file: "elk" },
+  { word: "łoś", file: "moose" },
   { word: "łuk", file: "bow" },
   { word: "łza", file: "tear" },
   { word: "miś", file: "teddy" },
@@ -23,6 +23,6 @@ export const PL03DCR = [
   { word: "wąs", file: "moustache" },
   { word: "wół", file: "ox" },
   { word: "ząb", file: "tooth" },
-  { word: "żar", file: "glow" },
+  { word: "żar", file: "embers" },
   { word: "żuk", file: "beetle" },
 ];
