@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.6.1] - 2025-06-28
+
+### Fixed
+
+- Fixed audio paths to use correct language folders instead of always using Polish audio files.
+
 ## [0.6.0] - 2025-06-25
 
 ### Added
