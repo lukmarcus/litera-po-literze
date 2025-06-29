@@ -1,6 +1,6 @@
 export const PL03BSC = [
   { word: "bal", file: "ball" },
-  { word: "bat", file: "bat" },
+  { word: "bat", file: "whip" },
   { word: "but", file: "shoe" },
   { word: "byk", file: "bull" },
   { word: "dom", file: "house" },
