@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.6.2] - 2025-07-01
+
+### Added
+
+- Added English audio files for all words in the EN99 pack.
+
 ## [0.6.1] - 2025-06-28
 
 ### Changed
