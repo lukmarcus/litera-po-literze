@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.6.3] - 2025-07-07
+
+### Added
+
+- Added new English word pack `en02` (2-letter words: ad, ax, go, id, no, ok, on, ox, tv, up) with dedicated audio and images for each word.
+
 ## [0.6.2] - 2025-07-01
 
 ### Added

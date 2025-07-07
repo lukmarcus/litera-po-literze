@@ -38,7 +38,6 @@ export const EN99 = [
   { en: "moth" },
   { en: "mousse" },
   { en: "moustache" },
-  { en: "ox" },
   { en: "orchard" },
   { en: "peacock" },
   { en: "poppy" },
