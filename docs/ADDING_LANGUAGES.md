@@ -38,17 +38,9 @@ export const translations = {
 } as const;
 ```
 
-### 3. Create Word Pack
+### 3. Add Word Packs
 
-Create `src/data/es03Basic.ts`:
-
-```typescript
-export const ES03BASIC = [
-  { word: "sol", file: "sun" },
-  { word: "mar", file: "sea" },
-  // ... more words
-];
-```
+> See [ADDING_WORD_PACKS.md](./ADDING_WORD_PACKS.md) for instructions on adding word packs for your new language.
 
 ### 4. Update App Logic
 
