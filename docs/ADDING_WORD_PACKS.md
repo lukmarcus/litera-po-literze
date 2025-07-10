@@ -78,7 +78,7 @@ Example for English:
 
 ## Best Practices
 
-- **Naming Convention**: Use language code + number/description (e.g., `en02`, `pl03Basic`)
+- **Naming Convention**: Use language code + number/description (e.g., `en02`, `pl03Bsc`)
 - **Ordering**: Place packs in difficulty order (shorter/easier words first)
 - **Asset Verification**: Double-check all audio and image files exist before committing
 - **Testing**: Test the entire pack thoroughly, including audio playback and image display
@@ -99,6 +99,8 @@ Example for English:
 ## Notes
 
 - Images are shared across all languages (stored in `public/images/words/`)
+- All images should be created using the prompt: "ratio 3:2, 2D cartoon-style flat illustration for children, thick black outlines, soft pastel colors, educational flashcard layout, minimal shading"
+- The final image size should be exactly 540x360px and compressed for web use
 - Audio files are language-specific (stored in `public/audio/words/[language]/`)
 - New word packs appear automatically in the game menu once added to the wordPacks array
 - The `type` field can be "basic" or other values as needed for future categorization

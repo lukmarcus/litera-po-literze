@@ -97,6 +97,8 @@ Przykład:
 ## Uwagi
 
 - Obrazki są współdzielone między językami (w `public/images/words/`)
+- Wszystkie obrazki powinny być tworzone z użyciem frazy: "ratio 3:2, 2D cartoon-style flat illustration for children, thick black outlines, soft pastel colors, educational flashcard layout, minimal shading"
+- Ostateczna wersja obrazka powinna mieć dokładnie 540x360px i być skompresowana do weba
 - Pliki audio są specyficzne dla języka (w `public/audio/words/[język]/`)
 - Nowe paczki pojawiają się automatycznie w menu gry po dodaniu do tablicy wordPacks
 - Pole `type` może przyjmować wartość "basic" lub inne, jeśli w przyszłości pojawią się nowe kategorie
