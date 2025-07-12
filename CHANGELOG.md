@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.6.4] - 2025-07-11
+
+### Added
+
+- Added documentation (PL/EN) for adding word packs, including image requirements.
+
 ## [0.6.3] - 2025-07-07
 
 ### Added

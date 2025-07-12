@@ -14,13 +14,12 @@ export const SUPPORTED_LANGUAGES = ["pl", "en", "test", "es"] as const;
 
 ### 2. Add Translations
 
-Create new file `src/translations/es.ts`:
+Create new file `src/translations/es.ts` and add your translations:
 
 ```typescript
 export const es = {
   title: "Letra por Letra",
   subtitle: "Aprender a leer y escribir para niños",
-  reportBug: "Reportar Error",
   // ... all other translation keys
 } as const;
 ```
@@ -38,34 +37,7 @@ export const translations = {
 } as const;
 ```
 
-### 3. Create Word Pack
-
-Create `src/data/es03Basic.ts`:
-
-```typescript
-export const ES03BASIC = [
-  { word: "sol", file: "sun" },
-  { word: "mar", file: "sea" },
-  // ... more words
-];
-```
-
-### 4. Update App Logic
-
-Add language case in `src/app.tsx`:
-
-```typescript
-} else if (language === "es") {
-  wordPacks = [
-    {
-      id: "es03Basic",
-      name: "3 Letras Básicas",
-      words: ES03BASIC,
-    },
-  ];
-```
-
-### 5. Add Menu Button
+### 3. Add Menu Button
 
 Add button in `src/components/mainMenu/mainMenu.tsx` language view section:
 
@@ -83,18 +55,12 @@ Add button in `src/components/mainMenu/mainMenu.tsx` language view section:
 
 > **Note**: Menu translations are now automatically included from the main translation files - no need to add them separately!
 
-### 6. Add Assets
+### 4. Add Word Packs
 
-- Audio: `public/audio/words/es/[filename].mp3`
-- Images: `public/images/words/[filename].png`
-
-### 7. Test
-
-Navigate to `/#es` and verify everything works.
+See [ADDING_WORD_PACKS.md](./ADDING_WORD_PACKS.md) for instructions on adding word packs, assets, and testing.
 
 ## Notes
 
-- Component types update automatically
 - Use 2-letter language codes (ISO standard)
 - Keep translations concise for UI elements
-- Audio files should have clear pronunciation
+- Component types update automatically
