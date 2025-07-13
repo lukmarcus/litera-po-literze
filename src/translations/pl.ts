@@ -15,7 +15,8 @@ export const pl = {
   congratulations: "Gratulacje! Ukończono wszystkie słowa.",
   playSamePacks: "Zagraj te same paczki",
   changePacks: "Zmień paczki",
-  returnToMenu: "Wróć do menu",  wellDone: "Brawo!",
+  returnToMenu: "Wróć do menu",
+  wellDone: "Brawo!",
   nextWord: "Następne słowo (Enter)",
   currentWord: "Obecne słowo:",
   levels: "Poziomy",
@@ -28,4 +29,7 @@ export const pl = {
   back: "← Powrót",
   selectPacks: "Wybierz zestawy słów",
   play: "Zagraj",
+  changePackLanguage: "Język paczek",
+  selectAtLeastOnePack: "Wybierz przynajmniej jedną paczkę",
+  noPacksForLanguage: "Brak paczek dla wybranego języka.",
 } as const;

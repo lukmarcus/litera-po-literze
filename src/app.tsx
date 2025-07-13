@@ -8,7 +8,9 @@ import {
   getLanguageFromHash,
   DEFAULT_LANGUAGE,
 } from "./types/language";
-import { getWordPacksForLanguage } from "./wordPacks";
+import { enWordPacks } from "./wordPacks/en";
+import { plWordPacks } from "./wordPacks/pl";
+import { testWordPacks } from "./wordPacks/test";
 import Footer from "./components/footer/footer";
 import BugReportModal from "./components/bugReportModal/bugReportModal";
 import "./app.css";
@@ -20,6 +22,8 @@ const App: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [showPacksView, setShowPacksView] = useState(false);
   const [language, setLanguage] = useState<Language>(DEFAULT_LANGUAGE);
+  const [selectedPackLanguage, setSelectedPackLanguage] =
+    useState<string>("pl");
 
   const updateHash = (newLanguage: Language) => {
     window.location.hash = newLanguage;
@@ -50,13 +54,14 @@ const App: React.FC = () => {
     setShowPacksView(true);
   };
 
-  const wordPacks = getWordPacksForLanguage(language);
+  const allWordPacks = [...plWordPacks, ...enWordPacks, ...testWordPacks];
 
   const mergedPack: WordPack | null = selectedPacks
     ? {
         id: selectedPacks.map((p) => p.id).join("-"),
         name: selectedPacks.map((p) => p.name).join(", "),
         type: "basic", // For merged packs, we can default to basic
+        language: selectedPacks[0].language, // język pierwszej wybranej paczki
         words: selectedPacks.flatMap((p) => p.words),
       }
     : null;
@@ -93,7 +98,7 @@ const App: React.FC = () => {
           />
         ) : (
           <MainMenu
-            wordPacks={wordPacks}
+            wordPacks={allWordPacks}
             language={language}
             setLanguage={handleLanguageChange}
             onSelectPack={(packs) => {
