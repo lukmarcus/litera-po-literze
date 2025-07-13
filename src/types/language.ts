@@ -1,6 +1,6 @@
-export const SUPPORTED_LANGUAGES = ["pl", "en", "test"] as const;
+export const SUPPORTED_LANGUAGES = ["pl", "en"] as const;
 
-export type Language = (typeof SUPPORTED_LANGUAGES)[number];
+export type Language = "pl" | "en";
 
 export const DEFAULT_LANGUAGE: Language = "en";
 

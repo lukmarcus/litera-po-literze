@@ -6,14 +6,14 @@ export const testWordPacks: WordPack[] = [
   {
     id: "testASD",
     name: "3×1 testing letter (ASD)",
-    language: "test",
+    language: "testpack",
     type: "test",
     words: TESTASD,
   },
   {
     id: "testQWE",
     name: "3×1 testing letter (QWE)",
-    language: "test",
+    language: "testpack",
     type: "test",
     words: TESTQWE,
   },

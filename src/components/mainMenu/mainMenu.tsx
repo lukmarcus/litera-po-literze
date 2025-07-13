@@ -210,17 +210,6 @@ const MainMenu: React.FC<MainMenuProps> = ({
             English
           </button>
           <button
-            className={`menu-button${
-              language === "test" ? " lang-active" : ""
-            }`}
-            onClick={() => {
-              setLanguage("test");
-              setView("main");
-            }}
-          >
-            Test
-          </button>
-          <button
             className="menu-button"
             onClick={() => setView("main")}
             style={{ marginTop: "2rem" }}
@@ -256,10 +245,10 @@ const MainMenu: React.FC<MainMenuProps> = ({
           </button>
           <button
             className={`menu-button${
-              selectedPackLanguage === "test" ? " lang-active" : ""
+              selectedPackLanguage === "testpack" ? " lang-active" : ""
             }`}
             onClick={() => {
-              setSelectedPackLanguage("test");
+              setSelectedPackLanguage("testpack");
               setView("main");
             }}
           >
