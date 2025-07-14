@@ -73,7 +73,9 @@ const Game: React.FC<GameProps> = ({
     if (!gameState.currentWordObj) return;
     const fileName =
       gameState.currentWordObj.file || gameState.currentWordObj.word;
-    const audioPath = asset(`/audio/words/${language}/${fileName}.mp3`);
+    const audioPath = asset(
+      `/audio/words/${wordPack.language}/${fileName}.mp3`
+    );
     if (audio) {
       audio.pause();
       audio.currentTime = 0;
