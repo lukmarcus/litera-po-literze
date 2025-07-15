@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.6.5] - 2025-07-15
+
+### Changed
+
+- App language and word pack language can now be selected independently with dedicated menu for pack language.
+- Audio and pack filtering now always use the selected pack language.
+- Removed all remnants of the "test" app language.
+
 ## [0.6.4] - 2025-07-11
 
 ### Added
