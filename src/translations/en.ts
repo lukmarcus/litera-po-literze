@@ -29,4 +29,7 @@ export const en = {
   back: "← Back",
   selectPacks: "Select word packs",
   play: "Play",
+  changePackLanguage: "Pack language",
+  selectAtLeastOnePack: "Select at least one pack",
+  noPacksForLanguage: "No packs for selected language.",
 } as const;

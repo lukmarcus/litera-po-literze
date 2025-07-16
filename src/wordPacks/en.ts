@@ -6,12 +6,14 @@ export const enWordPacks: WordPack[] = [
   {
     id: "en02",
     name: "English 2-letter words",
+    language: "en",
     type: "basic",
     words: EN02.map(({ en }) => ({ word: en })),
   },
   {
     id: "en99",
     name: "English basic pack",
+    language: "en",
     type: "basic",
     words: EN99.map(({ en }) => ({ word: en })),
   },

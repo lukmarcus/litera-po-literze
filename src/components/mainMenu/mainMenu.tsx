@@ -10,9 +10,9 @@ const MainMenu: React.FC<MainMenuProps> = ({
   onSelectPack,
   initialView,
 }) => {
-  const [view, setView] = useState<"main" | "levels" | "packs" | "language">(
-    initialView || "main"
-  );
+  const [view, setView] = useState<
+    "main" | "levels" | "packs" | "language" | "packLanguage"
+  >(initialView || "main");
   const [checked, setChecked] = useState<boolean[]>(() => {
     const saved = localStorage.getItem("lastChecked");
     if (saved) {
@@ -28,6 +28,12 @@ const MainMenu: React.FC<MainMenuProps> = ({
     { id: "mixed", label: translations[language].mixed },
     { id: "diacritical", label: translations[language].diacritical },
   ]);
+  const [selectedPackLanguage, setSelectedPackLanguage] =
+    useState<string>("pl");
+
+  const filteredWordPacks = wordPacks.filter(
+    (pack) => pack.language === selectedPackLanguage
+  );
 
   useEffect(() => {
     setLevelDifficulties([
@@ -38,8 +44,8 @@ const MainMenu: React.FC<MainMenuProps> = ({
   }, [language]);
 
   useEffect(() => {
-    setChecked(wordPacks.map(() => true));
-  }, [language, wordPacks.length]);
+    setChecked(filteredWordPacks.map(() => true));
+  }, [selectedPackLanguage, filteredWordPacks.length]);
 
   const handleLevelDifficulty = (difficulty: string) => {
     alert(`Wybrano poziomy, trudność: ${difficulty}`);
@@ -72,6 +78,12 @@ const MainMenu: React.FC<MainMenuProps> = ({
             onClick={() => setView("language")}
           >
             🌐 {translations[language].changeLanguage}
+          </button>
+          <button
+            className="menu-button purple"
+            onClick={() => setView("packLanguage")}
+          >
+            🌍 {translations[language].changePackLanguage || "Język paczek"}
           </button>
         </div>
       )}
@@ -110,40 +122,58 @@ const MainMenu: React.FC<MainMenuProps> = ({
             onSubmit={(e) => {
               e.preventDefault();
               localStorage.setItem("lastChecked", JSON.stringify(checked));
-              const selected = wordPacks.filter((_, i) => checked[i]);
-              if (selected.length > 0) onSelectPack(selected);
+              const selected = filteredWordPacks.filter((_, i) => checked[i]);
+              if (selected.length > 0) {
+                onSelectPack(selected); // tylko wybrane paczki
+              } else {
+                alert(
+                  translations[language].selectAtLeastOnePack ||
+                    "Wybierz przynajmniej jedną paczkę"
+                );
+              }
             }}
           >
-            {wordPacks.map((pack, idx) => (
-              <label
-                key={pack.id}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.75em",
-                  background: "#e6ffe6",
-                  borderRadius: 8,
-                  padding: "0.5em 1em",
-                  fontWeight: "bold",
-                }}
+            {filteredWordPacks.length === 0 ? (
+              <div
+                style={{ color: "red", fontWeight: "bold", margin: "1em 0" }}
               >
-                <input
-                  type="checkbox"
-                  checked={checked[idx]}
-                  onChange={() => {
-                    const arr = [...checked];
-                    arr[idx] = !arr[idx];
-                    setChecked(arr);
+                {translations[language].noPacksForLanguage ||
+                  "Brak paczek dla wybranego języka."}
+              </div>
+            ) : (
+              filteredWordPacks.map((pack, idx) => (
+                <label
+                  key={pack.id}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.75em",
+                    background: "#e6ffe6",
+                    borderRadius: 8,
+                    padding: "0.5em 1em",
+                    fontWeight: "bold",
                   }}
-                  style={{ marginTop: 4 }}
-                />
-                {pack.name}
-              </label>
-            ))}
+                >
+                  <input
+                    type="checkbox"
+                    checked={checked[idx]}
+                    onChange={() => {
+                      const arr = [...checked];
+                      arr[idx] = !arr[idx];
+                      setChecked(arr);
+                    }}
+                    style={{ marginTop: 4 }}
+                  />
+                  {pack.name}
+                </label>
+              ))
+            )}
             <button
               className="menu-button green"
               type="submit"
-              disabled={checked.every((v) => !v)}
+              disabled={
+                filteredWordPacks.length === 0 || checked.every((v) => !v)
+              }
               style={{ marginTop: "1.5rem" }}
             >
               {translations[language].play}
@@ -180,11 +210,45 @@ const MainMenu: React.FC<MainMenuProps> = ({
             English
           </button>
           <button
+            className="menu-button"
+            onClick={() => setView("main")}
+            style={{ marginTop: "2rem" }}
+          >
+            {translations[language].back}
+          </button>
+        </div>
+      )}
+
+      {view === "packLanguage" && (
+        <div className="menu-buttons">
+          <button
             className={`menu-button${
-              language === "test" ? " lang-active" : ""
+              selectedPackLanguage === "pl" ? " lang-active" : ""
             }`}
             onClick={() => {
-              setLanguage("test");
+              setSelectedPackLanguage("pl");
+              setView("main");
+            }}
+          >
+            polski
+          </button>
+          <button
+            className={`menu-button${
+              selectedPackLanguage === "en" ? " lang-active" : ""
+            }`}
+            onClick={() => {
+              setSelectedPackLanguage("en");
+              setView("main");
+            }}
+          >
+            English
+          </button>
+          <button
+            className={`menu-button${
+              selectedPackLanguage === "testpack" ? " lang-active" : ""
+            }`}
+            onClick={() => {
+              setSelectedPackLanguage("testpack");
               setView("main");
             }}
           >
