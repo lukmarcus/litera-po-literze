@@ -6,28 +6,29 @@
 
 ## Features
 
-- **Multiple languages**: Polish, English, and test mode with hash-based routing (`/#pl`, `/#en`, `/#test`)
+**Multiple languages**: Polish, English, and test mode with hash-based routing (`/#pl-en`, `/#en-pl`, etc.)
+
 - **Interactive word learning interface** with visual and audio feedback
 - **Audio pronunciation** for each word
 - **Visual representation** of words with images
 - **Success and error sound effects**
 - **Responsive design** for various devices
 - **Mobile-friendly**: system keyboard support on mobile devices
-- **Direct URL access** to specific languages for easy sharing
+- **Direct URL access** to any app/pack language combination for easy sharing (e.g. `/#pl-en`)
 
-## Language Support
+## Language & Pack Selection
 
-The app supports multiple languages with direct URL access:
+You can now select the app language and word pack language independently. The URL hash reflects both settings. Example combinations:
 
-- **Polish**: `/#pl` - 58 words (32 basic + 26 with diacritics)
-- **English**: `/#en` - 58 words (basic vocabulary)
-- **Test mode**: `/#test` - 6 words (for testing)
+- `/#pl-en` – Polish UI, English word packs
+- `/#en-pl` – English UI, Polish word packs
+- ... (any combination, e.g. `/#en-en`, `/#pl-testpack`)
 
-You can also switch languages using the "Change language" button in the main menu.
+You can switch both languages using the main menu. The URL updates automatically, so you can share direct links to any configuration.
 
-**Note**: Audio pronunciation is in Polish for all modes.
+**Note**: Audio pronunciation matches the selected word pack language.
 
-For developers wanting to add new languages, see [Adding Languages Guide](docs/ADDING_LANGUAGES.md).
+For developers wanting to add new languages or word packs, see [Adding Languages Guide](docs/ADDING_LANGUAGES.md) and [Adding Word Packs Guide](docs/ADDING_WORD_PACKS.md).
 
 ## Prerequisites
 
