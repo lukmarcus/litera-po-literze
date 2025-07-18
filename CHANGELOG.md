@@ -1,5 +1,12 @@
 # Changelog
 
+
+## [0.6.6] - 2025-07-18
+
+### Changed
+
+- App and word pack language can now be selected independently and shared via direct links in the format `/#xx-yy` (e.g. `/#pl-en`).
+
 ## [0.6.5] - 2025-07-15
 
 ### Changed
