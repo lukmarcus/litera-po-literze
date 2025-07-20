@@ -14,9 +14,11 @@ function getLanguagesFromHash(): {
   const hash = window.location.hash.slice(1);
   const [appLang, packLang] = hash.split("-");
   return {
-    appLang: appLang === "en" ? "en" : "pl",
+    appLang: appLang === "pl" || appLang === "en" ? appLang : "en",
     packLang:
-      packLang === "en" ? "en" : packLang === "testpack" ? "testpack" : "pl",
+      packLang === "pl" || packLang === "en" || packLang === "testpack"
+        ? packLang
+        : "en",
   };
 }
 
