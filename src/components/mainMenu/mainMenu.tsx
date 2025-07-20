@@ -53,7 +53,7 @@ const MainMenu: React.FC<MainMenuPropsExt> = ({
   }, [packLanguage, filteredWordPacks.length]);
 
   const handleLevelDifficulty = (difficulty: string) => {
-    alert(`Wybrano poziomy, trudność: ${difficulty}`);
+    alert(`${translations[language].levelSelected} ${difficulty}`);
   };
 
   return (
@@ -74,7 +74,7 @@ const MainMenu: React.FC<MainMenuPropsExt> = ({
           </button>
           <button
             className="menu-button orange"
-            onClick={() => alert("Opcja jeszcze niedostępna")}
+            onClick={() => alert(translations[language].featureUnavailable)}
           >
             ❓ {translations[language].howToPlay}
           </button>
@@ -82,13 +82,13 @@ const MainMenu: React.FC<MainMenuPropsExt> = ({
             className="menu-button blue"
             onClick={() => setView("language")}
           >
-            🌐 {translations[language].changeLanguage}
+            🌐 {translations[language].changeAppLanguage}
           </button>
           <button
             className="menu-button purple"
             onClick={() => setView("packLanguage")}
           >
-            🌍 {translations[language].changePackLanguage || "Język paczek"}
+            🌍 {translations[language].changePackLanguage}
           </button>
         </div>
       )}
@@ -130,8 +130,7 @@ const MainMenu: React.FC<MainMenuPropsExt> = ({
                 onSelectPack(selected);
               } else {
                 alert(
-                  translations[language].selectAtLeastOnePack ||
-                    "Wybierz przynajmniej jedną paczkę"
+                  translations[language].selectAtLeastOnePack
                 );
               }
             }}
@@ -140,8 +139,7 @@ const MainMenu: React.FC<MainMenuPropsExt> = ({
               <div
                 style={{ color: "red", fontWeight: "bold", margin: "1em 0" }}
               >
-                {translations[language].noPacksForLanguage ||
-                  "Brak paczek dla wybranego języka."}
+                {translations[language].noPacksForLanguage}
               </div>
             ) : (
               filteredWordPacks.map((pack, idx) => (

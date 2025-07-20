@@ -1,4 +1,6 @@
 export const pl = {
+  levelSelected: "Wybrano poziomy, trudność:",
+  featureUnavailable: "Opcja jeszcze niedostępna",
   title: "Litera po Literze",
   subtitle: "Nauka czytania i pisania dla dzieci",
   reportBug: "Zgłoś błąd",
@@ -30,6 +32,7 @@ export const pl = {
   selectPacks: "Wybierz zestawy słów",
   play: "Zagraj",
   changePackLanguage: "Język paczek",
+  changeAppLanguage: "Język aplikacji",
   selectAtLeastOnePack: "Wybierz przynajmniej jedną paczkę",
   noPacksForLanguage: "Brak paczek dla wybranego języka.",
 } as const;
