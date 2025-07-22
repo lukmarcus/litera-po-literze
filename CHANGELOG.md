@@ -1,12 +1,22 @@
 # Changelog
 
+## [0.6.6] - 2025-07-21
+
+### Changed
+
+- App and word pack language can now be selected independently and shared via direct links in the format `/#xx-yy` (e.g. `/#pl-en`).
+- All remaining hardcoded main menu messages have been exported to translation files for proper i18n.
+
+### Removed
+
+- Removed all remnants of the "test" app language (translation files and code references).
+
 ## [0.6.5] - 2025-07-15
 
 ### Changed
 
 - App language and word pack language can now be selected independently with dedicated menu for pack language.
 - Audio and pack filtering now always use the selected pack language.
-- Removed all remnants of the "test" app language.
 
 ## [0.6.4] - 2025-07-11
 

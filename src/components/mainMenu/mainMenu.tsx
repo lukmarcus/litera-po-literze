@@ -3,10 +3,17 @@ import { MainMenuProps } from "./types";
 import { translations } from "../../translations";
 import "./mainMenu.css";
 
-const MainMenu: React.FC<MainMenuProps> = ({
+interface MainMenuPropsExt extends MainMenuProps {
+  setPackLanguage: (lang: string) => void;
+  packLanguage: string;
+}
+
+const MainMenu: React.FC<MainMenuPropsExt> = ({
   wordPacks,
   language,
   setLanguage,
+  setPackLanguage,
+  packLanguage,
   onSelectPack,
   initialView,
 }) => {
@@ -28,11 +35,9 @@ const MainMenu: React.FC<MainMenuProps> = ({
     { id: "mixed", label: translations[language].mixed },
     { id: "diacritical", label: translations[language].diacritical },
   ]);
-  const [selectedPackLanguage, setSelectedPackLanguage] =
-    useState<string>("pl");
 
   const filteredWordPacks = wordPacks.filter(
-    (pack) => pack.language === selectedPackLanguage
+    (pack) => pack.language === packLanguage
   );
 
   useEffect(() => {
@@ -45,10 +50,10 @@ const MainMenu: React.FC<MainMenuProps> = ({
 
   useEffect(() => {
     setChecked(filteredWordPacks.map(() => true));
-  }, [selectedPackLanguage, filteredWordPacks.length]);
+  }, [packLanguage, filteredWordPacks.length]);
 
   const handleLevelDifficulty = (difficulty: string) => {
-    alert(`Wybrano poziomy, trudność: ${difficulty}`);
+    alert(`${translations[language].levelSelected} ${difficulty}`);
   };
 
   return (
@@ -69,7 +74,7 @@ const MainMenu: React.FC<MainMenuProps> = ({
           </button>
           <button
             className="menu-button orange"
-            onClick={() => alert("Opcja jeszcze niedostępna")}
+            onClick={() => alert(translations[language].featureUnavailable)}
           >
             ❓ {translations[language].howToPlay}
           </button>
@@ -77,17 +82,16 @@ const MainMenu: React.FC<MainMenuProps> = ({
             className="menu-button blue"
             onClick={() => setView("language")}
           >
-            🌐 {translations[language].changeLanguage}
+            🌐 {translations[language].changeAppLanguage}
           </button>
           <button
             className="menu-button purple"
             onClick={() => setView("packLanguage")}
           >
-            🌍 {translations[language].changePackLanguage || "Język paczek"}
+            🌍 {translations[language].changePackLanguage}
           </button>
         </div>
       )}
-
       {view === "levels" && (
         <div className="menu-buttons">
           {levelDifficulties.map((diff) => (
@@ -108,7 +112,6 @@ const MainMenu: React.FC<MainMenuProps> = ({
           </button>
         </div>
       )}
-
       {view === "packs" && (
         <div className="menu-buttons" style={{ alignItems: "stretch" }}>
           <h2>{translations[language].selectPacks}</h2>
@@ -124,11 +127,10 @@ const MainMenu: React.FC<MainMenuProps> = ({
               localStorage.setItem("lastChecked", JSON.stringify(checked));
               const selected = filteredWordPacks.filter((_, i) => checked[i]);
               if (selected.length > 0) {
-                onSelectPack(selected); // tylko wybrane paczki
+                onSelectPack(selected);
               } else {
                 alert(
-                  translations[language].selectAtLeastOnePack ||
-                    "Wybierz przynajmniej jedną paczkę"
+                  translations[language].selectAtLeastOnePack
                 );
               }
             }}
@@ -137,8 +139,7 @@ const MainMenu: React.FC<MainMenuProps> = ({
               <div
                 style={{ color: "red", fontWeight: "bold", margin: "1em 0" }}
               >
-                {translations[language].noPacksForLanguage ||
-                  "Brak paczek dla wybranego języka."}
+                {translations[language].noPacksForLanguage}
               </div>
             ) : (
               filteredWordPacks.map((pack, idx) => (
@@ -188,7 +189,6 @@ const MainMenu: React.FC<MainMenuProps> = ({
           </button>
         </div>
       )}
-
       {view === "language" && (
         <div className="menu-buttons">
           <button
@@ -218,15 +218,14 @@ const MainMenu: React.FC<MainMenuProps> = ({
           </button>
         </div>
       )}
-
       {view === "packLanguage" && (
         <div className="menu-buttons">
           <button
             className={`menu-button${
-              selectedPackLanguage === "pl" ? " lang-active" : ""
+              packLanguage === "pl" ? " lang-active" : ""
             }`}
             onClick={() => {
-              setSelectedPackLanguage("pl");
+              setPackLanguage("pl");
               setView("main");
             }}
           >
@@ -234,10 +233,10 @@ const MainMenu: React.FC<MainMenuProps> = ({
           </button>
           <button
             className={`menu-button${
-              selectedPackLanguage === "en" ? " lang-active" : ""
+              packLanguage === "en" ? " lang-active" : ""
             }`}
             onClick={() => {
-              setSelectedPackLanguage("en");
+              setPackLanguage("en");
               setView("main");
             }}
           >
@@ -245,10 +244,10 @@ const MainMenu: React.FC<MainMenuProps> = ({
           </button>
           <button
             className={`menu-button${
-              selectedPackLanguage === "testpack" ? " lang-active" : ""
+              packLanguage === "testpack" ? " lang-active" : ""
             }`}
             onClick={() => {
-              setSelectedPackLanguage("testpack");
+              setPackLanguage("testpack");
               setView("main");
             }}
           >

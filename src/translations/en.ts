@@ -1,4 +1,6 @@
 export const en = {
+  levelSelected: "Level selected:",
+  featureUnavailable: "Feature not available yet",
   title: "Letter by Letter",
   subtitle: "Learning to read and write for children",
   reportBug: "Report Bug",
@@ -30,6 +32,7 @@ export const en = {
   selectPacks: "Select word packs",
   play: "Play",
   changePackLanguage: "Pack language",
+  changeAppLanguage: "App language",
   selectAtLeastOnePack: "Select at least one pack",
   noPacksForLanguage: "No packs for selected language.",
 } as const;
