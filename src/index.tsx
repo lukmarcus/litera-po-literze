@@ -9,14 +9,14 @@ const root = ReactDOM.createRoot(
 
 function getLanguagesFromHash(): {
   appLang: "pl" | "en";
-  packLang: "pl" | "en" | "testpack";
+  packLang: "pl" | "en" | "test";
 } {
   const hash = window.location.hash.slice(1);
   const [appLang, packLang] = hash.split("-");
   return {
     appLang: appLang === "pl" || appLang === "en" ? appLang : "en",
     packLang:
-      packLang === "pl" || packLang === "en" || packLang === "testpack"
+      packLang === "pl" || packLang === "en" || packLang === "test"
         ? packLang
         : "en",
   };
@@ -24,7 +24,7 @@ function getLanguagesFromHash(): {
 
 function setLanguagesToHash(
   appLang: "pl" | "en",
-  packLang: "pl" | "en" | "testpack"
+  packLang: "pl" | "en" | "test"
 ) {
   window.location.hash = `${appLang}-${packLang}`;
 }

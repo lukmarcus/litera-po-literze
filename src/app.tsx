@@ -19,10 +19,10 @@ import { translations } from "./translations";
 
 interface AppProps {
   initialAppLang: "pl" | "en";
-  initialPackLang: "pl" | "en" | "testpack";
+  initialPackLang: "pl" | "en" | "test";
   setLanguagesToHash: (
     appLang: "pl" | "en",
-    packLang: "pl" | "en" | "testpack"
+    packLang: "pl" | "en" | "test"
   ) => void;
 }
 
@@ -46,7 +46,7 @@ const App: React.FC<AppProps> = ({
       const [appLang, packLang] = hash.split("-");
       if (appLang && ["pl", "en"].includes(appLang))
         setLanguage(appLang as Language);
-      if (packLang && ["pl", "en", "testpack"].includes(packLang))
+      if (packLang && ["pl", "en", "test"].includes(packLang))
         setSelectedPackLanguage(packLang);
     };
     window.addEventListener("hashchange", onHashChange);
@@ -58,15 +58,15 @@ const App: React.FC<AppProps> = ({
     setLanguage(safeLang);
     setLanguagesToHash(
       safeLang,
-      selectedPackLanguage as "pl" | "en" | "testpack"
+      selectedPackLanguage as "pl" | "en" | "test"
     );
   };
   const handlePackLanguageChange = (newPackLang: string) => {
     const safePackLang =
       newPackLang === "en"
         ? "en"
-        : newPackLang === "testpack"
-        ? "testpack"
+        : newPackLang === "test"
+        ? "test"
         : "pl";
     setSelectedPackLanguage(safePackLang);
     setLanguagesToHash(language as "pl" | "en", safePackLang);

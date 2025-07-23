@@ -292,9 +292,9 @@ const MainMenu: React.FC<MainMenuPropsExt> = ({
                 </button>
                 <button
                   className={`menu-button${
-                    packLanguage === "testpack" ? " lang-active" : ""
+                    packLanguage === "test" ? " lang-active" : ""
                   }`}
-                  onClick={() => setPackLanguage("testpack")}
+                  onClick={() => setPackLanguage("test")}
                 >
                   🧪 TEST
                 </button>
