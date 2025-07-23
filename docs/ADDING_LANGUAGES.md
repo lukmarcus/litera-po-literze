@@ -37,7 +37,12 @@ export const translations = {
 } as const;
 ```
 
-### 3. Add Menu Button
+### 3. Add Language Flag
+
+Add a flag SVG for the new language in `public/images/languages/` (e.g. `es.svg`).
+You can find language SVG flags here: https://en.wiktionary.org/wiki/Wiktionary:Language_flags_list
+
+### 4. Add Menu Button
 
 Add button in `src/components/mainMenu/mainMenu.tsx` language view section:
 
@@ -49,13 +54,16 @@ Add button in `src/components/mainMenu/mainMenu.tsx` language view section:
     setView("main");
   }}
 >
+  <img src={asset("/images/languages/es.svg")}
+       alt="ES"
+       style={{ maxWidth: 32, verticalAlign: "middle", marginRight: 4, display: "inline-block" }} />
   ES
 </button>
 ```
 
 > **Note**: Menu translations are now automatically included from the main translation files - no need to add them separately!
 
-### 4. Add Word Packs
+### 5. Add Word Packs
 
 See [ADDING_WORD_PACKS.md](./ADDING_WORD_PACKS.md) for instructions on adding word packs, assets, and testing.
 
