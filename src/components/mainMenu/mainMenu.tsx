@@ -158,7 +158,7 @@ const MainMenu: React.FC<MainMenuPropsExt> = ({
                     }}
                     style={{ marginTop: 4 }}
                   />
-                  {pack.name}
+                  {pack.name[language] || pack.name.en}
                 </label>
               ))
             )}
