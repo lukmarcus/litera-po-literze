@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { MainMenuProps } from "./types";
 import { translations } from "../../translations";
+import { asset } from "../../utils/asset";
 import "./mainMenu.css";
 
 interface MainMenuPropsExt extends MainMenuProps {
@@ -82,7 +83,7 @@ const MainMenu: React.FC<MainMenuPropsExt> = ({
             className="menu-button blue"
             onClick={() => setView("language")}
           >
-            🌐 {translations[language].changeAppLanguage}
+            🛠️ {translations[language].changeLanguage}
           </button>
         </div>
       )}
@@ -183,6 +184,15 @@ const MainMenu: React.FC<MainMenuPropsExt> = ({
       )}
       {view === "language" && (
         <div className="menu-buttons" style={{ width: "100%" }}>
+          <h2
+            style={{
+              width: "100%",
+              textAlign: "center",
+              marginBottom: "1.5rem",
+            }}
+          >
+            {translations[language].changeLanguage}
+          </h2>
           <div style={{ display: "flex", gap: "2rem", marginBottom: "2rem" }}>
             <div style={{ flex: 1 }}>
               <h3 style={{ textAlign: "center", marginBottom: "1rem" }}>
@@ -201,7 +211,17 @@ const MainMenu: React.FC<MainMenuPropsExt> = ({
                   }`}
                   onClick={() => setLanguage("pl")}
                 >
-                  polski
+                  <img
+                    src={asset("/images/languages/pl.svg")}
+                    alt="PL"
+                    style={{
+                      maxHeight: 24,
+                      verticalAlign: "middle",
+                      marginRight: 4,
+                      display: "inline-block",
+                    }}
+                  />
+                  PL
                 </button>
                 <button
                   className={`menu-button${
@@ -209,7 +229,17 @@ const MainMenu: React.FC<MainMenuPropsExt> = ({
                   }`}
                   onClick={() => setLanguage("en")}
                 >
-                  English
+                  <img
+                    src={asset("/images/languages/en.svg")}
+                    alt="EN"
+                    style={{
+                      maxHeight: 24,
+                      verticalAlign: "middle",
+                      marginRight: 4,
+                      display: "inline-block",
+                    }}
+                  />
+                  EN
                 </button>
               </div>
             </div>
@@ -230,7 +260,17 @@ const MainMenu: React.FC<MainMenuPropsExt> = ({
                   }`}
                   onClick={() => setPackLanguage("pl")}
                 >
-                  polski
+                  <img
+                    src={asset("/images/languages/pl.svg")}
+                    alt="PL"
+                    style={{
+                      maxHeight: 24,
+                      verticalAlign: "middle",
+                      marginRight: 4,
+                      display: "inline-block",
+                    }}
+                  />
+                  PL
                 </button>
                 <button
                   className={`menu-button${
@@ -238,7 +278,17 @@ const MainMenu: React.FC<MainMenuPropsExt> = ({
                   }`}
                   onClick={() => setPackLanguage("en")}
                 >
-                  English
+                  <img
+                    src={asset("/images/languages/en.svg")}
+                    alt="EN"
+                    style={{
+                      maxHeight: 24,
+                      verticalAlign: "middle",
+                      marginRight: 4,
+                      display: "inline-block",
+                    }}
+                  />
+                  EN
                 </button>
                 <button
                   className={`menu-button${
@@ -246,7 +296,7 @@ const MainMenu: React.FC<MainMenuPropsExt> = ({
                   }`}
                   onClick={() => setPackLanguage("testpack")}
                 >
-                  Test
+                  🧪 TEST
                 </button>
               </div>
             </div>
