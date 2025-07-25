@@ -1,4 +1,5 @@
 export const pl = {
+  selectLevel: "Wybierz poziom",
   levelSelected: "Wybrano poziomy, trudność:",
   featureUnavailable: "Opcja jeszcze niedostępna",
   title: "Litera po Literze",

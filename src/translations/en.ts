@@ -1,4 +1,5 @@
 export const en = {
+  selectLevel: "Select Level",
   levelSelected: "Level selected:",
   featureUnavailable: "Feature not available yet",
   title: "Letter by Letter",

@@ -89,6 +89,7 @@ const MainMenu: React.FC<MainMenuPropsExt> = ({
       )}
       {view === "levels" && (
         <div className="menu-buttons">
+          <h2>{translations[language].selectLevel}</h2>
           {levelDifficulties.map((diff) => (
             <button
               key={diff.id}
@@ -184,15 +185,7 @@ const MainMenu: React.FC<MainMenuPropsExt> = ({
       )}
       {view === "language" && (
         <div className="menu-buttons" style={{ width: "100%" }}>
-          <h2
-            style={{
-              width: "100%",
-              textAlign: "center",
-              marginBottom: "1.5rem",
-            }}
-          >
-            {translations[language].changeLanguage}
-          </h2>
+          <h2>{translations[language].changeLanguage}</h2>
           <div style={{ display: "flex", gap: "2rem", marginBottom: "2rem" }}>
             <div style={{ flex: 1 }}>
               <h3 style={{ textAlign: "center", marginBottom: "1rem" }}>
