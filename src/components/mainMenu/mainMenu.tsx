@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { MainMenuProps } from "./types";
-import LanguageButton from "./LanguageButton";
+import LanguageMenuSection from "./languageMenuSection";
 import { translations } from "../../translations";
-import { asset } from "../../utils/asset";
 import "./mainMenu.css";
 
 interface MainMenuPropsExt extends MainMenuProps {
@@ -186,64 +185,13 @@ const MainMenu: React.FC<MainMenuPropsExt> = ({
       )}
       {view === "language" && (
         <div className="menu-buttons" style={{ width: "100%" }}>
-          <h2>{translations[language].changeLanguage}</h2>
-          <div style={{ display: "flex", gap: "2rem", marginBottom: "2rem" }}>
-            <div style={{ flex: 1 }}>
-              <h3 style={{ textAlign: "center", marginBottom: "1rem" }}>
-                {translations[language].changeAppLanguage}
-              </h3>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "0.5rem",
-                }}
-              >
-                <LanguageButton
-                  label="PL"
-                  iconSrc={asset("/images/languages/pl.svg")}
-                  active={language === "pl"}
-                  onClick={() => setLanguage("pl")}
-                />
-                <LanguageButton
-                  label="EN"
-                  iconSrc={asset("/images/languages/en.svg")}
-                  active={language === "en"}
-                  onClick={() => setLanguage("en")}
-                />
-              </div>
-            </div>
-            <div style={{ flex: 1 }}>
-              <h3 style={{ textAlign: "center", marginBottom: "1rem" }}>
-                {translations[language].changePackLanguage}
-              </h3>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "0.5rem",
-                }}
-              >
-                <LanguageButton
-                  label="PL"
-                  iconSrc={asset("/images/languages/pl.svg")}
-                  active={packLanguage === "pl"}
-                  onClick={() => setPackLanguage("pl")}
-                />
-                <LanguageButton
-                  label="EN"
-                  iconSrc={asset("/images/languages/en.svg")}
-                  active={packLanguage === "en"}
-                  onClick={() => setPackLanguage("en")}
-                />
-                <LanguageButton
-                  label="🧪 TEST"
-                  active={packLanguage === "test"}
-                  onClick={() => setPackLanguage("test")}
-                />
-              </div>
-            </div>
-          </div>
+          <LanguageMenuSection
+            appLanguage={language}
+            packLanguage={packLanguage}
+            setAppLanguage={setLanguage}
+            setPackLanguage={setPackLanguage}
+            translations={translations[language]}
+          />
           <button className="menu-button" onClick={() => setView("main")}>
             {translations[language].back}
           </button>

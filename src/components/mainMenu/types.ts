@@ -1,12 +1,19 @@
-import { WordPack } from "../../types/wordPack";
-import { Language } from "../../types/language";
+import type { WordPack } from "../../types/wordPack";
+import type { Language } from "../../types/language";
 
 export interface LanguageButtonProps {
   label: string;
   iconSrc?: string;
-  active?: boolean;
+  active: boolean;
   onClick: () => void;
-  className?: string;
+}
+
+export interface LanguageMenuSectionProps {
+  appLanguage: string;
+  packLanguage: string;
+  setAppLanguage: (lang: Language) => void;
+  setPackLanguage: (lang: string) => void;
+  translations: any;
 }
 
 export interface MainMenuProps {

@@ -42,26 +42,11 @@ export const translations = {
 Add a flag SVG for the new language in `public/images/languages/` (e.g. `es.svg`).
 You can find language SVG flags here: https://en.wiktionary.org/wiki/Wiktionary:Language_flags_list
 
-### 4. Add Menu Button
+### 4. Language Menu Button
 
-Add button in `src/components/mainMenu/mainMenu.tsx` language view section:
+You do not need to manually add a button for the new language in the menu. The language selection menu is now generated automatically from the supported languages and flag assets in `LanguageMenuSection.tsx`.
 
-```typescript
-<button
-  className={`menu-button${language === "es" ? " lang-active" : ""}`}
-  onClick={() => {
-    setLanguage("es");
-    setView("main");
-  }}
->
-  <img src={asset("/images/languages/es.svg")}
-       alt="ES"
-       style={{ maxWidth: 32, verticalAlign: "middle", marginRight: 4, display: "inline-block" }} />
-  ES
-</button>
-```
-
-> **Note**: Menu translations are now automatically included from the main translation files - no need to add them separately!
+> **Note**: Menu translations are also included automatically from the main translation files.
 
 ### 5. Add Word Packs
 
