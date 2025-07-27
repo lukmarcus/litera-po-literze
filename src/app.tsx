@@ -19,10 +19,10 @@ import { translations } from "./translations";
 
 interface AppProps {
   initialAppLang: "pl" | "en";
-  initialPackLang: "pl" | "en" | "testpack";
+  initialPackLang: "pl" | "en" | "test";
   setLanguagesToHash: (
     appLang: "pl" | "en",
-    packLang: "pl" | "en" | "testpack"
+    packLang: "pl" | "en" | "test"
   ) => void;
 }
 
@@ -46,7 +46,7 @@ const App: React.FC<AppProps> = ({
       const [appLang, packLang] = hash.split("-");
       if (appLang && ["pl", "en"].includes(appLang))
         setLanguage(appLang as Language);
-      if (packLang && ["pl", "en", "testpack"].includes(packLang))
+      if (packLang && ["pl", "en", "test"].includes(packLang))
         setSelectedPackLanguage(packLang);
     };
     window.addEventListener("hashchange", onHashChange);
@@ -56,18 +56,11 @@ const App: React.FC<AppProps> = ({
   const handleLanguageChange = (newLanguage: string) => {
     const safeLang = newLanguage === "en" ? "en" : "pl";
     setLanguage(safeLang);
-    setLanguagesToHash(
-      safeLang,
-      selectedPackLanguage as "pl" | "en" | "testpack"
-    );
+    setLanguagesToHash(safeLang, selectedPackLanguage as "pl" | "en" | "test");
   };
   const handlePackLanguageChange = (newPackLang: string) => {
     const safePackLang =
-      newPackLang === "en"
-        ? "en"
-        : newPackLang === "testpack"
-        ? "testpack"
-        : "pl";
+      newPackLang === "en" ? "en" : newPackLang === "test" ? "test" : "pl";
     setSelectedPackLanguage(safePackLang);
     setLanguagesToHash(language as "pl" | "en", safePackLang);
   };
@@ -81,7 +74,22 @@ const App: React.FC<AppProps> = ({
   const mergedPack: WordPack | null = selectedPacks
     ? {
         id: selectedPacks.map((p) => p.id).join("-"),
-        name: selectedPacks.map((p) => p.name).join(", "),
+        name: {
+          pl: selectedPacks
+            .map((p) =>
+              typeof p.name === "object"
+                ? p.name.pl || p.name.en || Object.values(p.name)[0] || ""
+                : String(p.name)
+            )
+            .join(", "),
+          en: selectedPacks
+            .map((p) =>
+              typeof p.name === "object"
+                ? p.name.en || p.name.pl || Object.values(p.name)[0] || ""
+                : String(p.name)
+            )
+            .join(", "),
+        },
         type: "basic",
         language: selectedPacks[0].language,
         words: selectedPacks.flatMap((p) => p.words),

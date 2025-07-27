@@ -84,6 +84,16 @@ Example for English:
 - **Testing**: Test the entire pack thoroughly, including audio playback and image display
 - **Consistency**: Follow the same data structure as existing packs for the language
 
+## Naming (multi-language)
+
+The `name` property of each word pack should be an object with keys for each supported app language, e.g.:
+
+```ts
+name: { pl: "Podstawowe", en: "Basic" }
+```
+
+This ensures the pack name is always displayed in the current app language. If a translation is missing, the English name will be used as fallback.
+
 ## Examples
 
 ### English packs:

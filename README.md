@@ -104,3 +104,4 @@ For a detailed list of changes, see the [Changelog](./CHANGELOG.md).
 - Resize & Compress: [iLoveIMG](https://www.iloveimg.com/)
 - Audio Words: [TTSMaker](https://ttsmaker.com/)
 - Sounds: [Pixabay](https://pixabay.com/)
+- Language flags: [Wiktionary](https://en.wiktionary.org/wiki/Wiktionary:Language_flags_list)

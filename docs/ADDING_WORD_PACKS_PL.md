@@ -73,6 +73,16 @@ Przykład:
 3. Sprawdź, czy nowa paczka pojawia się na liście
 4. Przetestuj rozgrywkę z nową paczką (audio, obrazki)
 
+## Nazewnictwo (wielojęzyczne)
+
+Pole `name` każdej paczki powinno być obiektem z kluczami dla każdego obsługiwanego języka aplikacji, np.:
+
+```ts
+name: { pl: "Podstawowe", en: "Basic" }
+```
+
+Dzięki temu nazwa paczki zawsze wyświetli się w aktualnym języku aplikacji. Jeśli tłumaczenie nie istnieje, domyślnie zostanie użyta wersja angielska.
+
 ## Dobre praktyki
 
 - **Nazewnictwo**: używaj kodu języka + numer/opis (np. `pl02`, `pl03Bsc`)

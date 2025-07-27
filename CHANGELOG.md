@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.6.7] - 2025-07-26
+
+### Added
+
+- SVG flags for language selection in the language settings menu.
+
+### Changed
+
+- Combined app and pack language selection into a single, two-column menu with clear headers.
+- Changed test pack language identifier from 'testpack' to 'test' in URLs.
+- Word pack names are now objects with translations for each app language.
+- Unified menu header styling: menu views now use consistent h2 styling.
+
 ## [0.6.6] - 2025-07-21
 
 ### Changed
