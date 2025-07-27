@@ -1,6 +1,16 @@
 import type { WordPack } from "../../types/wordPack";
 import type { Language } from "../../types/language";
 
+export interface PackMenuSectionProps {
+  wordPacks: WordPack[];
+  checked: boolean[];
+  setChecked: (arr: boolean[]) => void;
+  onSelectPack: (packs: WordPack[]) => void;
+  translations: any;
+  language: Language;
+  onBack: () => void;
+}
+
 export interface LanguageButtonProps {
   label: string;
   iconSrc?: string;
@@ -22,4 +32,6 @@ export interface MainMenuProps {
   setLanguage: (lang: Language) => void;
   onSelectPack: (packs: WordPack[]) => void;
   initialView?: "main" | "levels" | "packs";
+  setPackLanguage: (lang: string) => void;
+  packLanguage: string;
 }
