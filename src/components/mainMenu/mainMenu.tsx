@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { MainMenuProps } from "./types";
+import LanguageButton from "./LanguageButton";
 import { translations } from "../../translations";
 import { asset } from "../../utils/asset";
 import "./mainMenu.css";
@@ -198,42 +199,18 @@ const MainMenu: React.FC<MainMenuPropsExt> = ({
                   gap: "0.5rem",
                 }}
               >
-                <button
-                  className={`menu-button${
-                    language === "pl" ? " lang-active" : ""
-                  }`}
+                <LanguageButton
+                  label="PL"
+                  iconSrc={asset("/images/languages/pl.svg")}
+                  active={language === "pl"}
                   onClick={() => setLanguage("pl")}
-                >
-                  <img
-                    src={asset("/images/languages/pl.svg")}
-                    alt="PL"
-                    style={{
-                      maxHeight: 24,
-                      verticalAlign: "middle",
-                      marginRight: 4,
-                      display: "inline-block",
-                    }}
-                  />
-                  PL
-                </button>
-                <button
-                  className={`menu-button${
-                    language === "en" ? " lang-active" : ""
-                  }`}
+                />
+                <LanguageButton
+                  label="EN"
+                  iconSrc={asset("/images/languages/en.svg")}
+                  active={language === "en"}
                   onClick={() => setLanguage("en")}
-                >
-                  <img
-                    src={asset("/images/languages/en.svg")}
-                    alt="EN"
-                    style={{
-                      maxHeight: 24,
-                      verticalAlign: "middle",
-                      marginRight: 4,
-                      display: "inline-block",
-                    }}
-                  />
-                  EN
-                </button>
+                />
               </div>
             </div>
             <div style={{ flex: 1 }}>
@@ -247,50 +224,23 @@ const MainMenu: React.FC<MainMenuPropsExt> = ({
                   gap: "0.5rem",
                 }}
               >
-                <button
-                  className={`menu-button${
-                    packLanguage === "pl" ? " lang-active" : ""
-                  }`}
+                <LanguageButton
+                  label="PL"
+                  iconSrc={asset("/images/languages/pl.svg")}
+                  active={packLanguage === "pl"}
                   onClick={() => setPackLanguage("pl")}
-                >
-                  <img
-                    src={asset("/images/languages/pl.svg")}
-                    alt="PL"
-                    style={{
-                      maxHeight: 24,
-                      verticalAlign: "middle",
-                      marginRight: 4,
-                      display: "inline-block",
-                    }}
-                  />
-                  PL
-                </button>
-                <button
-                  className={`menu-button${
-                    packLanguage === "en" ? " lang-active" : ""
-                  }`}
+                />
+                <LanguageButton
+                  label="EN"
+                  iconSrc={asset("/images/languages/en.svg")}
+                  active={packLanguage === "en"}
                   onClick={() => setPackLanguage("en")}
-                >
-                  <img
-                    src={asset("/images/languages/en.svg")}
-                    alt="EN"
-                    style={{
-                      maxHeight: 24,
-                      verticalAlign: "middle",
-                      marginRight: 4,
-                      display: "inline-block",
-                    }}
-                  />
-                  EN
-                </button>
-                <button
-                  className={`menu-button${
-                    packLanguage === "test" ? " lang-active" : ""
-                  }`}
+                />
+                <LanguageButton
+                  label="🧪 TEST"
+                  active={packLanguage === "test"}
                   onClick={() => setPackLanguage("test")}
-                >
-                  🧪 TEST
-                </button>
+                />
               </div>
             </div>
           </div>
