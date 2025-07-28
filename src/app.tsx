@@ -10,7 +10,7 @@ import Footer from "./components/footer/footer";
 import BugReportModal from "./components/bugReportModal/bugReportModal";
 import "./app.css";
 import { asset } from "./utils/asset";
-import { translations } from "./translations";
+import { translations } from "@translations";
 
 const App: React.FC<AppProps> = ({
   initialAppLang,
