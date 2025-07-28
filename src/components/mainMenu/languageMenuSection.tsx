@@ -11,18 +11,7 @@ const LanguageButton: React.FC<LanguageButtonProps> = ({
 }) => (
   <button
     type="button"
-    style={{
-      display: "flex",
-      alignItems: "center",
-      gap: "0.75em",
-      fontWeight: active ? "bold" : undefined,
-      background: active ? "#d0eaff" : undefined,
-      border: "1px solid #b0b0b0",
-      borderRadius: 8,
-      padding: "0.5em 1em",
-      cursor: "pointer",
-      outline: active ? "2px solid #007bff" : undefined,
-    }}
+    className={`menu-button${active ? " lang-active" : ""}`}
     onClick={onClick}
   >
     {iconSrc && (

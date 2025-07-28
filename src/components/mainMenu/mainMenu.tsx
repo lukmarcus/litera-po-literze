@@ -1,6 +1,6 @@
+import "./mainMenu.css";
 import type { MainMenuProps } from "./types";
 import React, { useState, useEffect } from "react";
-
 import { translations } from "../../translations";
 import LanguageMenuSection from "./languageMenuSection";
 import PackMenuSection from "./packMenuSection";
