@@ -1,7 +1,7 @@
 import React from "react";
 import { version } from "../../../package.json";
 import "./footer.css";
-import { FooterProps } from "./types";
+import type { FooterProps } from "@types";
 import { translations } from "../../translations";
 
 const Footer: React.FC<FooterProps> = ({ language, onReportClick }) => (

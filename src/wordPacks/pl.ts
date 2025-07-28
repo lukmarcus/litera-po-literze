@@ -1,4 +1,4 @@
-import { WordPack } from "../types/wordPack";
+import type { WordPack } from "@types";
 import { PL03BSC } from "../data/pl03Bsc";
 import { PL03DCR } from "../data/pl03Dcr";
 

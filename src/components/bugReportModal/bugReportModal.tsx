@@ -1,6 +1,6 @@
 import React from "react";
 import "./bugReportModal.css";
-import { BugReportModalProps } from "./types";
+import type { BugReportModalProps } from "@types";
 import { translations } from "../../translations";
 
 const BugReportModal: React.FC<BugReportModalProps> = ({

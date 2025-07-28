@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import "./game.css";
 import { asset } from "../../utils/asset";
 import BackToMenuModal from "../backToMenuModal/backToMenuModal";
-import { GameState, GameProps } from "./types";
+import type { GameState, GameProps } from "@types";
 import { translations } from "../../translations";
 
 const Game: React.FC<GameProps> = ({

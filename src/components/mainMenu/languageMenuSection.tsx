@@ -1,7 +1,10 @@
 import React from "react";
 import { asset } from "../../utils/asset";
-import type { Language } from "../../types/language";
-import type { LanguageButtonProps, LanguageMenuSectionProps } from "./types";
+import type {
+  Language,
+  LanguageButtonProps,
+  LanguageMenuSectionProps,
+} from "@types";
 
 const LanguageButton: React.FC<LanguageButtonProps> = ({
   label,
@@ -88,7 +91,7 @@ const LanguageMenuSection: React.FC<LanguageMenuSectionProps> = ({
               label={opt.label}
               iconSrc={opt.iconSrc}
               active={packLanguage === opt.value}
-              onClick={() => setPackLanguage(opt.value)}
+              onClick={() => setPackLanguage(opt.value as any)}
             />
           ))}
         </div>

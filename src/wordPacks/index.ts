@@ -1,4 +1,4 @@
-import { Language } from "../types/language";
+import type { Language } from "@types";
 import { plWordPacks } from "./pl";
 import { enWordPacks } from "./en";
 
