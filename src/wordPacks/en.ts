@@ -1,4 +1,4 @@
-import { WordPack } from "../types/wordPack";
+import type { WordPack } from "@types";
 import { EN02 } from "../data/en02";
 import { EN99 } from "../data/en99";
 

@@ -1,4 +1,4 @@
-import { WordPack } from "../types/wordPack";
+import type { WordPack } from "@types";
 import { TESTASD } from "../data/testASD";
 import { TESTQWE } from "../data/testQWE";
 

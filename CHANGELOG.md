@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.6.8] - 2025-07-30
+
+### Changed
+
+- Unified and simplified all TypeScript types and translation imports using path aliases (`@types`, `@translations`).
+- Removed legacy and duplicate type files; all types are now managed in a single file.
+- Menu components split into dedicated files for clarity.
+- Language and pack selection menus are now generated automatically based on available languages and SVG flags.
+
 ## [0.6.7] - 2025-07-26
 
 ### Added

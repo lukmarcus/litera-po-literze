@@ -15,6 +15,12 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx"
+    ,
+    "baseUrl": "./src",
+    "paths": {
+      "@types": ["types/types.ts"],
+      "@translations": ["translations/index.ts"]
+    }
   },
   "include": ["src"]
 }

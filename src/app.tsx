@@ -2,12 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Game from "./components/game/game";
 import MainMenu from "./components/mainMenu/mainMenu";
-import { WordPack } from "./types/wordPack";
-import {
-  Language,
-  getLanguageFromHash,
-  DEFAULT_LANGUAGE,
-} from "./types/language";
+import type { AppProps, WordPack, Language, PackLanguage } from "@types";
 import { enWordPacks } from "./wordPacks/en";
 import { plWordPacks } from "./wordPacks/pl";
 import { testWordPacks } from "./wordPacks/test";
@@ -15,16 +10,7 @@ import Footer from "./components/footer/footer";
 import BugReportModal from "./components/bugReportModal/bugReportModal";
 import "./app.css";
 import { asset } from "./utils/asset";
-import { translations } from "./translations";
-
-interface AppProps {
-  initialAppLang: "pl" | "en";
-  initialPackLang: "pl" | "en" | "test";
-  setLanguagesToHash: (
-    appLang: "pl" | "en",
-    packLang: "pl" | "en" | "test"
-  ) => void;
-}
+import { translations } from "@translations";
 
 const App: React.FC<AppProps> = ({
   initialAppLang,
@@ -38,7 +24,7 @@ const App: React.FC<AppProps> = ({
     initialAppLang as Language
   );
   const [selectedPackLanguage, setSelectedPackLanguage] =
-    useState<string>(initialPackLang);
+    useState<PackLanguage>(initialPackLang as PackLanguage);
 
   useEffect(() => {
     const onHashChange = () => {
@@ -47,22 +33,22 @@ const App: React.FC<AppProps> = ({
       if (appLang && ["pl", "en"].includes(appLang))
         setLanguage(appLang as Language);
       if (packLang && ["pl", "en", "test"].includes(packLang))
-        setSelectedPackLanguage(packLang);
+        setSelectedPackLanguage(packLang as PackLanguage);
     };
     window.addEventListener("hashchange", onHashChange);
     return () => window.removeEventListener("hashchange", onHashChange);
   }, []);
 
-  const handleLanguageChange = (newLanguage: string) => {
-    const safeLang = newLanguage === "en" ? "en" : "pl";
+  const handleLanguageChange = (newLanguage: PackLanguage) => {
+    const safeLang: Language = newLanguage === "en" ? "en" : "pl";
     setLanguage(safeLang);
-    setLanguagesToHash(safeLang, selectedPackLanguage as "pl" | "en" | "test");
+    setLanguagesToHash(safeLang, selectedPackLanguage);
   };
-  const handlePackLanguageChange = (newPackLang: string) => {
-    const safePackLang =
+  const handlePackLanguageChange = (newPackLang: PackLanguage) => {
+    const safePackLang: PackLanguage =
       newPackLang === "en" ? "en" : newPackLang === "test" ? "test" : "pl";
     setSelectedPackLanguage(safePackLang);
-    setLanguagesToHash(language as "pl" | "en", safePackLang);
+    setLanguagesToHash(language, safePackLang);
   };
   const handleChangePacks = () => {
     setSelectedPacks(null);

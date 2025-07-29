@@ -1,6 +1,6 @@
 import React from "react";
 import "./backToMenuModal.css";
-import { BackToMenuModalProps } from "./types";
+import type { BackToMenuModalProps } from "@types";
 
 const BackToMenuModal: React.FC<BackToMenuModalProps> = ({
   open,

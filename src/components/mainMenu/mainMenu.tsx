@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { MainMenuProps } from "./types";
-import { translations } from "../../translations";
-import { asset } from "../../utils/asset";
 import "./mainMenu.css";
+import type { MainMenuProps } from "@types";
+import React, { useState, useEffect } from "react";
+import { translations } from "@translations";
+import LanguageMenuSection from "./languageMenuSection";
+import PackMenuSection from "./packMenuSection";
 
-interface MainMenuPropsExt extends MainMenuProps {
-  setPackLanguage: (lang: string) => void;
-  packLanguage: string;
-}
-
-const MainMenu: React.FC<MainMenuPropsExt> = ({
+const MainMenu: React.FC<MainMenuProps> = ({
   wordPacks,
   language,
   setLanguage,
@@ -31,6 +27,7 @@ const MainMenu: React.FC<MainMenuPropsExt> = ({
     }
     return wordPacks.map(() => true);
   });
+
   const [levelDifficulties, setLevelDifficulties] = useState([
     { id: "basic", label: translations[language].basic },
     { id: "mixed", label: translations[language].mixed },
@@ -109,191 +106,25 @@ const MainMenu: React.FC<MainMenuPropsExt> = ({
         </div>
       )}
       {view === "packs" && (
-        <div className="menu-buttons" style={{ alignItems: "stretch" }}>
-          <h2>{translations[language].selectPacks}</h2>
-          <form
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "0.5rem",
-              marginBottom: "2rem",
-            }}
-            onSubmit={(e) => {
-              e.preventDefault();
-              localStorage.setItem("lastChecked", JSON.stringify(checked));
-              const selected = filteredWordPacks.filter((_, i) => checked[i]);
-              if (selected.length > 0) {
-                onSelectPack(selected);
-              } else {
-                alert(translations[language].selectAtLeastOnePack);
-              }
-            }}
-          >
-            {filteredWordPacks.length === 0 ? (
-              <div
-                style={{ color: "red", fontWeight: "bold", margin: "1em 0" }}
-              >
-                {translations[language].noPacksForLanguage}
-              </div>
-            ) : (
-              filteredWordPacks.map((pack, idx) => (
-                <label
-                  key={pack.id}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.75em",
-                    background: "#e6ffe6",
-                    borderRadius: 8,
-                    padding: "0.5em 1em",
-                    fontWeight: "bold",
-                  }}
-                >
-                  <input
-                    type="checkbox"
-                    checked={checked[idx]}
-                    onChange={() => {
-                      const arr = [...checked];
-                      arr[idx] = !arr[idx];
-                      setChecked(arr);
-                    }}
-                    style={{ marginTop: 4 }}
-                  />
-                  {pack.name[language] || pack.name.en}
-                </label>
-              ))
-            )}
-            <button
-              className="menu-button green"
-              type="submit"
-              disabled={
-                filteredWordPacks.length === 0 || checked.every((v) => !v)
-              }
-              style={{ marginTop: "1.5rem" }}
-            >
-              {translations[language].play}
-            </button>
-          </form>
-          <button
-            className="menu-button"
-            onClick={() => setView("main")}
-            style={{ marginTop: "2rem" }}
-          >
-            {translations[language].back}
-          </button>
-        </div>
+        <PackMenuSection
+          wordPacks={filteredWordPacks}
+          checked={checked}
+          setChecked={setChecked}
+          onSelectPack={onSelectPack}
+          translations={translations[language]}
+          language={language}
+          onBack={() => setView("main")}
+        />
       )}
       {view === "language" && (
         <div className="menu-buttons" style={{ width: "100%" }}>
-          <h2>{translations[language].changeLanguage}</h2>
-          <div style={{ display: "flex", gap: "2rem", marginBottom: "2rem" }}>
-            <div style={{ flex: 1 }}>
-              <h3 style={{ textAlign: "center", marginBottom: "1rem" }}>
-                {translations[language].changeAppLanguage}
-              </h3>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "0.5rem",
-                }}
-              >
-                <button
-                  className={`menu-button${
-                    language === "pl" ? " lang-active" : ""
-                  }`}
-                  onClick={() => setLanguage("pl")}
-                >
-                  <img
-                    src={asset("/images/languages/pl.svg")}
-                    alt="PL"
-                    style={{
-                      maxHeight: 24,
-                      verticalAlign: "middle",
-                      marginRight: 4,
-                      display: "inline-block",
-                    }}
-                  />
-                  PL
-                </button>
-                <button
-                  className={`menu-button${
-                    language === "en" ? " lang-active" : ""
-                  }`}
-                  onClick={() => setLanguage("en")}
-                >
-                  <img
-                    src={asset("/images/languages/en.svg")}
-                    alt="EN"
-                    style={{
-                      maxHeight: 24,
-                      verticalAlign: "middle",
-                      marginRight: 4,
-                      display: "inline-block",
-                    }}
-                  />
-                  EN
-                </button>
-              </div>
-            </div>
-            <div style={{ flex: 1 }}>
-              <h3 style={{ textAlign: "center", marginBottom: "1rem" }}>
-                {translations[language].changePackLanguage}
-              </h3>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "0.5rem",
-                }}
-              >
-                <button
-                  className={`menu-button${
-                    packLanguage === "pl" ? " lang-active" : ""
-                  }`}
-                  onClick={() => setPackLanguage("pl")}
-                >
-                  <img
-                    src={asset("/images/languages/pl.svg")}
-                    alt="PL"
-                    style={{
-                      maxHeight: 24,
-                      verticalAlign: "middle",
-                      marginRight: 4,
-                      display: "inline-block",
-                    }}
-                  />
-                  PL
-                </button>
-                <button
-                  className={`menu-button${
-                    packLanguage === "en" ? " lang-active" : ""
-                  }`}
-                  onClick={() => setPackLanguage("en")}
-                >
-                  <img
-                    src={asset("/images/languages/en.svg")}
-                    alt="EN"
-                    style={{
-                      maxHeight: 24,
-                      verticalAlign: "middle",
-                      marginRight: 4,
-                      display: "inline-block",
-                    }}
-                  />
-                  EN
-                </button>
-                <button
-                  className={`menu-button${
-                    packLanguage === "test" ? " lang-active" : ""
-                  }`}
-                  onClick={() => setPackLanguage("test")}
-                >
-                  🧪 TEST
-                </button>
-              </div>
-            </div>
-          </div>
+          <LanguageMenuSection
+            appLanguage={language}
+            packLanguage={packLanguage}
+            setAppLanguage={setLanguage}
+            setPackLanguage={setPackLanguage}
+            translations={translations[language]}
+          />
           <button className="menu-button" onClick={() => setView("main")}>
             {translations[language].back}
           </button>
