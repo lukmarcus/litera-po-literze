@@ -1,9 +1,8 @@
-
-import '@testing-library/jest-dom';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import Game from './game';
-import type { WordPack } from '@types';
+import "@testing-library/jest-dom";
+import { render, screen, fireEvent } from "@testing-library/react";
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import Game from "./game";
+import type { WordPack } from "@types";
 
 // Mock Audio to track play calls and src
 const playMock = vi.fn(() => Promise.resolve());
@@ -28,59 +27,52 @@ beforeEach(() => {
 });
 
 const mockWordPack: WordPack = {
-  id: 'test',
-  name: { pl: 'Test', en: 'Test' },
-  language: 'en',
-  type: 'test',
-  words: [
-    { word: 'cat' },
-    { word: 'dog' },
-  ],
+  id: "test",
+  name: { pl: "Test", en: "Test" },
+  language: "en",
+  type: "test",
+  words: [{ word: "cat" }, { word: "dog" }],
 };
 
-describe('Game', () => {
-  it('renders current word and image', () => {
+describe("Game", () => {
+  it("renders current word and image", () => {
     render(
-      <Game
-        wordPack={mockWordPack}
-        language="en"
-        onBackToMenu={() => {}}
-      />
+      <Game wordPack={mockWordPack} language="en" onBackToMenu={() => {}} />
     );
     expect(screen.getByText(/current word/i)).toBeInTheDocument();
-    expect(screen.getByRole('img')).toBeInTheDocument();
+    expect(screen.getByRole("img")).toBeInTheDocument();
   });
 
-  it('shows congratulations after all words are completed and plays success audio', () => {
+  it("shows congratulations after all words are completed and plays success audio", () => {
     render(
       <Game
-        wordPack={{ ...mockWordPack, words: [{ word: 'a' }] }}
+        wordPack={{ ...mockWordPack, words: [{ word: "a" }] }}
         language="en"
         onBackToMenu={() => {}}
       />
     );
     // Simulate correct input
-    fireEvent.change(screen.getByRole('textbox'), { target: { value: 'a' } });
-    fireEvent.keyDown(window, { key: 'Enter' });
+    fireEvent.change(screen.getByRole("textbox"), { target: { value: "a" } });
+    fireEvent.keyDown(window, { key: "Enter" });
     expect(screen.getByText(/congratulations/i)).toBeInTheDocument();
     // Check if success audio was played with correct src
-    const audioInstance = MockAudio.instances.find(a => a.src.includes('/audio/effects/success.mp3'));
+    const audioInstance = MockAudio.instances.find((a) =>
+      a.src.includes("/audio/effects/success.mp3")
+    );
     expect(audioInstance).toBeDefined();
     expect(playMock).toHaveBeenCalled();
   });
 
-  it('calls onBackToMenu when menu button is confirmed', () => {
+  it("calls onBackToMenu when menu button is confirmed", () => {
     const onBackToMenu = vi.fn();
     render(
-      <Game
-        wordPack={mockWordPack}
-        language="en"
-        onBackToMenu={onBackToMenu}
-      />
+      <Game wordPack={mockWordPack} language="en" onBackToMenu={onBackToMenu} />
     );
-    fireEvent.click(screen.getByRole('button', { name: /menu/i }));
+    fireEvent.click(screen.getByRole("button", { name: /menu/i }));
     // Confirm modal
-    fireEvent.click(screen.getByRole('button', { name: /yes, return to menu/i }));
+    fireEvent.click(
+      screen.getByRole("button", { name: /yes, return to menu/i })
+    );
     expect(onBackToMenu).toHaveBeenCalled();
   });
 });
