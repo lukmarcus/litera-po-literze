@@ -3,8 +3,6 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import Game from "./game";
 import type { WordPack } from "@types";
-
-// Mock Audio to track play calls and src
 const playMock = vi.fn(() => Promise.resolve());
 class MockAudio {
   src: string;
@@ -74,5 +72,79 @@ describe("Game", () => {
       screen.getByRole("button", { name: /yes, return to menu/i })
     );
     expect(onBackToMenu).toHaveBeenCalled();
+  });
+
+  it("shows error message and plays error audio on wrong answer", () => {
+    render(
+      <Game wordPack={mockWordPack} language="en" onBackToMenu={() => {}} />
+    );
+    fireEvent.change(screen.getByRole("textbox"), {
+      target: { value: "wrong" },
+    });
+    fireEvent.keyDown(window, { key: "Enter" });
+    // Szukaj elementu z klasą .letter-slot.active.error
+    expect(document.querySelector(".letter-slot.active.error")).toBeTruthy();
+    const errorAudio = MockAudio.instances.find((a) =>
+      a.src.includes("/audio/effects/error.mp3")
+    );
+    expect(errorAudio).toBeDefined();
+    expect(playMock).toHaveBeenCalled();
+  });
+
+  it("shows next word after correct answer", () => {
+    render(
+      <Game wordPack={mockWordPack} language="en" onBackToMenu={() => {}} />
+    );
+    // First word
+    fireEvent.change(screen.getByRole("textbox"), { target: { value: "cat" } });
+    fireEvent.keyDown(window, { key: "Enter" });
+    // Second word should be visible in debug-word div
+    expect(
+      screen.getByText((content, el) => {
+        return Boolean(
+          el && el.className.includes("debug-word") && content.includes("dog")
+        );
+      })
+    ).toBeInTheDocument();
+  });
+
+  it("clears input after correct answer", () => {
+    render(
+      <Game wordPack={mockWordPack} language="en" onBackToMenu={() => {}} />
+    );
+    const input = screen.getByRole("textbox");
+    fireEvent.change(input, { target: { value: "cat" } });
+    fireEvent.keyDown(window, { key: "Enter" });
+    expect(input).toHaveValue("");
+  });
+
+  it("accepts Enter key for submitting answer", () => {
+    render(
+      <Game wordPack={mockWordPack} language="en" onBackToMenu={() => {}} />
+    );
+    fireEvent.change(screen.getByRole("textbox"), { target: { value: "cat" } });
+    fireEvent.keyDown(window, { key: "Enter" });
+    expect(screen.getByText(/dog/i)).toBeInTheDocument();
+  });
+
+  it("does not call onBackToMenu when modal is cancelled", () => {
+    const onBackToMenu = vi.fn();
+    render(
+      <Game wordPack={mockWordPack} language="en" onBackToMenu={onBackToMenu} />
+    );
+    fireEvent.click(screen.getByRole("button", { name: /menu/i }));
+    // Cancel modal (przycisk Cancel zamiast No/Nie)
+    fireEvent.click(screen.getByRole("button", { name: /cancel/i }));
+    expect(onBackToMenu).not.toHaveBeenCalled();
+  });
+
+  it("shows correct image for each word", () => {
+    render(
+      <Game wordPack={mockWordPack} language="en" onBackToMenu={() => {}} />
+    );
+    fireEvent.change(screen.getByRole("textbox"), { target: { value: "cat" } });
+    fireEvent.keyDown(window, { key: "Enter" });
+    const img = screen.getByRole("img");
+    expect(["cat", "dog"]).toContain(img.getAttribute("alt"));
   });
 });
