@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import Game from "./game";
 import type { WordPack } from "@types";
@@ -49,11 +49,9 @@ describe("Game", () => {
         onBackToMenu={() => {}}
       />
     );
-    // Simulate correct input
     fireEvent.change(screen.getByRole("textbox"), { target: { value: "a" } });
     fireEvent.keyDown(window, { key: "Enter" });
     expect(screen.getByText(/congratulations/i)).toBeInTheDocument();
-    // Check if success audio was played with correct src
     const audioInstance = MockAudio.instances.find((a) =>
       a.src.includes("/audio/effects/success.mp3")
     );
@@ -67,7 +65,6 @@ describe("Game", () => {
       <Game wordPack={mockWordPack} language="en" onBackToMenu={onBackToMenu} />
     );
     fireEvent.click(screen.getByRole("button", { name: /menu/i }));
-    // Confirm modal
     fireEvent.click(
       screen.getByRole("button", { name: /yes, return to menu/i })
     );
@@ -82,7 +79,6 @@ describe("Game", () => {
       target: { value: "wrong" },
     });
     fireEvent.keyDown(window, { key: "Enter" });
-    // Szukaj elementu z klasą .letter-slot.active.error
     expect(document.querySelector(".letter-slot.active.error")).toBeTruthy();
     const errorAudio = MockAudio.instances.find((a) =>
       a.src.includes("/audio/effects/error.mp3")
@@ -91,21 +87,19 @@ describe("Game", () => {
     expect(playMock).toHaveBeenCalled();
   });
 
-  it("shows next word after correct answer", () => {
+  it("shows next word after correct answer", async () => {
     render(
       <Game wordPack={mockWordPack} language="en" onBackToMenu={() => {}} />
     );
-    // First word
-    fireEvent.change(screen.getByRole("textbox"), { target: { value: "cat" } });
+    for (const letter of "cat") {
+      fireEvent.keyDown(window, { key: letter });
+    }
     fireEvent.keyDown(window, { key: "Enter" });
-    // Second word should be visible in debug-word div
-    expect(
-      screen.getByText((content, el) => {
-        return Boolean(
-          el && el.className.includes("debug-word") && content.includes("dog")
-        );
-      })
-    ).toBeInTheDocument();
+    await screen.findByText((content, el) => {
+      return (
+        !!el && el.className.includes("debug-word") && /dog/i.test(content)
+      );
+    });
   });
 
   it("clears input after correct answer", () => {
@@ -118,13 +112,20 @@ describe("Game", () => {
     expect(input).toHaveValue("");
   });
 
-  it("accepts Enter key for submitting answer", () => {
+  it("accepts Enter key for submitting answer", async () => {
     render(
       <Game wordPack={mockWordPack} language="en" onBackToMenu={() => {}} />
     );
-    fireEvent.change(screen.getByRole("textbox"), { target: { value: "cat" } });
+    for (const letter of "cat") {
+      fireEvent.keyDown(window, { key: letter });
+    }
     fireEvent.keyDown(window, { key: "Enter" });
-    expect(screen.getByText(/dog/i)).toBeInTheDocument();
+    await waitFor(() => {
+      const debugWord = document.querySelector(".debug-word");
+      expect(debugWord).toBeTruthy();
+      const text = debugWord?.textContent?.replace(/\s+/g, " ").trim();
+      expect(text).toMatch(/dog/i);
+    });
   });
 
   it("does not call onBackToMenu when modal is cancelled", () => {
