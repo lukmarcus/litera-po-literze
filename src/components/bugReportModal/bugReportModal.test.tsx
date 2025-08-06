@@ -4,7 +4,26 @@ import { describe, it, expect, vi } from "vitest";
 import BugReportModal from "./bugReportModal";
 
 describe("BugReportModal", () => {
-  // translations pobierane są z globalnego obiektu w komponencie
+  it("GitHub and Form links have correct attributes", () => {
+    render(<BugReportModal language="en" onClose={() => {}} />);
+    const github = screen.getByRole("link", { name: /github/i });
+    const form = screen.getByRole("link", { name: /form/i });
+    expect(github).toHaveAttribute("target", "_blank");
+    expect(github).toHaveAttribute("rel", expect.stringContaining("noopener"));
+    expect(form).toHaveAttribute("target", "_blank");
+    expect(form).toHaveAttribute("rel", expect.stringContaining("noopener"));
+  });
+
+  it("renders correct texts for different languages", () => {
+    render(<BugReportModal language="pl" onClose={() => {}} />);
+    expect(
+      screen.getByRole("heading", { name: /zgłoś błąd|błąd/i })
+    ).toBeInTheDocument();
+    render(<BugReportModal language="en" onClose={() => {}} />);
+    expect(
+      screen.getByRole("heading", { name: /report bug/i })
+    ).toBeInTheDocument();
+  });
 
   it("renders title, description and links", () => {
     render(<BugReportModal language="en" onClose={() => {}} />);
