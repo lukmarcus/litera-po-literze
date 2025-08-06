@@ -4,6 +4,35 @@ import { describe, it, expect, vi } from "vitest";
 import BackToMenuModal from "./backToMenuModal";
 
 describe("BackToMenuModal", () => {
+  it("renders custom button labels", () => {
+    render(
+      <BackToMenuModal
+        open={true}
+        title="Test Title"
+        message="Test Message"
+        confirmLabel="Potwierdź"
+        cancelLabel="Odrzuć"
+        onConfirm={() => {}}
+        onCancel={() => {}}
+      />
+    );
+    expect(
+      screen.getByRole("button", { name: /potwierdź/i })
+    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /odrzuć/i })).toBeInTheDocument();
+  });
+
+  it("does not render message if not provided", () => {
+    render(
+      <BackToMenuModal
+        open={true}
+        title="Test Title"
+        onConfirm={() => {}}
+        onCancel={() => {}}
+      />
+    );
+    expect(screen.queryByText("Test Message")).not.toBeInTheDocument();
+  });
   it("does not render when open is false", () => {
     render(
       <BackToMenuModal
