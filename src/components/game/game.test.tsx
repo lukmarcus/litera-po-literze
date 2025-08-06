@@ -33,6 +33,89 @@ const mockWordPack: WordPack = {
 };
 
 describe("Game", () => {
+  it("shows 'congratulations' when wordPack is empty", () => {
+    render(
+      <Game
+        wordPack={{ ...mockWordPack, words: [] }}
+        language="en"
+        onBackToMenu={() => {}}
+      />
+    );
+    expect(screen.getByText(/congratulations|well done/i)).toBeInTheDocument();
+  });
+
+  it("handles very long word", async () => {
+    const longWord = "supercalifragilisticexpialidocious";
+    render(
+      <Game
+        wordPack={{ ...mockWordPack, words: [{ word: longWord }] }}
+        language="en"
+        onBackToMenu={() => {}}
+      />
+    );
+    for (const letter of longWord) {
+      fireEvent.keyDown(window, { key: letter });
+    }
+    fireEvent.keyDown(window, { key: "Enter" });
+    await screen.findByText(/congratulations|well done/i);
+  });
+
+  it("handles word with special characters", async () => {
+    const specialWord = "zażółć";
+    render(
+      <Game
+        wordPack={{ ...mockWordPack, words: [{ word: specialWord }] }}
+        language="pl"
+        onBackToMenu={() => {}}
+      />
+    );
+    for (const letter of specialWord) {
+      fireEvent.keyDown(window, { key: letter });
+    }
+    fireEvent.keyDown(window, { key: "Enter" });
+    await screen.findByText(/gratulacje|brawo|well done|congratulations/i);
+  });
+
+  it("focuses input after word change", async () => {
+    render(
+      <Game wordPack={mockWordPack} language="en" onBackToMenu={() => {}} />
+    );
+    const input = screen.getByRole("textbox");
+    for (const letter of "cat") {
+      fireEvent.keyDown(window, { key: letter });
+    }
+    fireEvent.keyDown(window, { key: "Enter" });
+    await waitFor(() => {
+      expect(document.activeElement).toBe(input);
+    });
+  });
+
+  it("plays success audio only on correct answer", async () => {
+    render(
+      <Game wordPack={mockWordPack} language="en" onBackToMenu={() => {}} />
+    );
+    for (const letter of "cat") {
+      fireEvent.keyDown(window, { key: letter });
+    }
+    fireEvent.keyDown(window, { key: "Enter" });
+    expect(playMock).toHaveBeenCalledWith();
+    const audioInstance = MockAudio.instances.find((a) =>
+      a.src.includes("success.mp3")
+    );
+    expect(audioInstance).toBeDefined();
+  });
+
+  it("plays error audio only on wrong answer", () => {
+    render(
+      <Game wordPack={mockWordPack} language="en" onBackToMenu={() => {}} />
+    );
+    fireEvent.keyDown(window, { key: "x" });
+    expect(playMock).toHaveBeenCalledWith();
+    const audioInstance = MockAudio.instances.find((a) =>
+      a.src.includes("error.mp3")
+    );
+    expect(audioInstance).toBeDefined();
+  });
   it("renders current word and image", () => {
     render(
       <Game wordPack={mockWordPack} language="en" onBackToMenu={() => {}} />
