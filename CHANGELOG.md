@@ -1,3 +1,9 @@
+# [0.6.9] - 2025-08-09
+
+### Added
+
+- Full Vitest coverage for all main components (including edge-cases and audio).
+
 # Changelog
 
 ## [0.6.8] - 2025-07-30
