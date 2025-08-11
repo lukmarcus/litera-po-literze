@@ -1,3 +1,9 @@
+# [0.6.10] - 2025-08-12
+
+### Added
+
+- Automatic Vitest test runs in CI on every commit and pull request to main (GitHub Actions).
+
 # [0.6.9] - 2025-08-09
 
 ### Added
@@ -11,9 +17,12 @@
 ### Changed
 
 - Unified and simplified all TypeScript types and translation imports using path aliases (`@types`, `@translations`).
-- Removed legacy and duplicate type files; all types are now managed in a single file.
 - Menu components split into dedicated files for clarity.
 - Language and pack selection menus are now generated automatically based on available languages and SVG flags.
+
+### Removed
+
+- Removed legacy and duplicate type files; all types are now managed in a single file.
 
 ## [0.6.7] - 2025-07-26
 
