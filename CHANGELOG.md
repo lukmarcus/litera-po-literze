@@ -4,7 +4,7 @@
 
 ### Added
 
-- Automatic Vitest test runs in CI on every commit and pull request to main (GitHub Actions).
+- Automatic Vitest test runs in CI on every pull request to main (GitHub Actions).
 
 ## [0.6.9] - 2025-08-09
 

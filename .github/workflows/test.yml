@@ -1,9 +1,6 @@
 name: Run Vitest tests
 
 on:
-  push:
-    branches:
-      - "**"
   pull_request:
     branches:
       - main
