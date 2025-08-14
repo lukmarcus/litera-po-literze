@@ -121,6 +121,12 @@ const Game: React.FC<GameProps> = ({
         return;
       }
 
+      if (e.key === " " || e.code === "Space") {
+        e.preventDefault();
+        playAudio();
+        return;
+      }
+
       if (/^[a-ząćęłńóśźż]$/i.test(e.key)) {
         e.preventDefault();
         const key = e.key.toLowerCase();
