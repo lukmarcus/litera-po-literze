@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.6.11] - 2025-08-16
+
+### Added
+
+- Ability to replay the word audio during gameplay by pressing the spacebar.
+
 ## [0.6.10] - 2025-08-12
 
 ### Added
